@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        console.log(innerWidth);
+        console.log(innerHeight);
+
+        setTimeout(function() {
+            console.log("After timeout");
+        },800);
+
+        let i = 0;
+        let intervalId = setInterval(() => {
+            console.log(i);
+            i++
+        }, 500);
+
+        let useInput = prompt("Podaj liczbe");
+        let floatNum = parseFloat(useInput);
+
+        console.log("Wynik dodawania " + floatNum + 100);
+
+
+
+        
+        // Metoda 1: Przypisanie funkcji do właściwości 'onload' obiektu window
+window.onload = function(){
+    // Ta funkcja zostanie wywołana, gdy strona i wszystkie jej zasoby (obrazy, skrypty, style) zostaną w pełni załadowane
+    // console.log("Strona została załadowana");
+    // Uwaga: Ta linia jest zakomentowana, więc nic nie zostanie wyświetlone w konsoli
+}
+
+// Metoda 2: Przypisanie funkcji do właściwości 'onresize' obiektu window
+window.onresize = function(){
+    // Ta funkcja będzie wywoływana za każdym razem, gdy rozmiar okna przeglądarki zostanie zmieniony
+    // console.log(window.innerWidth, window.innerHeight);
+    // Uwaga: Ta linia jest zakomentowana, więc wymiary okna nie będą wyświetlane w konsoli
+}
+
+// Metoda 3: Użycie addEventListener do nasłuchiwania zdarzenia 'load'
+window.addEventListener("load", function(){
+    // Ta funkcja zostanie wywołana, gdy strona i wszystkie jej zasoby zostaną załadowane
+    // Jest to alternatywny sposób obsługi zdarzenia 'load'
+    console.log("Website downloaded and parsed");
+    // Ta linia wyświetli komunikat w konsoli po pełnym załadowaniu strony
+});
+
+// Metoda 4: Użycie addEventListener z funkcją strzałkową do nasłuchiwania zdarzenia 'resize'
+window.addEventListener("resize", () => {
+    // Ta funkcja będzie wywoływana przy każdej zmianie rozmiaru okna przeglądarki
+    // Jest to alternatywny sposób obsługi zdarzenia 'resize', używający składni funkcji strzałkowej (arrow function)
+    // console.log(window.innerWidth, window.innerHeight);
+    // Uwaga: Ta linia jest zakomentowana, więc wymiary okna nie będą wyświetlane w konsoli
+})
+
+// Uwagi ogólne:
+// 1. Metody onload i onresize pozwalają przypisać tylko jedną funkcję obsługi do danego zdarzenia.
+//    Jeśli przypiszesz nową funkcję, zastąpi ona poprzednią.
+// 2. Metoda addEventListener pozwala dodać wiele funkcji obsługi do tego samego zdarzenia,
+//    nie nadpisując istniejących. Jest to bardziej elastyczne podejście.
+// 3. Zdarzenie 'load' jest wywoływane, gdy cała strona wraz z zasobami zostanie załadowana.
+// 4. Zdarzenie 'resize' jest wywoływane za każdym razem, gdy zmienia się rozmiar okna przeglądarki.
+// 5. Zakomentowane linie (z //) nie będą wykonywane. Możesz je odkomentować, usuwając //,
+//    jeśli chcesz zobaczyć ich działanie.
+    </script>
+</body>
+</html>

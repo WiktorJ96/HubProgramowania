@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        let data = new Date();
+        console.log(data);
+
+
+        // Funkcja konstruujaca - definicja funkcji
+        function Car(brand, name, color){
+            this.brand = brand;
+            this.name = name;
+            this.color = color;
+            this.year = new Date();
+
+            this.printData = function(){
+                console.log(this.brand, this.name, this.color, this.year);
+            }
+        }
+
+
+        //Instancja obiektu - egzemplarz obiektu stworzony na bazie funkcji konstruujacej 
+        let myCar = new Car("Toyota", "Camry", "Black");
+        myCar.printData();
+        console.log(myCar);
+
+        let car2 = new Car("Porsche", "Carrera", "Red");
+        car2.printData();
+        console.log(car2);
+
+
+                    /*
+            BRAK 'NEW' PRZY WYWOLANIU INSTANCJI OBIEKTU
+
+            CO TO ROBI?
+            Ten fragment kodu pomaga naprawić błąd, który może się zdarzyć, gdy tworzymy nowy obiekt.
+                
+            JAKI BŁĄD?
+            Kiedy tworzymy nowy obiekt, powinniśmy używać słowa 'new'. Ale czasem można o tym zapomnieć.
+                
+            JAK TO NAPRAWIA?
+            Kod sprawdza, czy użyto 'new'. Jeśli nie, automatycznie używa 'new' za nas.
+                
+            JAK TO DZIAŁA?
+            1. Sprawdza, czy obiekt został stworzony poprawnie (z 'new').
+            2. Jeśli nie, tworzy nowy obiekt prawidłowo.
+            */
+                
+            PRZYKŁAD:
+                
+            function Car(marka) {
+                if (!(this instanceof Car)) {
+                    return new Car(marka);
+                }
+                this.marka = marka;
+            }
+            
+            // Teraz oba sposoby działają:
+            let auto1 = new Car("Toyota");  // Dobrze
+            let auto2 = Car("Honda");       // Też dobrze, choć bez 'new'
+            
+            /*
+            DLACZEGO TO WAŻNE?
+            Dzięki temu nasz kod jest bardziej odporny na błędy. Nawet jeśli ktoś zapomni użyć 'new', 
+            wszystko będzie działać jak należy.
+            */
+    </script>
+</body>
+</html>

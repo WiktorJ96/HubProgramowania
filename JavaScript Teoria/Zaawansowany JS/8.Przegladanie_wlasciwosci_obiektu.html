@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <pre>
+        
+WYJAŚNIENIE KODU:
+
+1. Tworzenie obiektu:
+   Najpierw tworzymy obiekt o nazwie 'obj'. Ten obiekt ma kilka różnych typów danych:
+   - a: liczba (12)
+   - b: tekst ("text")
+   - printData: funkcja, która wyświetla wartości 'a' i 'b'
+   - arr: tablica liczb od 1 do 9
+
+2. Pętla po właściwościach obiektu:
+   Następnie używamy pętli 'for...in', aby przejść przez wszystkie właściwości obiektu.
+
+3. Sprawdzanie własnych właściwości:
+   Wewnątrz pętli używamy 'hasOwnProperty', aby upewnić się, że wyświetlamy tylko 
+   właściwości, które należą bezpośrednio do obiektu (a nie do jego prototypu).
+
+4. Wyświetlanie właściwości:
+   Dla każdej własnej właściwości obiektu, wyświetlamy jej nazwę i wartość.
+
+CO TO ZROBI?
+Ten kod wyświetli w konsoli wszystkie własne właściwości obiektu 'obj' wraz z ich wartościami.
+
+PRZYKŁADOWY WYNIK W KONSOLI:
+a 12
+b text
+printData [Function: printData]
+arr [1, 2, 3, 4, 5, 6, 7, 8, 9]
+
+DLACZEGO TO JEST WAŻNE?
+- Pozwala zobaczyć wszystkie właściwości obiektu.
+- Pokazuje, jak iterować po obiekcie w JavaScript.
+- Demonstruje użycie 'hasOwnProperty' do filtrowania właściwości.
+
+UWAGA:
+Metoda 'hasOwnProperty' jest ważna, bo zapobiega wyświetlaniu właściwości,
+które obiekt mógł odziedziczyć z prototypu, a nie są jego własnymi właściwościami.
+
+    </pre>
+    <script>
+        const obj = {
+            a:12,
+            b:"text",
+            printData:function(){
+                console.log(this.a, this.b);
+            },
+            arr:[1,2,3,4,5,6,7,8,9]
+        }
+
+        for(const prop in obj){
+            if(obj.hasOwnProperty(prop)){
+                console.log(prop, obj[prop]);
+            }
+        }
+
+        
+    </script>
+</body>
+</html>

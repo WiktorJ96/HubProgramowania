@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        const tvFactory = {
+            name: 'Factory',
+            city: 'San Francisco',
+            employees:[],
+            brand: 'Philips',
+            addEmployee: function(name, surname) {
+                const obj = {
+                    name: name,
+                    surname: surname,
+                    email: `${name.toLowerCase()}.${surname.toLowerCase()}@gmail.com`
+                };
+
+                this.employees[this.employees.length] = obj;
+        },
+        showEmployees: function(){
+            console.log(this.name, "employees:");
+
+            for(let i=0; i<this.employees.length; i){
+                const e = this.employees[i];
+                console.log(`${e.name} ${e.surname} - ${e.email}`);
+            }
+        },
+        makeTv: function(model, color) {
+            return {
+                id:`${this.brand}-${model}-tv-${color}`,
+                brand: this.brand,
+                model: model,
+                color: color,
+                
+            }
+        }
+    };
+
+    tvFactory.addEmployee('John', 'Doe');
+    tvFactory.addEmployee('Darek', 'Grzyb');
+    console.log(tvFactory.employees);
+
+    let tv1 = tvFactory.makeTv('x1', 'silver');
+    let tv2 = tvFactory.makeTv('pw10', 'black');
+
+    console.log(tv1, tv2);
+
+    tvFactory.name = "Factory Sp.Z.o.o"  // zmiana nazwy firmy
+
+    console.log(tvFactory)
+
+
+    // druga opcja zmiany nazwy firmy
+    const factoryName = "name"
+    tvFactory[factoryName] = "Sharp Tv Factory"
+
+    console.log(tvFactory)
+    </script>
+</body>
+</html>

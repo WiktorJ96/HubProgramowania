@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        function test(x) {
+    // Funkcja "test" przyjmuje jeden argument "x".
+    
+    return function(y) {
+        // Zwraca nową funkcję, która przyjmuje jeden argument "y".
+        
+        console.log(x, y);
+        // Funkcja wyświetla wartości "x" (z funkcji zewnętrznej "test") oraz "y" (z funkcji wewnętrznej).
+    }
+}
+
+let show = test(12);
+// Wywołujemy funkcję "test" z argumentem 12.
+// Funkcja "test" zwraca funkcję wewnętrzną, która jest przypisana do zmiennej "show".
+// Zmienna "x" przyjmuje wartość 12 i jest zamknięta (zapamiętana) w tej funkcji wewnętrznej.
+
+show(15); // Output: 12 15
+// Wywołujemy funkcję "show" z argumentem 15.
+// Funkcja wyświetla "x" (12) oraz "y" (15).
+
+show(20); // Output: 12 20
+// Wywołujemy funkcję "show" z argumentem 20.
+// Funkcja wyświetla "x" (12) oraz "y" (20).
+
+show(25); // Output: 12 25
+// Wywołujemy funkcję "show" z argumentem 25.
+// Funkcja wyświetla "x" (12) oraz "y" (25).
+
+    </script>
+</body>
+</html>

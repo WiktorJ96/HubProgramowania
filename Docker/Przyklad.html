@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Praktyczny przykład projektu w Dockerze</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Fira+Code&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #0056b3;
+            --secondary-color: #004085;
+            --background-color: #f8f9fa;
+            --text-color: #333;
+            --code-background: #e9ecef;
+            --pre-background: #272822;
+            --pre-color: #f8f8f2;
+            --tip-background: #d4edda;
+            --tip-border: #c3e6cb;
+            --link-color: #007bff;
+            --link-hover-color: #0056b3;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--background-color);
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: white;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+
+        h1, h2, h3 {
+            color: var(--primary-color);
+        }
+
+        h1 {
+            border-bottom: 2px solid var(--primary-color);
+            padding-bottom: 10px;
+        }
+
+        pre, code {
+            font-family: 'Fira Code', monospace;
+            background-color: var(--code-background);
+            border-radius: 4px;
+        }
+
+        pre {
+            padding: 15px;
+            overflow-x: auto;
+        }
+
+        code {
+            padding: 2px 5px;
+        }
+
+        .tip {
+            background-color: var(--tip-background);
+            border: 1px solid var(--tip-border);
+            border-radius: 4px;
+            padding: 15px;
+            margin: 20px 0;
+        }
+
+        .file-structure {
+            background-color: var(--code-background);
+            padding: 15px;
+            border-radius: 4px;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Praktyczny przykład projektu w Dockerze</h1>
+
+        <h2>Opis projektu</h2>
+        <p>Nasz przykładowy projekt to prosta aplikacja webowa składająca się z frontendu w React, backendu w Node.js (Express) i bazy danych MongoDB. Skupimy się na stworzeniu bezpiecznego środowiska Docker dla tej aplikacji.</p>
+
+        <h2>Struktura projektu</h2>
+        <div class="file-structure">
+            <pre>
+project-root/
+├── frontend/
+│   ├── src/
+│   ├── public/
+│   ├── package.json
+│   └── Dockerfile
+├── backend/
+│   ├── src/
+│   ├── package.json
+│   └── Dockerfile
+├── database/
+│   └── init-mongo.js
+├── nginx/
+│   └── nginx.conf
+├── .dockerignore
+├── docker-compose.yml
+└── .env
+            </pre>
+        </div>
+
+        <h2>Krok 1: Przygotowanie plików Dockerfile</h2>
+
+        <h3>Frontend Dockerfile (frontend/Dockerfile)</h3>
+        <pre>
+# Etap budowania
+FROM node:14 AS build
+WORKDIR /app
+COPY package*.json ./
+RUN npm ci
+COPY . .
+RUN npm run build
+
+# Etap produkcyjny
+FROM nginx:alpine
+COPY --from=build /app/build /usr/share/nginx/html
+COPY nginx/nginx.conf /etc/nginx/conf.d/default.conf
+EXPOSE 80
+CMD ["nginx", "-g", "daemon off;"]
+        </pre>
+
+        <h3>Backend Dockerfile (backend/Dockerfile)</h3>
+        <pre>
+FROM node:14-alpine
+WORKDIR /app
+COPY package*.json ./
+RUN npm ci --only=production
+COPY . .
+USER node
+EXPOSE 3000
+CMD ["node", "src/server.js"]
+        </pre>
+
+        <h2>Krok 2: Konfiguracja nginx (nginx/nginx.conf)</h2>
+        <pre>
+server {
+    listen 80;
+    location / {
+        root /usr/share/nginx/html;
+        index index.html index.htm;
+        try_files $uri $uri/ /index.html;
+    }
+    location /api {
+        proxy_pass http://backend:3000;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection 'upgrade';
+        proxy_set_header Host $host;
+        proxy_cache_bypass $http_upgrade;
+    }
+}
+        </pre>
+
+        <h2>Krok 3: Plik docker-compose.yml</h2>
+        <pre>
+version: '3.8'
+
+services:
+  frontend:
+    build: ./frontend
+    restart: unless-stopped
+    networks:
+      - app-network
+
+  backend:
+    build: ./backend
+    restart: unless-stopped
+    env_file: .env
+    networks:
+      - app-network
+      - db-network
+    depends_on:
+      - mongo
+
+  mongo:
+    image: mongo:4.4
+    restart: unless-stopped
+    env_file: .env
+    volumes:
+      - mongo-data:/data/db
+      - ./database/init-mongo.js:/docker-entrypoint-initdb.d/init-mongo.js:ro
+    networks:
+      - db-network
+
+  nginx:
+    image: nginx:alpine
+    restart: unless-stopped
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/conf.d/default.conf:ro
+    depends_on:
+      - frontend
+      - backend
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
+  db-network:
+    driver: bridge
+
+volumes:
+  mongo-data:
+    driver: local
+        </pre>
+
+        <h2>Krok 4: Plik .env</h2>
+        <pre>
+MONGO_INITDB_ROOT_USERNAME=admin
+MONGO_INITDB_ROOT_PASSWORD=secure_password
+MONGO_INITDB_DATABASE=myapp
+        </pre>
+
+        <h2>Krok 5: Plik .dockerignore</h2>
+        <pre>
+node_modules
+npm-debug.log
+Dockerfile
+.dockerignore
+.git
+.gitignore
+        </pre>
+
+        <h2>Instrukcje budowania i uruchamiania</h2>
+        <ol>
+            <li>Upewnij się, że masz zainstalowany Docker i Docker Compose.</li>
+            <li>W głównym katalogu projektu uruchom:
+                <code>docker-compose up --build</code>
+            </li>
+            <li>Aplikacja będzie dostępna pod adresem <code>http://localhost</code></li>
+        </ol>
+
+        <h2>Wskazówki dotyczące bezpieczeństwa</h2>
+        <ul>
+            <li>Używaj oficjalnych obrazów bazowych i regularnie je aktualizuj.</li>
+            <li>Minimalizuj liczbę warstw w obrazach Docker.</li>
+            <li>Nie przechowuj wrażliwych danych (np. hasła, klucze API) w obrazach. Używaj zmiennych środowiskowych lub sekretów Docker.</li>
+            <li>Uruchamiaj aplikacje jako użytkownik nie-root w kontenerach.</li>
+            <li>Używaj skanerów bezpieczeństwa kontenerów (np. Trivy, Clair) do wykrywania znanych luk.</li>
+            <li>Implementuj zasadę najmniejszych uprawnień dla kontenerów i użytkowników.</li>
+            <li>Używaj sieci Docker do izolacji kontenerów (jak pokazano w docker-compose.yml).</li>
+            <li>Regularnie wykonuj kopie zapasowe wolumenów z danymi.</li>
+        </ul>
+
+        <div class="tip">
+            <strong>Wskazówka:</strong> W środowisku produkcyjnym rozważ użycie narzędzi orkiestracji kontenerów, takich jak Kubernetes, dla lepszego zarządzania, skalowania i bezpieczeństwa.
+        </div>
+
+        <h2>Podsumowanie</h2>
+        <p>Ten przykład pokazuje, jak stworzyć bezpieczne środowisko Docker dla typowej aplikacji webowej. Pamiętaj, że bezpieczeństwo to proces ciągły - regularnie aktualizuj swoje obrazy i monitoruj znane luki w używanych technologiach.</p>
+    </div>
+</body>
+</html>

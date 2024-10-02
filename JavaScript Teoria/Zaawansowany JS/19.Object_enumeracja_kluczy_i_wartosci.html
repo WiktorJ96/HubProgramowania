@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+
+      // Tworzymy obiekt `obj` z różnymi właściwościami: liczbą, stringiem, funkcją, tablicą oraz zagnieżdżonym obiektem
+let obj = {
+    num: 123,                    // Właściwość numeryczna
+    str: "txt",                  // Właściwość typu string
+    printData: function() {      // Właściwość, która jest funkcją
+        console.log("Hello");
+    },
+    arr: [1, 2, 3, 4, 5],        // Właściwość typu tablica
+    data: {                      // Zagnieżdżony obiekt
+        a: 1,
+        b: 2
+    }
+};
+
+// Używamy `Object.keys()` do uzyskania tablicy kluczy (właściwości) obiektu `obj`
+const objKeys = Object.keys(obj);
+console.log(objKeys);  // Wynik: ["num", "str", "printData", "arr", "data"]
+
+// Iterujemy po kluczach obiektu `obj` i wypisujemy zarówno klucz, jak i odpowiadającą mu wartość
+for (const key of objKeys) {
+    console.log("Key:", key, "Value:", obj[key]);  
+    // Wynik:
+    // Key: num Value: 123
+    // Key: str Value: txt
+    // Key: printData Value: [Function: printData]
+    // Key: arr Value: [1, 2, 3, 4, 5]
+    // Key: data Value: { a: 1, b: 2 }
+}
+
+// Używamy `Object.values()` do uzyskania tablicy wartości obiektu `obj`
+const objValues = Object.values(obj);
+console.log(objValues);  
+// Wynik: [123, "txt", [Function: printData], [1, 2, 3, 4, 5], { a: 1, b: 2 }]
+
+// Używamy `Object.entries()` do uzyskania tablicy par klucz-wartość (tablicy tablic), gdzie każdy element zawiera parę klucz-wartość obiektu
+const objEntries = Object.entries(obj);
+console.log(objEntries);  
+// Wynik: [["num", 123], ["str", "txt"], ["printData", [Function: printData]], ["arr", [1, 2, 3, 4, 5]], ["data", { a: 1, b: 2 }]]
+
+// Iterujemy po parach klucz-wartość (destrukturyzacja), wyświetlamy klucz i wartość dla każdej pary
+for (const [key, value] of objEntries) {
+    console.log("Key:", key, "Value:", value);  
+    // Wynik:
+    // Key: num Value: 123
+    // Key: str Value: txt
+    // Key: printData Value: [Function: printData]
+    // Key: arr Value: [1, 2, 3, 4, 5]
+    // Key: data Value: { a: 1, b: 2 }
+}
+
+
+    </script>
+</body>
+</html>

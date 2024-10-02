@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+WYJAŚNIENIE KODU:
+
+1. Tworzenie obiektu:
+   Tworzymy obiekt o nazwie 'user'. Ten obiekt ma specjalną strukturę
+   do zarządzania właściwością 'name'.
+
+2. Właściwość _name:
+   - '_name' to właściwość "prywatna" (konwencja w JS).
+   - Zaczyna się od null, co oznacza, że początkowo nie ma wartości.
+
+3. Setter dla 'name':
+   - To specjalna funkcja, która jest wywoływana, gdy próbujemy ustawić wartość 'name'.
+   - Sprawdza, czy nowa nazwa ma co najmniej 3 znaki.
+   - Jeśli tak, ustawia '_name' na nową wartość.
+   - Jeśli nie, wyświetla komunikat o błędzie.
+
+4. Getter dla 'name':
+   - To funkcja, która jest wywoływana, gdy próbujemy odczytać wartość 'name'.
+   - Po prostu zwraca wartość '_name'.
+
+JAK TO DZIAŁA?
+
+1. user.name = "John";
+   - To wywołuje setter.
+   - "John" ma więcej niż 2 znaki, więc '_name' zostaje ustawione na "John".
+
+2. console.log(user.name);
+   - To wywołuje getter.
+   - Getter zwraca wartość '_name', czyli "John".
+   - Dlatego w konsoli widzimy: John
+
+DLACZEGO TO JEST UŻYTECZNE?
+
+1. Kontrola danych: Możemy sprawdzać i walidować dane przed ich ustawieniem.
+2. Ukrywanie implementacji: Użytkownik obiektu nie musi wiedzieć o '_name'.
+3. Elastyczność: Możemy łatwo zmienić sposób przechowywania lub przetwarzania danych.
+
+    <script>
+        const user = {
+            _name: null,  // zgodnie z konwencja zapisujemy przed nazwa wartosci '_'
+
+            set name(newValue){
+                //setter
+                if(newValue.length > 2){
+                    this._name = newValue;  // wartosc _name przechowuje teraz argument podany przy wywolywniu user.name 
+                } else {
+                    console.log("Nazwa musi mieć minimum 3 znaki");
+            }
+        },
+
+        get name(){
+            // getter
+            return this._name;
+        }
+    }
+
+    user.name = "John";
+    console.log(user.name); // Output: John
+    </script>
+</body>
+</html>

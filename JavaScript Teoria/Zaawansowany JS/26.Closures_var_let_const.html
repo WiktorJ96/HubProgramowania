@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+
+        for(var i=0; i<10; i++) {
+            setTimeout(function() {
+            console.log(i);        
+            },500);
+        }   
+
+        // Zmienna i jest zadeklarowana jako zmienna globalna, dlatego wynik jest równy 10 dla każdej iteracji
+
+        
+        // Jeśli chcemy aby każda iteracja miała swoją własną zmienną, to musimy użyć let i zadeklarować ją wewnątrz pętli
+
+        for(let i=0; i<10; i++) {
+            setTimeout(function() {
+            console.log(i);        
+            },500);
+        }
+
+
+    </script>
+</body>
+</html>

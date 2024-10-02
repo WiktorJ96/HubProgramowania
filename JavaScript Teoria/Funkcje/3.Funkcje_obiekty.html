@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        function hireEmployees (name, surname, email, phone, profession) {
+
+            if(name.length < 3) return null;
+            if (!/^\d{9}$/.test(phone)) return null;   //sprawdza czy numer ma 9 cyfr i nie ma innych znakow niz cyfry
+            if (!email.includes('@')) return null;          // sprawdza czy email zawiera znak @
+            if (profession != 'programmer' 
+                && profession != 'menager'
+                && profession != 'developer'
+            ) return null;
+
+
+            let employeeHired = {
+                name: name,
+                surname: surname,
+                email: email,
+                phone: phone,
+                profession: profession
+            }
+
+            return employeeHired;
+        }
+
+        const employee = hireEmployees('Kasie', 'Babbol', 'kacha.wp.pl', 987265462, 'menager')   // blad w emailu
+        const employee2 = hireEmployees('Ania', 'Doruchania', 'anka@onet.pl', 9473827461, 'programmer') //blad w numerze telefonu
+        const employee3 = hireEmployees('Zbigniew', "Brzeczyszczykiewicz", 'zbychu@interia.pl', 983712345, 'developer') //poprawny
+
+        console.log(employee,employee2,employee3)
+        //zostanie zwrocony tylko employee3
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // Przykład 1: Niemutowalność stringów
+let str = "Hello, world!";
+str[0] = "R";  // Ta operacja nie ma efektu, stringi są niemutowalne
+console.log(str[0]); // Wyświetli: "H"
+// Próba zmiany pojedynczego znaku w stringu nie powoduje błędu, ale też nie zmienia stringu
+
+// Możemy jednak utworzyć nowy string na bazie starego
+str = str + "!!!!!!!!!";
+console.log(str); // Wyświetli: "Hello, world!!!!!!!!!"
+// Operacja konkatenacji tworzy nowy string, nie modyfikuje oryginalnego
+
+// Przykład 2: Mutowalność tablic i zachowanie const
+const arr = ["H", "E", "L", "L", "O"];
+arr[0] = "R";  // Ta operacja jest dozwolona, tablice są mutowalne
+console.log(arr[0]); // Wyświetli: "R"
+// Możemy modyfikować zawartość tablicy, nawet jeśli jest zadeklarowana jako const
+
+arr = {};  // To spowoduje błąd: "Assignment to constant variable"
+// Nie możemy przypisać nowej wartości do zmiennej const
+
+// Kluczowe pojęcia:
+// 1. Niemutowalność stringów: Nie możemy zmienić pojedynczych znaków w stringu
+// 2. Mutowalność tablic: Możemy modyfikować elementy tablicy
+// 3. Zachowanie const: 
+//    - Zapobiega ponownemu przypisaniu wartości do zmiennej
+//    - Nie zapobiega modyfikacji zawartości obiektów lub tablic
+// 4. Różnica między modyfikacją a ponownym przypisaniem
+    </script>
+</body>
+</html>

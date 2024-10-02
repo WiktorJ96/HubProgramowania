@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <script>
+
+        function test() {
+    let privateData = "hello world";
+    // Tworzymy zmienną lokalną "privateData" z początkową wartością "hello world".
+    // Ta zmienna jest prywatna i dostępna tylko w ramach funkcji "test" oraz funkcji, które są w jej zasięgu.
+
+    function showPrivData() {
+        console.log(privateData);
+        // Funkcja "showPrivData" wyświetla aktualną wartość zmiennej "privateData".
+    }
+
+    function setData(value) {
+        privateData = value;
+        // Funkcja "setData" zmienia wartość zmiennej "privateData" na nową wartość podaną w argumencie "value".
+    }
+
+    return {
+        showData: showPrivData,
+        // Zwracamy funkcję "showPrivData" jako metodę "showData" w obiekcie.
+        setData: setData
+        // Zwracamy funkcję "setData" jako metodę "setData" w obiekcie.
+    };
+}
+
+const obj = test();
+// Wywołujemy funkcję "test" i przypisujemy zwrócony obiekt do zmiennej "obj".
+// "obj" ma teraz dwie metody: "showData" i "setData".
+
+console.log(obj);
+// Wyświetla obiekt z metodami "showData" oraz "setData".
+
+obj.showData();
+// Wywołuje metodę "showData", która jest referencją do funkcji "showPrivData".
+// Funkcja wyświetla wartość zmiennej "privateData", czyli "hello world".
+
+obj.setData("EBE EBE");
+// Wywołuje metodę "setData", która jest referencją do funkcji "setData".
+// Funkcja zmienia wartość zmiennej "privateData" na "EBE EBE".
+
+obj.showData();
+// Ponownie wywołuje metodę "showData", która teraz wyświetla zaktualizowaną wartość "privateData", czyli "EBE EBE".
+
+    </script>
+</body>
+</html>

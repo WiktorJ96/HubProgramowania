@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<pre>
+    
+IIFE (Immediately Invoked Function Expression) to wzorzec programowania w JavaScript,
+polegający na zdefiniowaniu i natychmiastowym wywołaniu funkcji anonimowej.
+
+Główne cechy i zastosowania IIFE:
+
+1. Ograniczenie zasięgu zmiennych:
+   - Zmienne zadeklarowane wewnątrz IIFE (za pomocą var, let lub const) są ograniczone
+     do zakresu tej funkcji i nie zaśmiecają globalnej przestrzeni nazw.
+   - Po wykonaniu IIFE, zmienne wewnątrz niej nie są już dostępne z zewnątrz,
+     co pomaga w uniknięciu konfliktów nazw i niezamierzonych interakcji z innymi częściami kodu.
+
+2. Enkapsulacja:
+   - IIFE pozwala na tworzenie prywatnych zmiennych i funkcji, które nie są dostępne
+     z zewnątrz, co wspiera zasadę enkapsulacji.
+
+3. Tworzenie modułów:
+   - IIFE często używane jest do tworzenia modułów w JavaScript, szczególnie
+     w starszych aplikacjach przed wprowadzeniem systemu modułów ES6.
+
+4. Unikanie konfliktów:
+   - Pomaga w uniknięciu konfliktów między różnymi bibliotekami lub skryptami,
+     które mogą używać tych samych nazw zmiennych.
+
+</pre>
+<body>
+    <script>
+
+        
+        if(true){ 
+    // Warunek "if" jest zawsze prawdziwy, więc kod w bloku zostanie wykonany
+    var a = 5; 
+    // Zmienna 'a' jest deklarowana za pomocą 'var', więc ma zasięg globalny (lub funkcyjny, gdyby była wewnątrz funkcji)
+}
+
+console.log(a); 
+// 'a' jest dostępna poza blokiem 'if', więc wynik to 5
+
+(function(data){
+    // Tworzysz i natychmiastowo wywołujesz funkcję anonimową (IIFE)
+    console.log(data); 
+    // Wyświetli wartość argumentu 'data', który wynosi "test"
+    
+    var b = 10; 
+    // Deklarujesz zmienną 'b' lokalnie w funkcji, przypisując jej wartość 10
+
+    console.log("b:", b); 
+    // Wyświetla tekst "b:" oraz wartość zmiennej 'b', czyli 10
+})("test"); 
+// Funkcja anonimowa jest wywoływana z argumentem "test"
+
+
+
+
+    </script>
+</body>
+</html>

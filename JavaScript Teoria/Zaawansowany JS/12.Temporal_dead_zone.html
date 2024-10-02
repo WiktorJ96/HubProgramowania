@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // Deklaracja zmiennej 'y' w zakresie globalnym
+let y = 10;
+
+if (1 == 1) { // Ten warunek zawsze jest prawdziwy, więc blok zawsze się wykona
+    // Tutaj zaczyna się nowy zakres blokowy
+
+    console.log(y); // To spowoduje błąd: Cannot access 'y' before initialization
+    // Mimo że istnieje globalna zmienna 'y', 
+    // ta linia odnosi się do lokalnej zmiennej 'y' zadeklarowanej poniżej.
+    // Jest to przykład Temporal Dead Zone (TDZ)
+
+    // TDZ dla lokalnej zmiennej 'y' trwa od początku bloku do tej linii:
+    let y = 20; // Ta deklaracja tworzy nową, lokalną zmienną 'y'
+    // Ta lokalna zmienna 'y' przesłania globalną zmienną 'y'
+    
+    // Gdyby ta linia była odkomentowana, wyświetliłaby 20:
+    // console.log(y);
+}
+
+// Tutaj znowu mamy dostęp do globalnej zmiennej 'y'
+// console.log(y); // Gdyby ta linia była odkomentowana, wyświetliłaby 10
+
+// Kluczowe pojęcia:
+// 1. Temporal Dead Zone (TDZ) - obszar w kodzie, gdzie zmienna istnieje, 
+//    ale nie można się do niej odwołać przed jej faktyczną deklaracją.
+// 2. Zakres blokowy - zmienna zadeklarowana za pomocą 'let' jest widoczna 
+//    tylko wewnątrz bloku, w którym została zadeklarowana.
+// 3. Przesłanianie zmiennych - zmienna lokalna o tej samej nazwie 
+//    przesłania zmienną z szerszego zakresu.
+    </script>
+</body>
+</html>
