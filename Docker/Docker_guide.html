@@ -180,7 +180,90 @@ CMD ["nginx", "-g", "daemon off;"]</pre>
         </div>
 
         <div class="section">
-            <h2>5. Docker Compose</h2>
+            <h2>5. Tworzenie bezpiecznych obrazów i kontenerów</h2>
+            
+            <h3>1. Minimalne obrazy bazowe</h3>
+            <p>Używaj możliwie najmniejszych obrazów bazowych, takich jak <code>alpine</code>, aby zminimalizować powierzchnię ataku. Mniejsze obrazy mają mniej zależności, co redukuje liczbę potencjalnych luk bezpieczeństwa.</p>
+            <pre>
+# Przykład użycia obrazu Alpine:
+FROM alpine:latest
+RUN apk add --no-cache bash
+            </pre>
+
+            <h3>2. Regularne aktualizacje i łatki</h3>
+            <p>Regularnie aktualizuj obrazy bazowe oraz oprogramowanie w kontenerach, aby zapewnić stosowanie najnowszych poprawek bezpieczeństwa.</p>
+            <pre>
+# Przykład aktualizacji w Dockerfile:
+RUN apt-get update && apt-get upgrade -y
+            </pre>
+
+            <h3>3. Zarządzanie uprawnieniami</h3>
+            <p>Unikaj uruchamiania aplikacji w kontenerze jako użytkownik <code>root</code>. Zamiast tego twórz użytkowników o ograniczonych uprawnieniach.</p>
+            <pre>
+# Dodanie nowego użytkownika w Dockerfile:
+RUN addgroup -S mygroup && adduser -S myuser -G mygroup
+USER myuser
+            </pre>
+
+            <h3>4. Izolacja zasobów</h3>
+            <p>Ogranicz zasoby dostępne dla kontenerów (CPU, pamięć), aby zapobiec atakom polegającym na przeciążeniu zasobów.</p>
+            <pre>
+# Przykład w docker-compose.yml:
+services:
+  app:
+    deploy:
+      resources:
+        limits:
+          cpus: '0.50'
+          memory: 512M
+            </pre>
+
+            <h3>5. Bezpieczne zarządzanie sekretami</h3>
+            <p>Nie zapisuj tajnych danych (np. kluczy API, haseł) w obrazie. Używaj zmiennych środowiskowych lub menedżerów sekretów, takich jak Docker Secrets.</p>
+            <pre>
+# Przykład użycia zmiennych środowiskowych w docker-compose.yml:
+environment:
+  - DATABASE_PASSWORD=${DB_PASSWORD}
+            </pre>
+
+            <h3>6. Bezpieczna konfiguracja sieci</h3>
+            <p>Izoluj kontenery w oddzielnych sieciach i stosuj firewalle, aby ograniczyć nieautoryzowany dostęp. Docker domyślnie tworzy sieć mostu dla kontenerów, ale możesz stworzyć bardziej zaawansowane sieci.</p>
+            <pre>
+# Przykład w docker-compose.yml:
+networks:
+  default:
+    external:
+      name: my_custom_network
+            </pre>
+
+            <h3>7. Skany bezpieczeństwa</h3>
+            <p>Regularnie skanuj swoje obrazy pod kątem podatności na ataki za pomocą narzędzi takich jak <code>Trivy</code> czy <code>Clair</code>.</p>
+            <pre>
+# Przykład skanu za pomocą Trivy:
+trivy image myimage:latest
+            </pre>
+
+            <h3>8. Kontrola dostępu do hosta</h3>
+            <p>Unikaj uruchamiania kontenerów z pełnymi uprawnieniami do systemu hosta, chyba że jest to absolutnie konieczne. Ogranicz dostęp do systemu plików hosta poprzez unikanie opcji <code>--privileged</code>.</p>
+
+            <h3>9. Blokowanie niepotrzebnych uprawnień</h3>
+            <p>Użyj opcji <code>--cap-drop</code> i <code>--security-opt</code>, aby usunąć niepotrzebne uprawnienia z kontenerów.</p>
+            <pre>
+# Przykład uruchomienia kontenera z ograniczonymi uprawnieniami:
+docker run --cap-drop=ALL --security-opt=no-new-privileges myimage
+            </pre>
+
+            <h3>10. Używanie podpisanych obrazów</h3>
+            <p>Używaj podpisanych obrazów Docker i włącz Docker Content Trust (DCT) w celu weryfikacji podpisów obrazów i zapobiegania użyciu nieautoryzowanych obrazów.</p>
+            <pre>
+# Włączenie Docker Content Trust:
+export DOCKER_CONTENT_TRUST=1
+            </pre>
+        </div>
+
+
+        <div class="section">
+            <h2>6. Docker Compose</h2>
             <p>Docker Compose to narzędzie do definiowania i uruchamiania aplikacji składających się z wielu kontenerów. Używa pliku YAML do konfiguracji usług aplikacji.</p>
 
             <h3>Struktura docker-compose.yml</h3>
