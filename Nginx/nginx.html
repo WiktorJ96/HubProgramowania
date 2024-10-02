@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kompleksowy przewodnik po NGINX</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Fira+Code&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #009639;
+            --secondary-color: #007d31;
+            --background-color: #f8f9fa;
+            --text-color: #333;
+            --code-background: #e9ecef;
+            --pre-background: #272822;
+            --pre-color: #f8f8f2;
+            --tip-background: #d4edda;
+            --tip-border: #c3e6cb;
+            --link-color: #007bff;
+            --link-hover-color: #0056b3;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--background-color);
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: white;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+
+        h1, h2, h3 {
+            color: var(--primary-color);
+        }
+
+        h1 {
+            border-bottom: 2px solid var(--primary-color);
+            padding-bottom: 10px;
+        }
+
+        pre, code {
+            font-family: 'Fira Code', monospace;
+            background-color: var(--code-background);
+            border-radius: 4px;
+        }
+
+        pre {
+            padding: 15px;
+            overflow-x: auto;
+        }
+
+        code {
+            padding: 2px 5px;
+        }
+
+        .tip {
+            background-color: var(--tip-background);
+            border: 1px solid var(--tip-border);
+            border-radius: 4px;
+            padding: 15px;
+            margin: 20px 0;
+        }
+
+        .button {
+            display: inline-block;
+            background-color: var(--primary-color);
+            color: white;
+            padding: 10px 20px;
+            margin: 20px 0;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: bold;
+            text-decoration: none;
+            text-align: center;
+            transition: background-color 0.3s ease;
+            cursor: pointer;
+        }
+
+        .button:hover {
+            background-color: var(--secondary-color);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Kompleksowy i szczegółowy przewodnik po NGINX</h1>
+
+        <h2>1. Co to jest NGINX?</h2>
+        <p>NGINX (wymawiane jako "engine-x") to zaawansowany serwer HTTP, reverse proxy, load balancer i serwer proxy dla protokołów pocztowych (IMAP/POP3). Został stworzony przez Igora Sysoeva w 2004 roku, aby rozwiązać problem C10k (obsługa 10,000 jednoczesnych połączeń).</p>
+
+        <h3>Kluczowe cechy NGINX:</h3>
+        <ul>
+            <li><strong>Architektura sterowana zdarzeniami:</strong> W przeciwieństwie do tradycyjnych serwerów opartych na wątkach, NGINX wykorzystuje asynchroniczne, sterowane zdarzeniami podejście, co pozwala na obsługę tysięcy jednoczesnych połączeń na pojedynczym wątku.</li>
+            <li><strong>Modułowa konstrukcja:</strong> Funkcjonalność NGINX jest rozszerzana poprzez moduły, które mogą być ładowane statycznie lub dynamicznie.</li>
+            <li><strong>Niskie zużycie zasobów:</strong> NGINX jest znany z małego śladu pamięciowego i efektywnego wykorzystania CPU.</li>
+            <li><strong>Wysoka wydajność:</strong> Zdolność do obsługi dużej liczby jednoczesnych połączeń z niskim opóźnieniem.</li>
+        </ul>
+
+        <h3>Główne zastosowania NGINX:</h3>
+        <ul>
+            <li><strong>Serwer HTTP/HTTPS:</strong> Serwowanie statycznych i dynamicznych treści web.</li>
+            <li><strong>Reverse proxy:</strong> Przekazywanie żądań do serwerów aplikacji (np. Node.js, PHP-FPM) z opcjami cachowania.</li>
+            <li><strong>Load balancer:</strong> Dystrybucja ruchu między wieloma serwerami backend.</li>
+            <li><strong>API Gateway:</strong> Zarządzanie, monitorowanie i zabezpieczanie dostępu do API.</li>
+            <li><strong>Serwer mediów strumieniowych:</strong> Obsługa przesyłania strumieniowego audio i wideo.</li>
+            <li><strong>Serwer plików statycznych:</strong> Wydajne serwowanie plików statycznych z opcjami cachowania.</li>
+        </ul>
+
+        <h2>2. Architektura NGINX</h2>
+        <p>NGINX działa w oparciu o model master-worker:</p>
+        <ul>
+            <li><strong>Proces master:</strong> Odpowiada za czytanie konfiguracji, zarządzanie procesami worker, obsługę sygnałów.</li>
+            <li><strong>Procesy worker:</strong> Obsługują faktyczne żądania. Liczba procesów worker jest konfigurowalna i zazwyczaj ustawiana na liczbę rdzeni CPU.</li>
+            <li><strong>Cache loader:</strong> Proces uruchamiany okresowo do ładowania danych cache z dysku do pamięci współdzielonej.</li>
+            <li><strong>Cache manager:</strong> Proces okresowo usuwający przestarzałe wpisy z cache'u na dysku i w pamięci współdzielonej.</li>
+        </ul>
+
+        <h2>3. Instalacja i podstawowa konfiguracja NGINX</h2>
+        <h3>Instalacja na różnych systemach:</h3>
+        <h4>Ubuntu/Debian:</h4>
+        <pre><code>sudo apt update
+sudo apt install nginx</code></pre>
+
+        <h4>CentOS/RHEL:</h4>
+        <pre><code>sudo yum install epel-release
+sudo yum install nginx</code></pre>
+
+        <h4>Kompilacja ze źródeł (dla zaawansowanych użytkowników):</h4>
+        <pre><code>wget https://nginx.org/download/nginx-1.21.6.tar.gz
+tar zxf nginx-1.21.6.tar.gz
+cd nginx-1.21.6
+./configure --prefix=/usr/local/nginx --with-http_ssl_module
+make
+sudo make install</code></pre>
+
+        <h3>Struktura katalogów NGINX:</h3>
+        <ul>
+            <li><code>/etc/nginx/</code>: Główny katalog konfiguracyjny</li>
+            <li><code>/etc/nginx/nginx.conf</code>: Główny plik konfiguracyjny</li>
+            <li><code>/etc/nginx/sites-available/</code>: Konfiguracje dostępnych stron</li>
+            <li><code>/etc/nginx/sites-enabled/</code>: Symlinki do aktywnych konfiguracji</li>
+            <li><code>/var/log/nginx/</code>: Logi (access.log, error.log)</li>
+            <li><code>/usr/share/nginx/html/</code>: Domyślny katalog z plikami strony</li>
+        </ul>
+
+        <h3>Podstawowa konfiguracja NGINX:</h3>
+        <pre><code>user www-data;
+worker_processes auto;
+pid /run/nginx.pid;
+
+events {
+    worker_connections 1024;
+}
+
+http {
+    include       /etc/nginx/mime.types;
+    default_type  application/octet-stream;
+
+    log_format  main  '$remote_addr - $remote_user [$time_local] "$request" '
+                      '$status $body_bytes_sent "$http_referer" '
+                      '"$http_user_agent" "$http_x_forwarded_for"';
+
+    access_log  /var/log/nginx/access.log  main;
+    error_log   /var/log/nginx/error.log warn;
+
+    sendfile        on;
+    tcp_nopush      on;
+    tcp_nodelay     on;
+    keepalive_timeout  65;
+    types_hash_max_size 2048;
+
+    include /etc/nginx/conf.d/*.conf;
+    include /etc/nginx/sites-enabled/*;
+}
+</code></pre>
+
+        <h2>4. Kluczowe dyrektywy i konteksty NGINX</h2>
+        <ul>
+            <li><strong>main:</strong> Globalny kontekst dla całej konfiguracji</li>
+            <li><strong>events:</strong> Konfiguracja przetwarzania połączeń</li>
+            <li><strong>http:</strong> Konfiguracja dla protokołu HTTP i HTTPS</li>
+            <li><strong>server:</strong> Definicja wirtualnego hosta</li>
+            <li><strong>location:</strong> Konfiguracja dla określonych ścieżek URL</li>
+            <li><strong>upstream:</strong> Definicja grupy serwerów dla load balancingu</li>
+        </ul>
+
+        <h3>Ważne dyrektywy:</h3>
+        <ul>
+            <li><code>listen</code>: Określa adres IP i port nasłuchiwania</li>
+            <li><code>server_name</code>: Definiuje nazwy domen obsługiwanych przez serwer</li>
+            <li><code>root</code>: Ustawia katalog główny dla plików</li>
+            <li><code>index</code>: Określa domyślne pliki indeksu</li>
+            <li><code>try_files</code>: Próbuje znaleźć plik w określonej kolejności</li>
+            <li><code>proxy_pass</code>: Przekierowuje żądania do innego serwera</li>
+            <li><code>fastcgi_pass</code>: Przekazuje żądania do serwera FastCGI (np. PHP-FPM)</li>
+        </ul>
+
+        <h2>5. NGINX jako reverse proxy</h2>
+        <p>NGINX często używany jest jako reverse proxy, przekazując żądania do serwerów aplikacji. Oto rozszerzona konfiguracja:</p>
+        <pre><code>http {
+    upstream backend {
+        server backend1.example.com weight=3;
+        server backend2.example.com;
+        server unix:/tmp/backend3;
+    }
+
+    server {
+        listen 80;
+        server_name example.com;
+
+        location / {
+            proxy_pass http://backend;
+            proxy_set_header Host $host;
+            proxy_set_header X-Real-IP $remote_addr;
+            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+            proxy_set_header X-Forwarded-Proto $scheme;
+
+            proxy_buffering on;
+            proxy_buffer_size 8k;
+            proxy_buffers 8 8k;
+
+            proxy_connect_timeout 5s;
+            proxy_send_timeout 10s;
+            proxy_read_timeout 10s;
+        }
+    }
+}</code></pre>
+
+        <h2>6. Zaawansowany load balancing z NGINX</h2>
+        <p>NGINX oferuje różne metody load balancingu:</p>
+        <ul>
+            <li><strong>Round Robin:</strong> Domyślna metoda, równomiernie rozdziela żądania</li>
+            <li><strong>Least Connections:</strong> Wysyła żądanie do serwera z najmniejszą liczbą aktywnych połączeń</li>
+            <li><strong>IP Hash:</strong> Używa adresu IP klienta do wybrania serwera</li>
+            <li><strong>Generic Hash:</strong> Używa zdefiniowanego klucza do wyboru serwera</li>
+        </ul>
+
+        <pre><code>http {
+    upstream backend {
+        least_conn;
+        server backend1.example.com;
+        server backend2.example.com;
+        server backend3.example.com;
+    }
+
+    server {
+        listen 80;
+        location / {
+            proxy_pass http://backend;
+            health_check interval=10 fails=3 passes=2;
+        }
+    }
+}</code></pre>
+
+        <h2>7. Optymalizacja wydajności NGINX</h2>
+        <h3>Kompresja Gzip:</h3>
+        <pre><code>gzip on;
+gzip_comp_level 5;
+gzip_min_length 256;
+gzip_proxied any;
+gzip_types text/plain text/css application/json application/javascript text/xml application/xml application/xml+rss text/javascript;</code></pre>
+
+        <h3>Buforowanie:</h3>
+        <pre><code>location ~* \.(jpg|jpeg|png|gif|ico|css|js)$ {
+    expires 30d;
+    add_header Cache-Control "public, no-transform";
+}</code></pre>
+
+        <h3>Limit połączeń:</h3>
+        <pre><code>limit_conn_zone $binary_remote_addr zone=addr:10m;
+limit_conn addr 100;</code></pre>
+
+        <h2>8. Bezpieczeństwo NGINX</h2>
+        <h3>Konfiguracja SSL/TLS:</h3>
+        <pre><code>server {
+    listen 443 ssl http2;
+    server_name example.com;
+
+    ssl_certificate /path/to/certificate.crt;
+    ssl_certificate_key /path/to/certificate.key;
+    ssl_protocols TLSv1.2 TLSv1.3;
+    ssl_prefer_server_ciphers on;
+    ssl_ciphers ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305:DHE-RSA-AES128-GCM-SHA256:DHE-RSA-AES256-GCM-SHA384;
+    
+    # HSTS (nagłówek Strict-Transport-Security)
+    add_header Strict-Transport-Security "max-age=31536000; includeSubDomains" always;
+}</code></pre>
+
+        <h3>Nagłówki bezpieczeństwa:</h3>
+        <pre><code>add_header X-Frame-Options "SAMEORIGIN" always;
+add_header X-XSS-Protection "1; mode=block" always;
+add_header X-Content-Type-Options "nosniff" always;
+add_header Referrer-Policy "no-referrer-when-downgrade" always;
+add_header Content-Security-Policy "default-src 'self' http: https: data: blob: 'unsafe-inline'" always;</code></pre>
+
+        <h2>9. Monitorowanie i debugowanie NGINX</h2>
+        <h3>Konfiguracja logowania:</h3>
+        <pre><code>http {
+    log_format detailed '$remote_addr - $remote_user [$time_local] '
+                        '"$request" $status $body_bytes_sent '
+                        '"$http_referer" "$http_user_agent" '
+                        '$request_time $upstream_response_time';
+
+    access_log /var/log/nginx/access.log detailed;
+    error_log /var/log/nginx/error.log warn;
+}</code></pre>
+
+        <h3>Moduł stub_status:</h3>
+        <pre><code>location /nginx_status {
+    stub_status on;
+    allow 127.0.0.1;
+    deny all;
+}</code></pre>
+
+        <p>Do monitorowania NGINX można również użyć narzędzi takich jak Prometheus z eksporterem NGINX, Grafana dla wizualizacji, czy ELK Stack (Elasticsearch, Logstash, Kibana) do analizy logów.</p>
+
+        <div class="tip">
+            <strong>Wskazówka:</strong> Zawsze testuj konfigurację NGINX przed jej zastosowaniem używając polecenia <code>nginx -t</code>. W przypadku błędów, sprawdź logi błędów w <code>/var/log/nginx/error.log</code>.
+        </div>
+
+        <h2>10. Zaawansowane funkcje NGINX</h2>
+        <h3>Rewriting URL:</h3>
+        <pre><code>location /old-page {
+    rewrite ^/old-page(.*)$ /new-page$1 permanent;
+}</code></pre>
+
+        <h3>Split testing (A/B testing):</h3>
+        <pre><code>split_clients "${remote_addr}${uri}" $variant {
+    50%     "A";
+    *       "B";
+}
+
+server {
+    listen 80;
+    server_name example.com;
+
+    location / {
+        set $dir /var/www/$variant;
+        root $dir;
+    }
+}</code></pre>
+        <p>Ta konfiguracja kieruje 50% ruchu do wersji A, a pozostałe 50% do wersji B, umożliwiając przeprowadzanie testów A/B.</p>
+
+        <h3>Buforowanie odpowiedzi:</h3>
+        <pre><code>proxy_cache_path /path/to/cache levels=1:2 keys_zone=my_cache:10m max_size=10g inactive=60m use_temp_path=off;
+
+server {
+    location / {
+        proxy_cache my_cache;
+        proxy_cache_use_stale error timeout http_500 http_502 http_503 http_504;
+        proxy_cache_valid 200 60m;
+        proxy_cache_valid 404 10m;
+        proxy_cache_key $request_uri;
+    }
+}</code></pre>
+        <p>Ta konfiguracja ustala zaawansowane buforowanie odpowiedzi proxy, co może znacznie przyspieszyć dostarczanie treści.</p>
+
+        <h3>Limity szybkości (rate limiting):</h3>
+        <pre><code>limit_req_zone $binary_remote_addr zone=one:10m rate=1r/s;
+
+server {
+    location /login/ {
+        limit_req zone=one burst=5;
+    }
+}</code></pre>
+        <p>Ta konfiguracja ogranicza liczbę żądań do 1 na sekundę dla każdego adresu IP, z możliwością krótkiego przekroczenia do 5 żądań.</p>
+
+        <h3>Przetwarzanie SSL w NGINX:</h3>
+        <pre><code>http {
+    ssl_session_cache shared:SSL:10m;
+    ssl_session_timeout 10m;
+
+    server {
+        listen 443 ssl http2;
+        server_name example.com;
+
+        ssl_certificate /path/to/certificate.crt;
+        ssl_certificate_key /path/to/certificate.key;
+        ssl_protocols TLSv1.2 TLSv1.3;
+        ssl_ciphers ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305:DHE-RSA-AES128-GCM-SHA256:DHE-RSA-AES256-GCM-SHA384;
+        ssl_prefer_server_ciphers off;
+
+        ssl_stapling on;
+        ssl_stapling_verify on;
+        resolver 8.8.8.8 8.8.4.4 valid=300s;
+        resolver_timeout 5s;
+    }
+}</code></pre>
+        <p>Ta konfiguracja zapewnia zaawansowane ustawienia SSL/TLS, włączając OCSP Stapling i optymalizację sesji SSL.</p>
+
+        <h3>Obsługa WebSocket:</h3>
+        <pre><code>server {
+    location /wsapp/ {
+        proxy_pass http://wsbackend;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "upgrade";
+    }
+}</code></pre>
+        <p>Ta konfiguracja umożliwia przekazywanie połączeń WebSocket do backendu.</p>
+
+        <h3>Uwierzytelnianie podstawowe:</h3>
+        <pre><code>location /secure/ {
+    auth_basic "Restricted Access";
+    auth_basic_user_file /etc/nginx/.htpasswd;
+}</code></pre>
+        <p>Ta konfiguracja dodaje podstawowe uwierzytelnianie HTTP do określonej lokalizacji.</p>
+
+        <h3>Przekierowania warunkowe:</h3>
+        <pre><code>if ($http_user_agent ~* "Googlebot") {
+    rewrite ^/(.*)$ /for-robots/$1 last;
+}</code></pre>
+        <p>Ta konfiguracja przekierowuje ruch z określonego user-agent (w tym przypadku Googlebot) do innej ścieżki.</p>
+
+        <h3>Dynamiczne moduły:</h3>
+        <p>NGINX od wersji 1.9.11 obsługuje dynamiczne moduły. Oto przykład ładowania modułu:</p>
+        <pre><code>load_module modules/ngx_http_geoip2_module.so;</code></pre>
+        <p>Ta linia ładuje moduł GeoIP2, który może być używany do podejmowania decyzji routingowych na podstawie lokalizacji geograficznej.</p>
+
+        <h3>Strumienowanie wideo:</h3>
+        <pre><code>location /hls/ {
+    types {
+        application/vnd.apple.mpegurl m3u8;
+        video/mp2t ts;
+    }
+    root /var/www/video;
+    add_header Cache-Control no-cache;
+}</code></pre>
+        <p>Ta konfiguracja umożliwia strumienowanie wideo w formacie HLS (HTTP Live Streaming).</p>
+
+        <h2>11. Narzędzia i ekosystem NGINX</h2>
+        <ul>
+            <li><strong>NGINX Amplify:</strong> Narzędzie do monitorowania i analizy wydajności NGINX.</li>
+            <li><strong>NGINX Controller:</strong> Centralna platforma do zarządzania i monitorowania wielu instancji NGINX.</li>
+            <li><strong>NGINX Unit:</strong> Dynamiczny serwer aplikacji, który może obsługiwać różne języki programowania.</li>
+            <li><strong>NGINX WAF:</strong> Zapora aplikacji webowych, która chroni przed atakami typu OWASP Top 10.</li>
+        </ul>
+
+        <h2>12. Najlepsze praktyki i porady</h2>
+        <ul>
+            <li>Regularnie aktualizuj NGINX do najnowszej stabilnej wersji.</li>
+            <li>Używaj narzędzi takich jak Nginx Config IO do generowania bezpiecznych konfiguracji.</li>
+            <li>Implementuj monitorowanie i alerty, aby szybko reagować na problemy.</li>
+            <li>Testuj wydajność za pomocą narzędzi takich jak Apache Bench lub Siege.</li>
+            <li>Rozważ użycie NGINX Plus dla zaawansowanych funkcji komercyjnych, jeśli Twoje potrzeby tego wymagają.</li>
+            <li>Zawsze miej plan kopii zapasowej i odzyskiwania dla Twojej konfiguracji NGINX.</li>
+        </ul>
+
+        <div class="tip">
+            <strong>Wskazówka:</strong> NGINX jest potężnym narzędziem z szerokim zakresem zastosowań. Zawsze staraj się zrozumieć, jak każda konfiguracja wpływa na wydajność i bezpieczeństwo Twojej aplikacji.
+        </div>
+
+        <p>To kończy nasz rozszerzony przewodnik po NGINX. Pamiętaj, że NGINX jest nieustannie rozwijany, więc zawsze warto sprawdzać oficjalną dokumentację dla najnowszych funkcji i najlepszych praktyk.</p>
+
+        <a href="./NginxPrzyklad.html" class="button">Zaawansowany przykład konfiguracji NGINX</a>
+    </div>
+</body>
+</html>
