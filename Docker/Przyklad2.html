@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multistage Build - Przyklad</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Fira+Code&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #0056b3;
+            --secondary-color: #004085;
+            --background-color: #f8f9fa;
+            --text-color: #333;
+            --code-background: #e9ecef;
+            --pre-background: #272822;
+            --pre-color: #f8f8f2;
+            --tip-background: #d4edda;
+            --tip-border: #c3e6cb;
+            --link-color: #007bff;
+            --link-hover-color: #0056b3;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--background-color);
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: white;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+
+        h1, h2, h3 {
+            color: var(--primary-color);
+        }
+
+        h1 {
+            border-bottom: 2px solid var(--primary-color);
+            padding-bottom: 10px;
+        }
+
+        pre, code {
+            font-family: 'Fira Code', monospace;
+            background-color: var(--code-background);
+            border-radius: 4px;
+        }
+
+        pre {
+            padding: 15px;
+            overflow-x: auto;
+        }
+
+        code {
+            padding: 2px 5px;
+        }
+
+        .tip {
+            background-color: var(--tip-background);
+            border: 1px solid var(--tip-border);
+            border-radius: 4px;
+            padding: 15px;
+            margin: 20px 0;
+        }
+
+        .file-structure {
+            background-color: var(--code-background);
+            padding: 15px;
+            border-radius: 4px;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Multistage Build – Wyjaśnienie na przykładzie</h1>
+
+        <h2>Dockerfile:</h2>
+        <pre>
+<code>
+# Etap 1: Budowanie aplikacji
+FROM golang:1.16 AS builder
+
+# Ustawienie katalogu roboczego na /app
+WORKDIR /app
+
+# Skopiowanie kodu źródłowego z hosta do katalogu /app w kontenerze
+COPY . .
+
+# Kompilacja aplikacji i stworzenie pliku wykonywalnego myapp w katalogu /app
+RUN go build -o myapp .
+
+# Etap 2: Tworzenie minimalnego obrazu produkcyjnego
+FROM alpine:latest
+
+# Ustawienie katalogu roboczego na /root (w nowym, finalnym obrazie)
+WORKDIR /root
+
+# Skopiowanie pliku myapp z poprzedniego etapu (builder) do /root
+COPY --from=builder /app/myapp .
+
+# Ustawienie polecenia uruchamiania aplikacji
+CMD ["./myapp"]
+</code>
+        </pre>
+
+        <h2>Wyjaśnienie krok po kroku:</h2>
+        
+        <h3>Etap 1: <code>builder</code></h3>
+        <p><strong>Katalog roboczy w pierwszym etapie:</strong> <code>/app</code></p>
+        <p>W pierwszym etapie (<code>builder</code>) ustawiamy katalog roboczy na <code>/app</code> w kontenerze.</p>
+        <p>Do tego katalogu kopiujemy cały kod źródłowy aplikacji z hosta (<code>COPY . .</code>), co oznacza, że wszystkie pliki z bieżącego katalogu hosta (np. kod źródłowy Go) zostaną umieszczone w <code>/app</code> w kontenerze.</p>
+        <p>Następnie kompilujemy kod za pomocą polecenia <code>go build</code>, a wynikowa aplikacja (<code>myapp</code>) zostanie zapisana w katalogu <code>/app</code> (tam, gdzie został ustawiony katalog roboczy).</p>
+
+        <p><strong>Plik wykonywalny (<code>myapp</code>) jest teraz w <code>/app</code>:</strong></p>
+        <p>W tym momencie skompilowana aplikacja znajduje się w katalogu <code>/app/myapp</code>.</p>
+
+        <h3>Etap 2: <code>finalny obraz produkcyjny</code></h3>
+        <p><strong>Nowy obraz – minimalny system operacyjny:</strong> <code>alpine</code></p>
+        <p>W drugim etapie zaczynamy od nowego, minimalnego obrazu (w tym przypadku <code>alpine</code>).</p>
+        <p>Ustawiamy katalog roboczy na <code>/root</code> w nowym obrazie. Od tego momentu wszelkie operacje będą odnosiły się do katalogu <code>/root</code> w tym finalnym obrazie.</p>
+        
+        <h4>Kopiowanie pliku z poprzedniego etapu:</h4>
+        <p>Korzystając z polecenia <code>COPY --from=builder /app/myapp .</code>, kopiujemy plik wykonywalny <code>myapp</code>, który został zbudowany w pierwszym etapie (<code>builder</code>), do nowego obrazu (finalnego etapu).</p>
+        <p>Plik <code>myapp</code> zostanie skopiowany z katalogu <code>/app</code> w obrazie <code>builder</code> do katalogu roboczego <code>/root</code> w nowym obrazie, ponieważ używamy polecenia <code>COPY .</code> (które oznacza, że plik zostanie skopiowany do bieżącego katalogu roboczego).</p>
+
+        <h4>Ostateczna struktura katalogów:</h4>
+        <p>W finalnym obrazie plik wykonywalny <code>myapp</code> znajduje się w katalogu <code>/root</code> (bo tam został skopiowany).</p>
+        <p>Ostateczny obraz produkcyjny zawiera tylko minimalny system operacyjny (Alpine) i plik wykonywalny aplikacji w katalogu <code>/root</code>.</p>
+
+        <h3>Uruchamianie aplikacji:</h3>
+        <p>Gdy kontener zostanie uruchomiony, Docker wykona polecenie startowe <code>CMD ["./myapp"]</code> z katalogu <code>/root</code>, co uruchomi aplikację.</p>
+
+        <h2>Podsumowanie:</h2>
+        <p><strong>Etap 1 (builder):</strong> Aplikacja jest budowana w katalogu <code>/app</code> w obrazie do budowy.</p>
+        <p><strong>Etap 2 (finalny obraz produkcyjny):</strong> Plik <code>myapp</code> jest kopiowany z katalogu <code>/app</code> w obrazie budującym (<code>builder</code>) do katalogu <code>/root</code> w finalnym, produkcyjnym obrazie. W finalnym obrazie produkcyjnym znajduje się minimalny system operacyjny oraz aplikacja w katalogu <code>/root</code>.</p>
+
+        <h3>Kluczowy punkt:</h3>
+        <p>Plik nie jest kopiowany do katalogu <code>/root</code> w pierwszym etapie, tylko w drugim etapie budowy, gdy kopiujemy go z obrazu <code>builder</code> do finalnego obrazu. Katalog <code>/root</code> znajduje się w finalnym obrazie, a katalog <code>/app</code> istnieje tylko w obrazie do budowy.</p>
+    </div>
+</body>
+
+</html>
