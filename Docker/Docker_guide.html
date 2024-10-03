@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Prosty i szczegółowy przewodnik po Dockerze</title>
+    <title>Przewodnik Docker</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Fira+Code&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="docker.css">
     <style>
@@ -21,6 +21,37 @@
             background-color: yellow;
             font-weight: bold;
         }
+        /* Ulepszone style dla elementów pre i code */
+    pre {
+        background-color: #1e1e1e;
+        color: #d4d4d4;
+        border-radius: 4px;
+        padding: 16px;
+        margin: 20px 0;
+        overflow-x: auto;
+        position: relative;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        border: 1px solid #333;
+    }
+    code {
+        font-family: 'Fira Code', 'Consolas', 'Monaco', 'Andale Mono', 'Ubuntu Mono', monospace;
+        font-size: 14px;
+        line-height: 1.5;
+    }
+    pre code {
+        display: block;
+        padding-top: 8px;
+    }
+    /* Dodatkowe style dla wyróżnienia składni */
+    .keyword { color: #569cd6; }
+    .string { color: #ce9178; }
+    .number { color: #b5cea8; }
+    .comment { color: #6a9955; font-style: italic; }
+    .operator { color: #d4d4d4; }
+    .punctuation { color: #d4d4d4; }
+    .class-name { color: #4ec9b0; }
+    .function { color: #dcdcaa; }
+    .variable { color: #9cdcfe; }
     </style>
 </head>
 <body>
@@ -32,386 +63,778 @@
         </div>
 
         <div class="section">
-            <h2>1. Co to jest Docker?</h2>
-            <p>Docker to platforma do tworzenia, uruchamiania i zarządzania kontenerami. Kontenery to lekkie, izolowane środowiska zawierające wszystko, co potrzebne do uruchomienia aplikacji: kod, runtime, narzędzia systemowe, biblioteki i ustawienia.</p>
+    <h2>1. Co to jest Docker?</h2>
+    <p>Docker to platforma do tworzenia, uruchamiania i zarządzania kontenerami. Kontenery to lekkie, izolowane środowiska zawierające wszystko, co potrzebne do uruchomienia aplikacji: kod, runtime, narzędzia systemowe, biblioteki i ustawienia.</p>
 
-            <h3>Główne zalety Dockera:</h3>
-            <ul>
-                <li><strong>Izolacja aplikacji:</strong> Każdy kontener działa niezależnie, co eliminuje konflikty między aplikacjami i ich zależnościami.</li>
-                <li><strong>Łatwe przenoszenie między środowiskami:</strong> Kontenery można łatwo przenosić między różnymi systemami operacyjnymi i chmurami, zachowując spójność działania.</li>
-                <li><strong>Szybkie uruchamianie i zatrzymywanie:</strong> Kontenery startują w ciągu sekund, co przyspiesza procesy developerskie i wdrożeniowe.</li>
-                <li><strong>Efektywne wykorzystanie zasobów:</strong> W przeciwieństwie do tradycyjnych maszyn wirtualnych, kontenery współdzielą jądro systemu operacyjnego, co zmniejsza zużycie zasobów.</li>
-                <li><strong>Skalowalność:</strong> Łatwe skalowanie aplikacji poprzez uruchamianie wielu instancji kontenerów.</li>
-                <li><strong>Kontrola wersji:</strong> Możliwość wersjonowania całych środowisk aplikacji, co ułatwia zarządzanie i rollback.</li>
-            </ul>
+    <h3>Główne zalety Dockera:</h3>
+    <ul>
+        <li><strong>Izolacja aplikacji:</strong> Każdy kontener działa niezależnie, co eliminuje konflikty między aplikacjami i ich zależnościami.</li>
+        <li><strong>Łatwe przenoszenie między środowiskami:</strong> Kontenery można łatwo przenosić między różnymi systemami operacyjnymi i chmurami, zachowując spójność działania.</li>
+        <li><strong>Szybkie uruchamianie i zatrzymywanie:</strong> Kontenery startują w ciągu sekund, co przyspiesza procesy developerskie i wdrożeniowe.</li>
+        <li><strong>Efektywne wykorzystanie zasobów:</strong> W przeciwieństwie do tradycyjnych maszyn wirtualnych, kontenery współdzielą jądro systemu operacyjnego, co zmniejsza zużycie zasobów.</li>
+        <li><strong>Skalowalność:</strong> Łatwe skalowanie aplikacji poprzez uruchamianie wielu instancji kontenerów.</li>
+        <li><strong>Kontrola wersji:</strong> Możliwość wersjonowania całych środowisk aplikacji, co ułatwia zarządzanie i rollback.</li>
+    </ul>
 
-            <h3>Architektura Dockera:</h3>
-            <p>Docker składa się z kilku kluczowych komponentów:</p>
-            <ul>
-                <li><strong>Docker Engine:</strong> Serce systemu Docker, odpowiedzialne za tworzenie i zarządzanie kontenerami.</li>
-                <li><strong>Docker Client:</strong> Interfejs wiersza poleceń do interakcji z Docker Engine.</li>
-                <li><strong>Docker Registry:</strong> Repozytorium do przechowywania i dystrybucji obrazów Docker (np. Docker Hub).</li>
-            </ul>
-        </div>
+    <h3>Architektura Dockera:</h3>
+    <p>Docker składa się z kilku kluczowych komponentów:</p>
+    <ul>
+        <li><strong>Docker Engine:</strong> Serce systemu Docker, odpowiedzialne za tworzenie i zarządzanie kontenerami.</li>
+        <li><strong>Docker Client:</strong> Interfejs wiersza poleceń do interakcji z Docker Engine.</li>
+        <li><strong>Docker Registry:</strong> Repozytorium do przechowywania i dystrybucji obrazów Docker (np. Docker Hub).</li>
+    </ul>
+</div>
 
-        <div class="section">
-            <h2>2. Podstawowe pojęcia</h2>
-            
-            <h3>Obraz (Image)</h3>
-            <p>Obraz Docker to szablon zawierający system operacyjny, aplikację i jej zależności. Obrazy są niemutowalne i budowane warstwowo, co pozwala na efektywne współdzielenie wspólnych warstw między różnymi obrazami.</p>
-            <p>Kluczowe cechy obrazów:</p>
-            <ul>
-                <li>Składają się z wielu warstw, które są cache'owane</li>
-                <li>Mogą być budowane na bazie innych obrazów</li>
-                <li>Definiowane są przez Dockerfile</li>
-                <li>Mogą być przechowywane w rejestrach (np. Docker Hub)</li>
-            </ul>
+<div class="section">
+    <h2>2. Podstawowe pojęcia</h2>
+    
+    <h3>Obraz (Image)</h3>
+    <p>Obraz Docker to szablon zawierający system operacyjny, aplikację i jej zależności. Obrazy są niemutowalne i budowane warstwowo, co pozwala na efektywne współdzielenie wspólnych warstw między różnymi obrazami.</p>
+    <p>Kluczowe cechy obrazów:</p>
+    <ul>
+        <li>Składają się z wielu warstw, które są cache'owane</li>
+        <li>Mogą być budowane na bazie innych obrazów</li>
+        <li>Definiowane są przez Dockerfile</li>
+        <li>Mogą być przechowywane w rejestrach (np. Docker Hub)</li>
+    </ul>
 
-            <h3>Kontener (Container)</h3>
-            <p>Kontener to uruchomiona instancja obrazu. Jest to lekkie, samodzielne środowisko wykonawcze dla aplikacji.</p>
-            <p>Właściwości kontenerów:</p>
-            <ul>
-                <li>Mogą być uruchamiane, zatrzymywane, przenoszone i usuwane</li>
-                <li>Są izolowane od innych kontenerów i systemu hosta</li>
-                <li>Mogą być połączone z innymi kontenerami poprzez sieci Docker</li>
-                <li>Mają własny system plików, który jest kombinacją warstw obrazu i warstwy zapisywalnej</li>
-            </ul>
+    <h3>Kontener (Container)</h3>
+    <p>Kontener to uruchomiona instancja obrazu. Jest to lekkie, samodzielne środowisko wykonawcze dla aplikacji.</p>
+    <p>Właściwości kontenerów:</p>
+    <ul>
+        <li>Mogą być uruchamiane, zatrzymywane, przenoszone i usuwane</li>
+        <li>Są izolowane od innych kontenerów i systemu hosta</li>
+        <li>Mogą być połączone z innymi kontenerami poprzez sieci Docker</li>
+        <li>Mają własny system plików, który jest kombinacją warstw obrazu i warstwy zapisywalnej</li>
+    </ul>
 
-            <h3>Dockerfile</h3>
-            <p>Dockerfile to plik tekstowy zawierający zestaw instrukcji do budowania obrazu Docker. Definiuje środowisko i konfigurację aplikacji.</p>
-            <p>Przykładowe instrukcje Dockerfile:</p>
-            <ul>
-                <li><code>FROM</code>: Określa bazowy obraz</li>
-                <li><code>RUN</code>: Wykonuje polecenia w kontenerze</li>
-                <li><code>COPY</code> / <code>ADD</code>: Kopiuje pliki do kontenera</li>
-                <li><code>ENV</code>: Ustawia zmienne środowiskowe</li>
-                <li><code>EXPOSE</code>: Informuje o portach nasłuchujących kontenera</li>
-                <li><code>CMD</code> / <code>ENTRYPOINT</code>: Definiuje domyślne polecenie do uruchomienia</li>
-            </ul>
+    <h3>Dockerfile</h3>
+    <p>Dockerfile to plik tekstowy zawierający zestaw instrukcji do budowania obrazu Docker. Definiuje środowisko i konfigurację aplikacji.</p>
+    <p>Przykładowe instrukcje Dockerfile:</p>
+    <ul>
+        <li><code class="inline-code"><span class="keyword">FROM</span></code>: Określa bazowy obraz</li>
+        <li><code class="inline-code"><span class="keyword">RUN</span></code>: Wykonuje polecenia w kontenerze</li>
+        <li><code class="inline-code"><span class="keyword">COPY</span></code> / <code class="inline-code"><span class="keyword">ADD</span></code>: Kopiuje pliki do kontenera</li>
+        <li><code class="inline-code"><span class="keyword">ENV</span></code>: Ustawia zmienne środowiskowe</li>
+        <li><code class="inline-code"><span class="keyword">EXPOSE</span></code>: Informuje o portach nasłuchujących kontenera</li>
+        <li><code class="inline-code"><span class="keyword">CMD</span></code> / <code class="inline-code"><span class="keyword">ENTRYPOINT</span></code>: Definiuje domyślne polecenie do uruchomienia</li>
+    </ul>
 
-            <h3>Docker Hub</h3>
-            <p>Docker Hub to publiczne repozytorium obrazów Docker. Umożliwia przechowywanie, pobieranie i udostępnianie obrazów Docker.</p>
-            <p>Funkcje Docker Hub:</p>
-            <ul>
-                <li>Przechowywanie publicznych i prywatnych obrazów</li>
-                <li>Automatyczne budowanie obrazów z kodu źródłowego</li>
-                <li>Integracja z systemami kontroli wersji (np. GitHub, Bitbucket)</li>
-                <li>Zarządzanie zespołami i organizacjami</li>
-            </ul>
-        </div>
-
-        <div class="section">
-            <h2>3. Podstawowe komendy Dockera</h2>
-            
-            <h3>Pobieranie obrazu</h3>
-            <p class="command">docker pull nginx:latest</p>
-            <p>Ta komenda pobiera najnowszą wersję obrazu nginx z Docker Hub. Możesz określić konkretną wersję, zamieniając <code>latest</code> na numer wersji.</p>
-
-            <h3>Uruchamianie kontenera</h3>
-            <p class="command">docker run -d -p 8080:80 --name moj_nginx nginx</p>
-            <p>Ta komenda uruchamia kontener nginx w tle, mapując port 8080 hosta na port 80 kontenera.</p>
-            <p>Opcje:</p>
-            <ul>
-                <li><code>-d</code>: uruchom w trybie detached (w tle)</li>
-                <li><code>-p 8080:80</code>: przekieruj port 8080 hosta na port 80 kontenera</li>
-                <li><code>--name moj_nginx</code>: nadaj nazwę kontenerowi</li>
-            </ul>
-            <p>Dodatkowe przydatne opcje:</p>
-            <ul>
-                <li><code>-v /sciezka/na/hoscie:/sciezka/w/kontenerze</code>: montuje wolumin</li>
-                <li><code>-e ZMIENNA=wartosc</code>: ustawia zmienną środowiskową</li>
-                <li><code>--network nazwa_sieci</code>: podłącza kontener do określonej sieci</li>
-            </ul>
-
-            <h3>Listowanie kontenerów</h3>
-            <p class="command">docker ps</p>
-            <p>Wyświetla listę uruchomionych kontenerów.</p>
-            <p class="command">docker ps -a</p>
-            <p>Wyświetla wszystkie kontenery, włącznie z zatrzymanymi.</p>
-
-            <h3>Zatrzymywanie i usuwanie kontenerów</h3>
-            <pre>docker stop moj_nginx
-docker rm moj_nginx</pre>
-            <p><code>docker stop</code> zatrzymuje działający kontener, a <code>docker rm</code> usuwa go. Możesz użyć ID kontenera zamiast nazwy.</p>
-            <p>Aby zatrzymać i usunąć wszystkie kontenery:</p>
-            <pre>docker stop $(docker ps -aq)
-docker rm $(docker ps -aq)</pre>
-
-            <h3>Wykonywanie poleceń w kontenerze</h3>
-            <p class="command">docker exec -it moj_nginx /bin/bash</p>
-            <p>Ta komenda pozwala na interaktywne wykonywanie poleceń wewnątrz działającego kontenera.</p>
-
-            <h3>Przeglądanie logów kontenera</h3>
-            <p class="command">docker logs moj_nginx</p>
-            <p>Wyświetla logi z określonego kontenera. Dodaj opcję <code>-f</code>, aby śledzić logi na żywo.</p>
-        </div>
+    <h3>Docker Hub</h3>
+    <p>Docker Hub to publiczne repozytorium obrazów Docker. Umożliwia przechowywanie, pobieranie i udostępnianie obrazów Docker.</p>
+    <p>Funkcje Docker Hub:</p>
+    <ul>
+        <li>Przechowywanie publicznych i prywatnych obrazów</li>
+        <li>Automatyczne budowanie obrazów z kodu źródłowego</li>
+        <li>Integracja z systemami kontroli wersji (np. GitHub, Bitbucket)</li>
+        <li>Zarządzanie zespołami i organizacjami</li>
+    </ul>
+</div>
 
         <div class="section">
-            <h2>4. Tworzenie własnych obrazów</h2>
-            
-            <h3>Struktura Dockerfile</h3>
-            <p>Dockerfile to skrypt zawierający instrukcje do budowania obrazu Docker. Oto przykładowy Dockerfile:</p>
-            <pre>
-# Używamy oficjalnego obrazu nginx jako bazy
-FROM nginx:latest
+    <h2>3. Podstawowe komendy Dockera</h2>
+    
+    <h3>Pobieranie obrazu</h3>
+    <p class="command"><code class="inline-code">docker pull nginx:latest</code></p>
+    <p>Ta komenda pobiera najnowszą wersję obrazu nginx z Docker Hub. Możesz określić konkretną wersję, zamieniając <code class="inline-code">latest</code> na numer wersji.</p>
 
-# Kopiujemy pliki naszej aplikacji do kontenera
-COPY ./moja_strona /usr/share/nginx/html
+    <h3>Uruchamianie kontenera</h3>
+    <p class="command"><code class="inline-code">docker run -d -p 8080:80 --name moj_nginx nginx</code></p>
+    <p>Ta komenda uruchamia kontener nginx w tle, mapując port 8080 hosta na port 80 kontenera.</p>
+    <p>Opcje:</p>
+    <ul>
+        <li><code class="inline-code">-d</code>: uruchom w trybie detached (w tle)</li>
+        <li><code class="inline-code">-p 8080:80</code>: przekieruj port 8080 hosta na port 80 kontenera</li>
+        <li><code class="inline-code">--name moj_nginx</code>: nadaj nazwę kontenerowi</li>
+    </ul>
+    <p>Dodatkowe przydatne opcje:</p>
+    <ul>
+        <li><code class="inline-code">-v /sciezka/na/hoscie:/sciezka/w/kontenerze</code>: montuje wolumin</li>
+        <li><code class="inline-code">-e ZMIENNA=wartosc</code>: ustawia zmienną środowiskową</li>
+        <li><code class="inline-code">--network nazwa_sieci</code>: podłącza kontener do określonej sieci</li>
+    </ul>
 
-# Instalujemy dodatkowe narzędzia
-RUN apt-get update && apt-get install -y vim
+    <h3>Listowanie kontenerów</h3>
+    <p class="command"><code class="inline-code">docker ps</code></p>
+    <p>Wyświetla listę uruchomionych kontenerów.</p>
+    <p class="command"><code class="inline-code">docker ps -a</code></p>
+    <p>Wyświetla wszystkie kontenery, włącznie z zatrzymanymi.</p>
 
-# Ustawiamy zmienną środowiskową
-ENV MY_ENV_VAR=wartosc
+    <h3>Zatrzymywanie i usuwanie kontenerów</h3>
+    <pre><code><span class="keyword">docker</span> stop moj_nginx
+<span class="keyword">docker</span> rm moj_nginx</code></pre>
+    <p><code class="inline-code">docker stop</code> zatrzymuje działający kontener, a <code class="inline-code">docker rm</code> usuwa go. Możesz użyć ID kontenera zamiast nazwy.</p>
+    <p>Aby zatrzymać i usunąć wszystkie kontenery:</p>
+    <pre><code><span class="keyword">docker</span> stop $(docker ps -aq)
+<span class="keyword">docker</span> rm $(docker ps -aq)</code></pre>
 
-# Informujemy, że kontener będzie nasłuchiwał na porcie 80
-EXPOSE 80
+    <h3>Wykonywanie poleceń w kontenerze</h3>
+    <p class="command"><code class="inline-code">docker exec -it moj_nginx /bin/bash</code></p>
+    <p>Ta komenda pozwala na interaktywne wykonywanie poleceń wewnątrz działającego kontenera.</p>
 
-# Uruchamiamy nginx w trybie foreground
-CMD ["nginx", "-g", "daemon off;"]</pre>
-            <p>Wyjaśnienie instrukcji:</p>
-            <ul>
-                <li><code>FROM</code>: Określa bazowy obraz</li>
-                <li><code>COPY</code>: Kopiuje pliki z hosta do kontenera</li>
-                <li><code>RUN</code>: Wykonuje polecenia podczas budowania obrazu</li>
-                <li><code>ENV</code>: Ustawia zmienną środowiskową</li>
-                <li><code>EXPOSE</code>: Informuje o portach, na których nasłuchuje aplikacja</li>
-                <li><code>CMD</code>: Definiuje domyślne polecenie do uruchomienia kontenera</li>
-            </ul>
+    <h3>Przeglądanie logów kontenera</h3>
+    <p class="command"><code class="inline-code">docker logs moj_nginx</code></p>
+    <p>Wyświetla logi z określonego kontenera. Dodaj opcję <code class="inline-code">-f</code>, aby śledzić logi na żywo.</p>
+</div>
 
-            <h3>Budowanie obrazu</h3>
-            <p class="command">docker build -t moj_obraz:v1 .</p>
-            <p>Ta komenda buduje obraz na podstawie Dockerfile w bieżącym katalogu. Opcje:</p>
-            <ul>
-                <li><code>-t moj_obraz:v1</code>: nadaje nazwę i tag obrazowi</li>
-                <li><code>.</code>: wskazuje na bieżący katalog jako kontekst budowania</li>
-            </ul>
+<div class="section">
+    <h2>4. Tworzenie własnych obrazów</h2>
+    
+    <h3>Struktura Dockerfile</h3>
+    <p>Dockerfile to skrypt zawierający instrukcje do budowania obrazu Docker. Oto przykładowy Dockerfile:</p>
+    <pre><code><span class="comment"># Używamy oficjalnego obrazu nginx jako bazy</span>
+<span class="keyword">FROM</span> nginx:latest
 
-            <h3>Dobre praktyki tworzenia obrazów</h3>
-            <ul>
-                <li>Używaj oficjalnych obrazów bazowych</li>
-                <li>Minimalizuj liczbę warstw, łącząc polecenia RUN</li>
-                <li>Usuwaj niepotrzebne pliki po instalacji pakietów</li>
-                <li>Używaj .dockerignore do wykluczania niepotrzebnych plików</li>
-                <li>Unikaj instalowania niepotrzebnych pakietów</li>
-                <li>Używaj wieloetapowego budowania dla mniejszych obrazów końcowych</li>
-            </ul>
-        </div>
+<span class="comment"># Kopiujemy pliki naszej aplikacji do kontenera</span>
+<span class="keyword">COPY</span> ./moja_strona /usr/share/nginx/html
+
+<span class="comment"># Instalujemy dodatkowe narzędzia</span>
+<span class="keyword">RUN</span> apt-get update && apt-get install -y vim
+
+<span class="comment"># Ustawiamy zmienną środowiskową</span>
+<span class="keyword">ENV</span> MY_ENV_VAR=wartosc
+
+<span class="comment"># Informujemy, że kontener będzie nasłuchiwał na porcie 80</span>
+<span class="keyword">EXPOSE</span> 80
+
+<span class="comment"># Uruchamiamy nginx w trybie foreground</span>
+<span class="keyword">CMD</span> ["nginx", "-g", "daemon off;"]</code></pre>
+    <p>Wyjaśnienie instrukcji:</p>
+    <ul>
+        <li><code class="inline-code"><span class="keyword">FROM</span></code>: Określa bazowy obraz</li>
+        <li><code class="inline-code"><span class="keyword">COPY</span></code>: Kopiuje pliki z hosta do kontenera</li>
+        <li><code class="inline-code"><span class="keyword">RUN</span></code>: Wykonuje polecenia podczas budowania obrazu</li>
+        <li><code class="inline-code"><span class="keyword">ENV</span></code>: Ustawia zmienną środowiskową</li>
+        <li><code class="inline-code"><span class="keyword">EXPOSE</span></code>: Informuje o portach, na których nasłuchuje aplikacja</li>
+        <li><code class="inline-code"><span class="keyword">CMD</span></code>: Definiuje domyślne polecenie do uruchomienia kontenera</li>
+    </ul>
+
+    <h3>Budowanie obrazu</h3>
+    <p class="command"><code class="inline-code">docker build -t moj_obraz:v1 .</code></p>
+    <p>Ta komenda buduje obraz na podstawie Dockerfile w bieżącym katalogu. Opcje:</p>
+    <ul>
+        <li><code class="inline-code">-t moj_obraz:v1</code>: nadaje nazwę i tag obrazowi</li>
+        <li><code class="inline-code">.</code>: wskazuje na bieżący katalog jako kontekst budowania</li>
+    </ul>
+
+    <h3>Dobre praktyki tworzenia obrazów</h3>
+    <ul>
+        <li>Używaj oficjalnych obrazów bazowych</li>
+        <li>Minimalizuj liczbę warstw, łącząc polecenia RUN</li>
+        <li>Usuwaj niepotrzebne pliki po instalacji pakietów</li>
+        <li>Używaj .dockerignore do wykluczania niepotrzebnych plików</li>
+        <li>Unikaj instalowania niepotrzebnych pakietów</li>
+        <li>Używaj wieloetapowego budowania dla mniejszych obrazów końcowych</li>
+    </ul>
+</div>
 
         <div class="section">
-            <h2>5. Tworzenie bezpiecznych obrazów i kontenerów</h2>
-            
-            <h3>1. Minimalne obrazy bazowe</h3>
-            <p>Używaj możliwie najmniejszych obrazów bazowych, takich jak <code>alpine</code>, aby zminimalizować powierzchnię ataku. Mniejsze obrazy mają mniej zależności, co redukuje liczbę potencjalnych luk bezpieczeństwa.</p>
-            <pre>
-# Przykład użycia obrazu Alpine:
-FROM alpine:latest
-RUN apk add --no-cache bash
-            </pre>
+    <h2>5. Tworzenie bezpiecznych obrazów i kontenerów</h2>
+    
+    <h3>1. Minimalne obrazy bazowe</h3>
+    <p>Używaj możliwie najmniejszych obrazów bazowych, takich jak <code class="inline-code">alpine</code>, aby zminimalizować powierzchnię ataku. Mniejsze obrazy mają mniej zależności, co redukuje liczbę potencjalnych luk bezpieczeństwa.</p>
+    <pre><code><span class="comment"># Przykład użycia obrazu Alpine:</span>
+<span class="keyword">FROM</span> alpine:latest
+<span class="keyword">RUN</span> apk add --no-cache bash</code></pre>
 
-            <h3>2. Regularne aktualizacje i łatki</h3>
-            <p>Regularnie aktualizuj obrazy bazowe oraz oprogramowanie w kontenerach, aby zapewnić stosowanie najnowszych poprawek bezpieczeństwa.</p>
-            <pre>
-# Przykład aktualizacji w Dockerfile:
-RUN apt-get update && apt-get upgrade -y
-            </pre>
+    <h3>2. Regularne aktualizacje i łatki</h3>
+    <p>Regularnie aktualizuj obrazy bazowe oraz oprogramowanie w kontenerach, aby zapewnić stosowanie najnowszych poprawek bezpieczeństwa.</p>
+    <pre><code><span class="comment"># Przykład aktualizacji w Dockerfile:</span>
+<span class="keyword">RUN</span> apt-get update && apt-get upgrade -y</code></pre>
 
-            <h3>3. Zarządzanie uprawnieniami</h3>
-            <p>Unikaj uruchamiania aplikacji w kontenerze jako użytkownik <code>root</code>. Zamiast tego twórz użytkowników o ograniczonych uprawnieniach.</p>
-            <pre>
-# Dodanie nowego użytkownika w Dockerfile:
-RUN addgroup -S mygroup && adduser -S myuser -G mygroup
-USER myuser
-            </pre>
+    <h3>3. Zarządzanie uprawnieniami</h3>
+    <p>Unikaj uruchamiania aplikacji w kontenerze jako użytkownik <code class="inline-code">root</code>. Zamiast tego twórz użytkowników o ograniczonych uprawnieniach.</p>
+    <pre><code><span class="comment"># Dodanie nowego użytkownika w Dockerfile:</span>
+<span class="keyword">RUN</span> addgroup -S mygroup && adduser -S myuser -G mygroup
+<span class="keyword">USER</span> myuser</code></pre>
 
-            <h3>4. Izolacja zasobów</h3>
-            <p>Ogranicz zasoby dostępne dla kontenerów (CPU, pamięć), aby zapobiec atakom polegającym na przeciążeniu zasobów.</p>
-            <pre>
-# Przykład w docker-compose.yml:
-services:
+    <h3>4. Izolacja zasobów</h3>
+    <p>Ogranicz zasoby dostępne dla kontenerów (CPU, pamięć), aby zapobiec atakom polegającym na przeciążeniu zasobów.</p>
+    <pre><code><span class="comment"># Przykład w docker-compose.yml:</span>
+<span class="keyword">services</span>:
   app:
-    deploy:
-      resources:
-        limits:
-          cpus: '0.50'
-          memory: 512M
-            </pre>
+    <span class="keyword">deploy</span>:
+      <span class="keyword">resources</span>:
+        <span class="keyword">limits</span>:
+          <span class="keyword">cpus</span>: <span class="string">'0.50'</span>
+          <span class="keyword">memory</span>: <span class="string">512M</span></code></pre>
 
-            <h3>5. Bezpieczne zarządzanie sekretami</h3>
-            <p>Nie zapisuj tajnych danych (np. kluczy API, haseł) w obrazie. Używaj zmiennych środowiskowych lub menedżerów sekretów, takich jak Docker Secrets.</p>
-            <pre>
-# Przykład użycia zmiennych środowiskowych w docker-compose.yml:
-environment:
-  - DATABASE_PASSWORD=${DB_PASSWORD}
-            </pre>
+    <h3>5. Bezpieczne zarządzanie sekretami</h3>
+    <p>Nie zapisuj tajnych danych (np. kluczy API, haseł) w obrazie. Używaj zmiennych środowiskowych lub menedżerów sekretów, takich jak Docker Secrets.</p>
+    <pre><code><span class="comment"># Przykład użycia zmiennych środowiskowych w docker-compose.yml:</span>
+<span class="keyword">environment</span>:
+  - <span class="variable">DATABASE_PASSWORD</span>=${DB_PASSWORD}</code></pre>
 
-            <h3>6. Bezpieczna konfiguracja sieci</h3>
-            <p>Izoluj kontenery w oddzielnych sieciach i stosuj firewalle, aby ograniczyć nieautoryzowany dostęp. Docker domyślnie tworzy sieć mostu dla kontenerów, ale możesz stworzyć bardziej zaawansowane sieci.</p>
-            <pre>
-# Przykład w docker-compose.yml:
-networks:
+    <h3>6. Bezpieczna konfiguracja sieci</h3>
+    <p>Izoluj kontenery w oddzielnych sieciach i stosuj firewalle, aby ograniczyć nieautoryzowany dostęp. Docker domyślnie tworzy sieć mostu dla kontenerów, ale możesz stworzyć bardziej zaawansowane sieci.</p>
+    <pre><code><span class="comment"># Przykład w docker-compose.yml:</span>
+<span class="keyword">networks</span>:
   default:
-    external:
-      name: my_custom_network
-            </pre>
+    <span class="keyword">external</span>:
+      <span class="keyword">name</span>: my_custom_network</code></pre>
 
-            <h3>7. Skany bezpieczeństwa</h3>
-            <p>Regularnie skanuj swoje obrazy pod kątem podatności na ataki za pomocą narzędzi takich jak <code>Trivy</code> czy <code>Clair</code>.</p>
-            <pre>
-# Przykład skanu za pomocą Trivy:
-trivy image myimage:latest
-            </pre>
+    <h3>7. Skany bezpieczeństwa</h3>
+    <p>Regularnie skanuj swoje obrazy pod kątem podatności na ataki za pomocą narzędzi takich jak <code class="inline-code">Trivy</code> czy <code class="inline-code">Clair</code>.</p>
+    <pre><code><span class="comment"># Przykład skanu za pomocą Trivy:</span>
+trivy image myimage:latest</code></pre>
 
-            <h3>8. Kontrola dostępu do hosta</h3>
-            <p>Unikaj uruchamiania kontenerów z pełnymi uprawnieniami do systemu hosta, chyba że jest to absolutnie konieczne. Ogranicz dostęp do systemu plików hosta poprzez unikanie opcji <code>--privileged</code>.</p>
+    <h3>8. Kontrola dostępu do hosta</h3>
+    <p>Unikaj uruchamiania kontenerów z pełnymi uprawnieniami do systemu hosta, chyba że jest to absolutnie konieczne. Ogranicz dostęp do systemu plików hosta poprzez unikanie opcji <code class="inline-code">--privileged</code>.</p>
 
-            <h3>9. Blokowanie niepotrzebnych uprawnień</h3>
-            <p>Użyj opcji <code>--cap-drop</code> i <code>--security-opt</code>, aby usunąć niepotrzebne uprawnienia z kontenerów.</p>
-            <pre>
-# Przykład uruchomienia kontenera z ograniczonymi uprawnieniami:
-docker run --cap-drop=ALL --security-opt=no-new-privileges myimage
-            </pre>
+    <h3>9. Blokowanie niepotrzebnych uprawnień</h3>
+    <p>Użyj opcji <code class="inline-code">--cap-drop</code> i <code class="inline-code">--security-opt</code>, aby usunąć niepotrzebne uprawnienia z kontenerów.</p>
+    <pre><code><span class="comment"># Przykład uruchomienia kontenera z ograniczonymi uprawnieniami:</span>
+docker run --cap-drop=ALL --security-opt=no-new-privileges myimage</code></pre>
 
-            <h3>10. Używanie podpisanych obrazów</h3>
-            <p>Używaj podpisanych obrazów Docker i włącz Docker Content Trust (DCT) w celu weryfikacji podpisów obrazów i zapobiegania użyciu nieautoryzowanych obrazów.</p>
-            <pre>
-# Włączenie Docker Content Trust:
-export DOCKER_CONTENT_TRUST=1
-            </pre>
-        </div>
+    <h3>10. Używanie podpisanych obrazów</h3>
+    <p>Używaj podpisanych obrazów Docker i włącz Docker Content Trust (DCT) w celu weryfikacji podpisów obrazów i zapobiegania użyciu nieautoryzowanych obrazów.</p>
+    <pre><code><span class="comment"># Włączenie Docker Content Trust:</span>
+<span class="keyword">export</span> <span class="variable">DOCKER_CONTENT_TRUST</span>=1</code></pre>
+</div>
 
+<div class="section">
+    <h2>6. Docker Compose</h2>
+    <p>Docker Compose to narzędzie do definiowania i uruchamiania aplikacji składających się z wielu kontenerów. Używa pliku YAML do konfiguracji usług aplikacji.</p>
 
-        <div class="section">
-            <h2>6. Docker Compose</h2>
-            <p>Docker Compose to narzędzie do definiowania i uruchamiania aplikacji składających się z wielu kontenerów. Używa pliku YAML do konfiguracji usług aplikacji.</p>
-
-            <h3>Struktura docker-compose.yml</h3>
-            <pre>
-version: '3'
-services:
-  web:
-    build: .
-    ports:
-      - "8080:80"
-    volumes:
-      - ./app:/usr/share/nginx/html
-    depends_on:
+    <h3>Struktura docker-compose.yml</h3>
+    <pre><code><span class="keyword">version</span>: <span class="string">'3'</span>
+<span class="keyword">services</span>:
+  <span class="function">web</span>:
+    <span class="keyword">build</span>: <span class="punctuation">.</span>
+    <span class="keyword">ports</span>:
+      - <span class="string">"8080:80"</span>
+    <span class="keyword">volumes</span>:
+      - <span class="string">./app:/usr/share/nginx/html</span>
+    <span class="keyword">depends_on</span>:
       - db
-  db:
-    image: mysql:5.7
-    environment:
-      MYSQL_ROOT_PASSWORD: example
-    volumes:
-      - db_data:/var/lib/mysql
+  <span class="function">db</span>:
+    <span class="keyword">image</span>: <span class="string">mysql:5.7</span>
+    <span class="keyword">environment</span>:
+      <span class="variable">MYSQL_ROOT_PASSWORD</span>: <span class="string">example</span>
+    <span class="keyword">volumes</span>:
+      - <span class="string">db_data:/var/lib/mysql</span>
 
-volumes:
-  db_data:</pre>
-            <p>Wyjaśnienie kluczowych elementów:</p>
-            <ul>
-                <li><code>version</code>: Wersja składni Docker Compose</li>
-                <li><code>services</code>: Definiuje usługi (kontenery) aplikacji</li>
-                <li><code>build</code>: Wskazuje na katalog z Dockerfile</li>
-                <li><code>image</code>: Określa gotowy obraz do użycia</li>
-                <li><code>ports</code>: Mapuje porty między hostem a kontenerem</li>
-                <li><code>volumes</code>: Definiuje wolumeny dla trwałego przechowywania danych</li>
-                <li><code>depends_on</code>: Określa zależności między usługami</li>
-                <li><code>environment</code>: Ustawia zmienne środowiskowe</li>
-            </ul>
+<span class="keyword">volumes</span>:
+  <span class="function">db_data</span>:</code></pre>
+    <p>Wyjaśnienie kluczowych elementów:</p>
+    <ul>
+        <li><code class="inline-code"><span class="keyword">version</span></code>: Wersja składni Docker Compose</li>
+        <li><code class="inline-code"><span class="keyword">services</span></code>: Definiuje usługi (kontenery) aplikacji</li>
+        <li><code class="inline-code"><span class="keyword">build</span></code>: Wskazuje na katalog z Dockerfile</li>
+        <li><code class="inline-code"><span class="keyword">image</span></code>: Określa gotowy obraz do użycia</li>
+        <li><code class="inline-code"><span class="keyword">ports</span></code>: Mapuje porty między hostem a kontenerem</li>
+        <li><code class="inline-code"><span class="keyword">volumes</span></code>: Definiuje wolumeny dla trwałego przechowywania danych</li>
+        <li><code class="inline-code"><span class="keyword">depends_on</span></code>: Określa zależności między usługami</li>
+        <li><code class="inline-code"><span class="keyword">environment</span></code>: Ustawia zmienne środowiskowe</li>
+    </ul>
+</div>
 
-            <h3>Podstawowe komendy Docker Compose</h3>
-            <p class="command">docker-compose up -d</p>
-            <p>Uruchamia wszystkie usługi zdefiniowane w docker-compose.yml w trybie detached (w tle). Jeśli obrazy nie istnieją, zostaną zbudowane.</p>
+<div class="section">
+    <h3>Podstawowe komendy Docker Compose</h3>
+    <p class="command"><code class="inline-code">docker-compose up -d</code></p>
+    <p>Uruchamia wszystkie usługi zdefiniowane w docker-compose.yml w trybie detached (w tle). Jeśli obrazy nie istnieją, zostaną zbudowane.</p>
 
-            <p class="command">docker-compose down</p>
-            <p>Zatrzymuje i usuwa wszystkie kontenery, sieci i wolumeny utworzone przez <code>docker-compose up</code>.</p>
+    <p class="command"><code class="inline-code">docker-compose down</code></p>
+    <p>Zatrzymuje i usuwa wszystkie kontenery, sieci i wolumeny utworzone przez <code class="inline-code">docker-compose up</code>.</p>
 
-            <p class="command">docker-compose ps</p>
-            <p>Wyświetla status kontenerów zdefiniowanych w docker-compose.yml.</p>
+    <p class="command"><code class="inline-code">docker-compose ps</code></p>
+    <p>Wyświetla status kontenerów zdefiniowanych w docker-compose.yml.</p>
 
-            <p class="command">docker-compose logs</p>
-            <p>Wyświetla logi ze wszystkich usług. Można dodać nazwę usługi, aby zobaczyć logi tylko dla niej.</p>
+    <p class="command"><code class="inline-code">docker-compose logs</code></p>
+    <p>Wyświetla logi ze wszystkich usług. Można dodać nazwę usługi, aby zobaczyć logi tylko dla niej.</p>
 
-            <p class="command">docker-compose build</p>
-            <p>Buduje lub przebudowuje usługi zdefiniowane w docker-compose.yml.</p>
+    <p class="command"><code class="inline-code">docker-compose build</code></p>
+    <p>Buduje lub przebudowuje usługi zdefiniowane w docker-compose.yml.</p>
 
-            <p class="command">docker-compose exec service_name command</p>
-            <p>Wykonuje polecenie w działającym kontenerze. Na przykład: <code>docker-compose exec web bash</code></p>
+    <p class="command"><code class="inline-code">docker-compose exec service_name command</code></p>
+    <p>Wykonuje polecenie w działającym kontenerze. Na przykład: <code class="inline-code">docker-compose exec web bash</code></p>
 
-            <h3>Zaawansowane funkcje Docker Compose</h3>
-            <ul>
-                <li><strong>Skalowanie usług:</strong> <code>docker-compose up -d --scale web=3</code> uruchomi 3 instancje usługi "web".</li>
-                <li><strong>Przesłanianie zmiennych środowiskowych:</strong> Można użyć pliku <code>.env</code> do przechowywania zmiennych środowiskowych.</li>
-                <li><strong>Rozszerzanie konfiguracji:</strong> Można użyć wielu plików docker-compose, np. <code>docker-compose.yml</code> i <code>docker-compose.override.yml</code>.</li>
-                <li><strong>Healthchecks:</strong> Można zdefiniować testy sprawdzające zdrowie kontenera.</li>
-            </ul>
+    <h3>Zaawansowane funkcje Docker Compose</h3>
+    <ul>
+        <li><strong>Skalowanie usług:</strong> <code class="inline-code">docker-compose up -d --scale web=3</code> uruchomi 3 instancje usługi "web".</li>
+        <li><strong>Przesłanianie zmiennych środowiskowych:</strong> Można użyć pliku <code class="inline-code">.env</code> do przechowywania zmiennych środowiskowych.</li>
+        <li><strong>Rozszerzanie konfiguracji:</strong> Można użyć wielu plików docker-compose, np. <code class="inline-code">docker-compose.yml</code> i <code class="inline-code">docker-compose.override.yml</code>.</li>
+        <li><strong>Healthchecks:</strong> Można zdefiniować testy sprawdzające zdrowie kontenera.</li>
+    </ul>
 
-            <h3>Przykład rozbudowanego docker-compose.yml</h3>
-            <pre>
-version: '3.8'
-services:
-  web:
-    build: 
-      context: ./frontend
-      dockerfile: Dockerfile.dev
-    ports:
-      - "3000:3000"
-    volumes:
-      - ./frontend:/app
-      - /app/node_modules
-    environment:
-      - REACT_APP_API_URL=http://api:5000
-    depends_on:
+    <h3>Przykład rozbudowanego docker-compose.yml</h3>
+    <pre><code><span class="keyword">version</span>: <span class="string">'3.8'</span>
+<span class="keyword">services</span>:
+  <span class="function">web</span>:
+    <span class="keyword">build</span>: 
+      <span class="keyword">context</span>: <span class="string">./frontend</span>
+      <span class="keyword">dockerfile</span>: <span class="string">Dockerfile.dev</span>
+    <span class="keyword">ports</span>:
+      - <span class="string">"3000:3000"</span>
+    <span class="keyword">volumes</span>:
+      - <span class="string">./frontend:/app</span>
+      - <span class="string">/app/node_modules</span>
+    <span class="keyword">environment</span>:
+      - <span class="variable">REACT_APP_API_URL</span>=<span class="string">http://api:5000</span>
+    <span class="keyword">depends_on</span>:
       - api
   
-  api:
-    build: ./backend
-    ports:
-      - "5000:5000"
-    environment:
-      - DATABASE_URL=postgres://user:password@db:5432/mydb
-    depends_on:
+  <span class="function">api</span>:
+    <span class="keyword">build</span>: <span class="string">./backend</span>
+    <span class="keyword">ports</span>:
+      - <span class="string">"5000:5000"</span>
+    <span class="keyword">environment</span>:
+      - <span class="variable">DATABASE_URL</span>=<span class="string">postgres://user:password@db:5432/mydb</span>
+    <span class="keyword">depends_on</span>:
       db:
-        condition: service_healthy
+        <span class="keyword">condition</span>: <span class="string">service_healthy</span>
   
+  <span class="function">db</span>:
+    <span class="keyword">image</span>: <span class="string">postgres:13</span>
+    <span class="keyword">volumes</span>:
+      - <span class="string">postgres_data:/var/lib/postgresql/data</span>
+    <span class="keyword">environment</span>:
+      - <span class="variable">POSTGRES_USER</span>=<span class="string">user</span>
+      - <span class="variable">POSTGRES_PASSWORD</span>=<span class="string">password</span>
+      - <span class="variable">POSTGRES_DB</span>=<span class="string">mydb</span>
+    <span class="keyword">healthcheck</span>:
+      <span class="keyword">test</span>: [<span class="string">"CMD-SHELL"</span>, <span class="string">"pg_isready -U user -d mydb"</span>]
+      <span class="keyword">interval</span>: <span class="number">10s</span>
+      <span class="keyword">timeout</span>: <span class="number">5s</span>
+      <span class="keyword">retries</span>: <span class="number">5</span>
+
+<span class="keyword">volumes</span>:
+  <span class="function">postgres_data</span>:
+
+<span class="keyword">networks</span>:
+  <span class="keyword">default</span>:
+    <span class="keyword">name</span>: <span class="string">myapp_network</span></code></pre>
+
+    <p>Ten przykład pokazuje bardziej zaawansowaną konfigurację z frontendem, backendem i bazą danych, wraz z healthchecks i niestandardową siecią.</p>
+
+    <h3>Dobre praktyki używania Docker Compose</h3>
+    <ul>
+        <li>Używaj zmiennych środowiskowych do konfiguracji wrażliwych danych</li>
+        <li>Definiuj wolumeny dla trwałego przechowywania danych</li>
+        <li>Używaj zależności (<code class="inline-code">depends_on</code>) do określania kolejności uruchamiania usług</li>
+        <li>Wykorzystuj healthchecks do zapewnienia, że usługi są gotowe przed uruchomieniem zależnych kontenerów</li>
+        <li>Rozważ użycie osobnych plików docker-compose dla różnych środowisk (dev, prod)</li>
+        <li>Używaj wersji obrazów, zamiast tagu <code class="inline-code">latest</code>, dla lepszej przewidywalności</li>
+    </ul>
+</div>
+
+<div class="section">
+    <h2>7. Dockerfile - Zaawansowane zastosowania</h2>
+    
+    <h3>Efektywne zarządzanie warstwami</h3>
+    <p>Efektywne zarządzanie warstwami w Dockerfile jest kluczowe dla tworzenia mniejszych i bardziej wydajnych obrazów. Oto kilka technik:</p>
+    <ol>
+        <li>Łączenie poleceń RUN:
+            <pre><code><span class="keyword">RUN</span> apt-get update && \
+    apt-get install -y package1 package2 && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*</code></pre>
+        </li>
+        <li>Użycie .dockerignore:
+            <p>Stwórz plik <code class="inline-code">.dockerignore</code> w katalogu z Dockerfile, aby wykluczyć niepotrzebne pliki:</p>
+            <pre><code>node_modules
+npm-debug.log
+*.tmp</code></pre>
+        </li>
+        <li>Uporządkowanie instrukcji od najmniej do najbardziej zmieniających się:
+            <pre><code><span class="keyword">FROM</span> node:14
+<span class="keyword">WORKDIR</span> /app
+<span class="keyword">COPY</span> package.json package-lock.json ./
+<span class="keyword">RUN</span> npm install
+<span class="keyword">COPY</span> . .
+<span class="keyword">CMD</span> [<span class="string">"npm"</span>, <span class="string">"start"</span>]</code></pre>
+        </li>
+    </ol>
+</div>
+
+            <div class="section">
+            <h2>7. Dockerfile - Zaawansowane zastosowania</h2>
+            
+            <h3>Efektywne zarządzanie warstwami</h3>
+            <p>Efektywne zarządzanie warstwami w Dockerfile jest kluczowe dla tworzenia mniejszych i bardziej wydajnych obrazów. Oto kilka technik:</p>
+            <ol>
+                <li>Łączenie poleceń RUN:
+                    <pre><code><span class="keyword">RUN</span> apt-get update && \
+    apt-get install -y package1 package2 && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*</code></pre>
+                </li>
+                <li>Użycie .dockerignore:
+                    <p>Stwórz plik <code>.dockerignore</code> w katalogu z Dockerfile, aby wykluczyć niepotrzebne pliki:</p>
+                    <pre><code>node_modules
+npm-debug.log
+*.tmp</code></pre>
+                </li>
+                <li>Uporządkowanie instrukcji od najmniej do najbardziej zmieniających się:
+                    <pre><code><span class="keyword">FROM</span> node:14
+<span class="keyword">WORKDIR</span> /app
+<span class="keyword">COPY</span> package.json package-lock.json ./
+<span class="keyword">RUN</span> npm install
+<span class="keyword">COPY</span> . .
+<span class="keyword">CMD</span> ["npm", "start"]</code></pre>
+                </li>
+            </ol>
+
+            <h3>Wieloetapowe budowanie (multi-stage builds)</h3>
+            <p>Wieloetapowe budowanie pozwala na znaczne zmniejszenie rozmiaru końcowego obrazu:</p>
+            <pre><code><span class="comment"># Etap budowania</span>
+<span class="keyword">FROM</span> node:14 <span class="keyword">AS</span> builder
+<span class="keyword">WORKDIR</span> /app
+<span class="keyword">COPY</span> package.json package-lock.json ./
+<span class="keyword">RUN</span> npm install
+<span class="keyword">COPY</span> . .
+<span class="keyword">RUN</span> npm run build
+
+<span class="comment"># Etap produkcyjny</span>
+<span class="keyword">FROM</span> nginx:alpine
+<span class="keyword">COPY</span> --from=builder /app/build /usr/share/nginx/html
+<span class="keyword">EXPOSE</span> 80
+<span class="keyword">CMD</span> ["nginx", "-g", "daemon off;"]</code></pre>
+            <p>To podejście jest szczególnie przydatne w przypadku aplikacji, które wymagają narzędzi do budowania, ale nie są potrzebne w środowisku produkcyjnym.</p>
+
+            <h3>Zaawansowane konfiguracje zmiennych środowiskowych</h3>
+            <ol>
+                <li>Używanie ARG do parametryzacji budowania:
+                    <pre><code><span class="keyword">ARG</span> NODE_VERSION=14
+<span class="keyword">FROM</span> node:${NODE_VERSION}</code></pre>
+                </li>
+                <li>Ustawianie domyślnych wartości dla ENV:
+                    <pre><code><span class="keyword">ENV</span> NODE_ENV=production
+<span class="keyword">ENV</span> PORT=3000</code></pre>
+                </li>
+                <li>Używanie zmiennych środowiskowych w czasie budowania:
+                    <pre><code><span class="keyword">ARG</span> BUILD_DATE
+<span class="keyword">ENV</span> BUILD_DATE=${BUILD_DATE}</code></pre>
+                </li>
+            </ol>
+        </div>
+
+<div class="section">
+    <h2>8. Najlepsze praktyki Docker Compose</h2>
+    
+    <h3>Organizacja plików konfiguracyjnych w większych projektach</h3>
+    <p>Dla większych projektów warto rozważyć następującą strukturę:</p>
+    <pre><code>project/
+├── docker-compose.yml
+├── docker-compose.override.yml
+├── docker-compose.prod.yml
+├── .env
+├── .env.prod
+└── services/
+    ├── app/
+    │   └── Dockerfile
+    ├── db/
+    │   └── init.sql
+    └── nginx/
+        └── nginx.conf</code></pre>
+    <ul>
+        <li><code class="inline-code">docker-compose.yml</code>: Podstawowa konfiguracja</li>
+        <li><code class="inline-code">docker-compose.override.yml</code>: Konfiguracja dla środowiska deweloperskiego</li>
+        <li><code class="inline-code">docker-compose.prod.yml</code>: Konfiguracja produkcyjna</li>
+        <li><code class="inline-code">.env</code>: Zmienne środowiskowe dla deweloperskiego środowiska</li>
+        <li><code class="inline-code">.env.prod</code>: Zmienne środowiskowe dla produkcji</li>
+    </ul>
+
+    <h3>Zastosowanie plików .env dla różnych środowisk</h3>
+    <ol>
+        <li>Stwórz plik <code class="inline-code">.env</code> dla każdego środowiska:
+            <pre><code><span class="comment"># .env.dev</span>
+<span class="variable">DATABASE_URL</span>=postgres://user:password@db:5432/devdb
+<span class="variable">DEBUG</span>=true
+
+<span class="comment"># .env.prod</span>
+<span class="variable">DATABASE_URL</span>=postgres://user:password@db:5432/proddb
+<span class="variable">DEBUG</span>=false</code></pre>
+        </li>
+        <li>W <code class="inline-code">docker-compose.yml</code> używaj zmiennych:
+            <pre><code><span class="keyword">version</span>: <span class="string">'3'</span>
+<span class="keyword">services</span>:
+  app:
+    <span class="keyword">environment</span>:
+      - <span class="variable">DATABASE_URL</span>=${DATABASE_URL}
+      - <span class="variable">DEBUG</span>=${DEBUG}</code></pre>
+        </li>
+        <li>Uruchamiaj z odpowiednim plikiem .env:
+            <pre><code>docker-compose --env-file .env.prod up -d</code></pre>
+        </li>
+    </ol>
+
+    <h3>Mechanizm healthchecks w Docker Compose</h3>
+    <p>Healthchecks pozwalają na monitorowanie stanu usług:</p>
+    <pre><code><span class="keyword">version</span>: <span class="string">'3'</span>
+<span class="keyword">services</span>:
+  web:
+    <span class="keyword">image</span>: nginx
+    <span class="keyword">healthcheck</span>:
+      <span class="keyword">test</span>: [<span class="string">"CMD"</span>, <span class="string">"curl"</span>, <span class="string">"-f"</span>, <span class="string">"http://localhost"</span>]
+      <span class="keyword">interval</span>: 1m30s
+      <span class="keyword">timeout</span>: 10s
+      <span class="keyword">retries</span>: 3
+      <span class="keyword">start_period</span>: 40s</code></pre>
+    <p>Możesz użyć <code class="inline-code">depends_on</code> z healthchecks:</p>
+    <pre><code><span class="keyword">services</span>:
+  web:
+    <span class="keyword">depends_on</span>:
+      db:
+        <span class="keyword">condition</span>: service_healthy
   db:
-    image: postgres:13
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
-    environment:
-      - POSTGRES_USER=user
-      - POSTGRES_PASSWORD=password
-      - POSTGRES_DB=mydb
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U user -d mydb"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
+    <span class="keyword">healthcheck</span>:
+      <span class="keyword">test</span>: [<span class="string">"CMD-SHELL"</span>, <span class="string">"pg_isready -U postgres"</span>]</code></pre>
+</div>
 
-volumes:
-  postgres_data:
+        <!-- Nowa sekcja: Docker Networks - Zaawansowane konfiguracje -->
+        <div class="section">
+    <h2>9. Docker Networks - Zaawansowane konfiguracje</h2>
+    
+    <h3>Tworzenie niestandardowych sieci overlay</h3>
+    <p>Dla Docker Swarm:</p>
+    <pre><code>docker network create --driver overlay --attachable my-overlay-network</code></pre>
+    <p>W docker-compose.yml:</p>
+    <pre><code><span class="keyword">networks</span>:
+  my-overlay-network:
+    <span class="keyword">external</span>: true</code></pre>
 
-networks:
-  default:
-    name: myapp_network</pre>
+    <h3>Zarządzanie sieciami w Docker Swarm</h3>
+    <ol>
+        <li>Tworzenie sieci dla usług Swarm:
+            <pre><code>docker network create --driver overlay --attachable my-swarm-network</code></pre>
+        </li>
+        <li>Używanie sieci w stack deploy:
+            <pre><code><span class="keyword">version</span>: <span class="string">'3'</span>
+<span class="keyword">services</span>:
+  web:
+    <span class="keyword">image</span>: nginx
+    <span class="keyword">networks</span>:
+      - my-swarm-network
+<span class="keyword">networks</span>:
+  my-swarm-network:
+    <span class="keyword">external</span>: true</code></pre>
+        </li>
+    </ol>
 
-            <p>Ten przykład pokazuje bardziej zaawansowaną konfigurację z frontendem, backendem i bazą danych, wraz z healthchecks i niestandardową siecią.</p>
+    <h3>Przykłady zabezpieczeń sieci</h3>
+    <ol>
+        <li>Izolacja między kontenerami:
+            <pre><code><span class="keyword">version</span>: <span class="string">'3'</span>
+<span class="keyword">services</span>:
+  app:
+    <span class="keyword">networks</span>:
+      - frontend
+  db:
+    <span class="keyword">networks</span>:
+      - backend
+<span class="keyword">networks</span>:
+  frontend:
+  backend:</code></pre>
+        </li>
+        <li>Używanie wewnętrznych sieci:
+            <pre><code><span class="keyword">networks</span>:
+  internal:
+    <span class="keyword">internal</span>: true</code></pre>
+        </li>
+    </ol>
+</div>
 
-            <h3>Dobre praktyki używania Docker Compose</h3>
-            <ul>
-                <li>Używaj zmiennych środowiskowych do konfiguracji wrażliwych danych</li>
-                <li>Definiuj wolumeny dla trwałego przechowywania danych</li>
-                <li>Używaj zależności (<code>depends_on</code>) do określania kolejności uruchamiania usług</li>
-                <li>Wykorzystuj healthchecks do zapewnienia, że usługi są gotowe przed uruchomieniem zależnych kontenerów</li>
-                <li>Rozważ użycie osobnych plików docker-compose dla różnych środowisk (dev, prod)</li>
-                <li>Używaj wersji obrazów, zamiast tagu <code>latest</code>, dla lepszej przewidywalności</li>
-            </ul>
+<div class="section">
+    <h2>10. Bezpieczeństwo kontenerów</h2>
+    
+    <h3>Użycie AppArmor</h3>
+    <ol>
+        <li>Stwórz profil AppArmor:
+            <pre><code><span class="comment">#include &lt;tunables/global&gt;</span>
+
+<span class="keyword">profile</span> docker-nginx flags=(attach_disconnected,mediate_deleted) {
+  <span class="comment">#include &lt;abstractions/base&gt;</span>
+  
+  network inet tcp,
+  network inet udp,
+  network inet icmp,
+
+  deny mount,
+  deny /sys/** rwklx,
+  deny /proc/** rwklx,
+
+  /var/run/nginx.pid rw,
+  /usr/sbin/nginx ix,
+  /etc/nginx/** r,
+  /var/log/nginx/* w,
+}</code></pre>
+        </li>
+        <li>Załaduj profil:
+            <pre><code>sudo apparmor_parser -r -W /etc/apparmor.d/docker-nginx</code></pre>
+        </li>
+        <li>Uruchom kontener z profilem:
+            <pre><code>docker run --security-opt apparmor=docker-nginx nginx</code></pre>
+        </li>
+    </ol>
+
+    <h3>Zabezpieczanie komunikacji między kontenerami</h3>
+    <ol>
+        <li>Używanie TLS dla serwisów webowych:
+            <pre><code><span class="keyword">version</span>: <span class="string">'3'</span>
+<span class="keyword">services</span>:
+  web:
+    <span class="keyword">image</span>: nginx
+    <span class="keyword">volumes</span>:
+      - ./certs:/etc/nginx/certs:ro
+    <span class="keyword">ports</span>:
+      - <span class="string">"443:443"</span></code></pre>
+        </li>
+        <li>Autoryzacja między mikroserwisami:
+            <p>Wykorzystaj narzędzia takie jak JSON Web Tokens (JWT) lub mutual TLS (mTLS) do autoryzacji między serwisami.</p>
+        </li>
+    </ol>
+</div>
+
+<div class="section">
+    <h2>11. Przechowywanie danych w Dockerze</h2>
+    
+    <h3>Zarządzanie danymi w środowisku produkcyjnym</h3>
+    <ol>
+        <li>Strategie backupów:
+            <pre><code><span class="comment"># Backup bazy danych PostgreSQL</span>
+docker exec -t your_db_container pg_dumpall -c -U postgres > dump_`date +%d-%m-%Y"_"%H_%M_%S`.sql
+
+<span class="comment"># Backup wolumenu</span>
+docker run --rm --volumes-from your_data_container -v $(pwd):/backup ubuntu tar cvf /backup/backup.tar /data</code></pre>
+        </li>
+        <li>Przywracanie z backupu:
+            <pre><code><span class="comment"># Przywracanie bazy danych</span>
+cat your_dump.sql | docker exec -i your_db_container psql -U postgres
+
+<span class="comment"># Przywracanie wolumenu</span>
+docker run --rm --volumes-from your_data_container -v $(pwd):/backup ubuntu bash -c "cd /data && tar xvf /backup/backup.tar --strip 1"</code></pre>
+        </li>
+    </ol>
+
+    <h3>Przykłady użycia zewnętrznych systemów przechowywania danych</h3>
+    <ol>
+        <li>Używanie Amazon S3 z Docker:
+            <pre><code><span class="keyword">version</span>: <span class="string">'3'</span>
+<span class="keyword">services</span>:
+  app:
+    <span class="keyword">image</span>: your-app
+    <span class="keyword">environment</span>:
+      - <span class="variable">AWS_ACCESS_KEY_ID</span>=${AWS_ACCESS_KEY_ID}
+      - <span class="variable">AWS_SECRET_ACCESS_KEY</span>=${AWS_SECRET_ACCESS_KEY}
+      - <span class="variable">S3_BUCKET</span>=${S3_BUCKET}</code></pre>
+        </li>
+        <li>Używanie Azure Blob Storage:
+            <pre><code><span class="keyword">version</span>: <span class="string">'3'</span>
+<span class="keyword">services</span>:
+  app:
+    <span class="keyword">image</span>: your-app
+    <span class="keyword">environment</span>:
+      - <span class="variable">AZURE_STORAGE_CONNECTION_STRING</span>=${AZURE_STORAGE_CONNECTION_STRING}
+      - <span class="variable">AZURE_CONTAINER_NAME</span>=${AZURE_CONTAINER_NAME}</code></pre>
+        </li>
+    </ol>
+</div>
+
+        <!-- Nowa sekcja: Monitoring i zarządzanie kontenerami -->
+        <div class="section">
+    <h2>12. Monitoring i zarządzanie kontenerami</h2>
+    
+    <h3>Prometheus i Grafana</h3>
+    <ol>
+        <li>Konfiguracja Prometheus:
+            <pre><code><span class="keyword">version</span>: <span class="string">'3'</span>
+<span class="keyword">services</span>:
+  prometheus:
+    <span class="keyword">image</span>: prom/prometheus
+    <span class="keyword">volumes</span>:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+    <span class="keyword">ports</span>:
+      - <span class="string">"9090:9090"</span></code></pre>
+        </li>
+        <li>Konfiguracja Grafana:
+            <pre><code><span class="keyword">version</span>: <span class="string">'3'</span>
+<span class="keyword">services</span>:
+  grafana:
+    <span class="keyword">image</span>: grafana/grafana
+    <span class="keyword">ports</span>:
+      - <span class="string">"3000:3000"</span>
+    <span class="keyword">environment</span>:
+      - <span class="variable">GF_SECURITY_ADMIN_PASSWORD</span>=secret</code></pre>
+        </li>
+    </ol>
+
+    <h3>cAdvisor</h3>
+    <p>Dodaj cAdvisor do docker-compose.yml:</p>
+    <pre><code><span class="keyword">version</span>: <span class="string">'3'</span>
+<span class="keyword">services</span>:
+  cadvisor:
+    <span class="keyword">image</span>: gcr.io/cadvisor/cadvisor:latest
+    <span class="keyword">volumes</span>:
+      - /:/rootfs:ro
+      - /var/run:/var/run:ro
+      - /sys:/sys:ro
+      - /var/lib/docker/:/var/lib/docker:ro
+    <span class="keyword">ports</span>:
+      - <span class="string">"8080:8080"</span></code></pre>
+</div>
+
+<div class="section">
+    <h2>13. Zaawansowane zarządzanie kontenerami</h2>
+    
+    <h3>Docker Swarm</h3>
+    <ol>
+        <li>Inicjalizacja Swarm:
+            <pre><code>docker swarm init</code></pre>
+        </li>
+        <li>Deployment stacka:
+            <pre><code><span class="keyword">version</span>: <span class="string">'3'</span>
+<span class="keyword">services</span>:
+  web:
+    <span class="keyword">image</span>: nginx
+    <span class="keyword">deploy</span>:
+      <span class="keyword">replicas</span>: 3</code></pre>
+            <p>Następnie uruchom stack:</p>
+            <pre><code>docker stack deploy -c docker-compose.yml my-stack</code></pre>
+        </li>
+    </ol>
+
+    <h3>Kubernetes</h3>
+    <ol>
+        <li>Deployment w Kubernetes:
+            <pre><code><span class="keyword">apiVersion</span>: apps/v1
+<span class="keyword">kind</span>: Deployment
+<span class="keyword">metadata</span>:
+  <span class="keyword">name</span>: nginx-deployment
+<span class="keyword">spec</span>:
+  <span class="keyword">replicas</span>: 3
+  <span class="keyword">selector</span>:
+    <span class="keyword">matchLabels</span>:
+      app: nginx
+  <span class="keyword">template</span>:
+    <span class="keyword">metadata</span>:
+      <span class="keyword">labels</span>:
+        app: nginx
+    <span class="keyword">spec</span>:
+      <span class="keyword">containers</span>:
+      - <span class="keyword">name</span>: nginx
+        <span class="keyword">image</span>: nginx:1.14.2
+        <span class="keyword">ports</span>:
+        - <span class="keyword">containerPort</span>: 80</code></pre>
+        </li>
+        <li>Uruchomienie deploymentu:
+            <pre><code>kubectl apply -f nginx-deployment.yaml</code></pre>
+        </li>
+    </ol>
+</div>
+
+<div class="section">
+    <h2>Podsumowanie</h2>
+    <p>Ten rozszerzony przewodnik po Dockerze obejmuje zaawansowane tematy i najlepsze praktyki, które pomogą Ci w efektywnym tworzeniu, wdrażaniu i zarządzaniu aplikacjami kontenerowymi. Od zaawansowanych technik Dockerfile, przez najlepsze praktyki Docker Compose, aż po orkiestrację kontenerów z użyciem Docker Swarm i Kubernetes - te narzędzia i koncepcje pozwolą Ci tworzyć skalowalne, bezpieczne i wydajne środowiska kontenerowe.</p>
+    <p>Pamiętaj, że technologie kontenerowe stale się rozwijają, dlatego ważne jest, aby być na bieżąco z najnowszymi trendami i aktualizacjami w ekosystemie Dockera i narzędzi pokrewnych.</p>
+</div>
 
             <div class="tip">
                 <strong>Wskazówka:</strong> Docker Compose jest świetnym narzędziem do lokalnego rozwoju i testowania, ale dla produkcyjnych wdrożeń rozważ użycie orkiestratorów kontenerów, takich jak Kubernetes lub Docker Swarm.
             </div>
 
             <a href="./Przyklad.html" class="button">Przykładowy projekt</a> <a href="./Docker_polecenia.html" class="button">Lista polecen Dockera</a>
-        </div>
+        
     </div>
 
 
