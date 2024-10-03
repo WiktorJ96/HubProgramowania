@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista poleceń Docker z flagami i wyszukiwarką</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Fira+Code&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #0056b3;
+            --secondary-color: #004085;
+            --background-color: #f8f9fa;
+            --text-color: #333;
+            --code-background: #e9ecef;
+            --pre-background: #272822;
+            --pre-color: #f8f8f2;
+            --tip-background: #d4edda;
+            --tip-border: #c3e6cb;
+            --link-color: #007bff;
+            --link-hover-color: #0056b3;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--background-color);
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: white;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+
+        h1, h2, h3 {
+            color: var(--primary-color);
+        }
+
+        h1 {
+            border-bottom: 2px solid var(--primary-color);
+            padding-bottom: 10px;
+        }
+
+        pre, code {
+            font-family: 'Fira Code', monospace;
+            background-color: var(--code-background);
+            border-radius: 4px;
+        }
+
+        code {
+            padding: 2px 5px;
+        }
+
+        .command {
+            margin-bottom: 20px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+        }
+
+        .command h3 {
+            margin-bottom: 5px;
+        }
+
+        .command p {
+            margin-top: 5px;
+        }
+
+        .flags {
+            margin-top: 10px;
+        }
+
+        .flags h4 {
+            margin-bottom: 5px;
+            color: var(--secondary-color);
+        }
+
+        .flags ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+
+        .flags li {
+            margin-bottom: 5px;
+        }
+
+        .tip {
+            background-color: var(--tip-background);
+            border: 1px solid var(--tip-border);
+            border-radius: 4px;
+            padding: 15px;
+            margin: 20px 0;
+        }
+
+        #search-container {
+            margin-bottom: 20px;
+        }
+
+        #search-input {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        .highlight {
+            background-color: yellow;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Lista poleceń Docker z flagami</h1>
+
+        <div id="search-container">
+            <input type="text" id="search-input" placeholder="Wyszukaj polecenie lub flagę...">
+        </div>
+
+        
+<div id="commands-list">
+        <div class="command">
+            <h3><code>docker run</code></h3>
+            <p>Tworzy i uruchamia nowy kontener na podstawie obrazu. Jeśli obraz nie jest dostępny lokalnie, Docker pobierze go automatycznie.</p>
+            <p>Przykład: <code>docker run -d -p 80:80 nginx</code></p>
+            <div class="flags">
+                <h4>Często używane flagi:</h4>
+                <ul>
+                    <li><code>-d, --detach</code>: Uruchamia kontener w tle</li>
+                    <li><code>-p, --publish</code>: Publikuje port kontenera na hoście</li>
+                    <li><code>-v, --volume</code>: Montuje wolumin</li>
+                    <li><code>--name</code>: Przypisuje nazwę kontenerowi</li>
+                    <li><code>-e, --env</code>: Ustawia zmienne środowiskowe</li>
+                    <li><code>--rm</code>: Automatycznie usuwa kontener po zatrzymaniu</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="command">
+            <h3><code>docker pull</code></h3>
+            <p>Pobiera obraz lub repozytorium z rejestru Docker (domyślnie Docker Hub).</p>
+            <p>Przykład: <code>docker pull ubuntu</code></p>
+            <div class="flags">
+                <h4>Często używane flagi:</h4>
+                <ul>
+                    <li><code>-a, --all-tags</code>: Pobiera wszystkie oznaczone obrazy w repozytorium</li>
+                    <li><code>--disable-content-trust</code>: Pomija weryfikację obrazu</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="command">
+            <h3><code>docker build</code></h3>
+            <p>Buduje obraz Docker na podstawie pliku Dockerfile.</p>
+            <p>Przykład: <code>docker build -t moja-aplikacja .</code></p>
+            <div class="flags">
+                <h4>Często używane flagi:</h4>
+                <ul>
+                    <li><code>-t, --tag</code>: Nadaje nazwę i opcjonalnie tag w formacie 'name:tag'</li>
+                    <li><code>-f, --file</code>: Nazwa pliku Dockerfile (domyślnie './Dockerfile')</li>
+                    <li><code>--no-cache</code>: Nie używa cache podczas budowania obrazu</li>
+                    <li><code>--pull</code>: Zawsze próbuje pobrać nowszą wersję obrazu bazowego</li>
+                </ul>
+            </div>
+        </div>
+
+       <div class="command">
+            <h3><code>docker ps</code></h3>
+            <p>Wyświetla listę uruchomionych kontenerów. Użyj flagi <code>-a</code>, aby zobaczyć wszystkie kontenery (również zatrzymane).</p>
+            <p>Przykład: <code>docker ps -a</code></p>
+            <div class="flags">
+                <h4>Często używane flagi:</h4>
+                <ul>
+                    <li><code>-a, --all</code>: Pokazuje wszystkie kontenery (domyślnie pokazuje tylko uruchomione)</li>
+                    <li><code>-q, --quiet</code>: Pokazuje tylko numeryczne ID</li>
+                    <li><code>-s, --size</code>: Wyświetla rozmiary plików</li>
+                    <li><code>-eaf</code>: Pokazuje wszystkie kontenery (również zatrzymane) w pełnym formacie, włączając dodatkowe informacje</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="command">
+            <h3><code>docker images</code></h3>
+            <p>Wyświetla listę obrazów Docker dostępnych lokalnie.</p>
+            <p>Przykład: <code>docker images</code></p>
+            <div class="flags">
+                <h4>Często używane flagi:</h4>
+                <ul>
+                    <li><code>-a, --all</code>: Pokazuje wszystkie obrazy (domyślnie ukrywa pośrednie obrazy)</li>
+                    <li><code>-q, --quiet</code>: Pokazuje tylko numeryczne ID obrazów</li>
+                    <li><code>--digests</code>: Pokazuje skróty (digests)</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="command">
+            <h3><code>docker stop</code></h3>
+            <p>Zatrzymuje jeden lub więcej uruchomionych kontenerów.</p>
+            <p>Przykład: <code>docker stop moj-kontener</code></p>
+            <div class="flags">
+                <h4>Często używane flagi:</h4>
+                <ul>
+                    <li><code>-t, --time</code>: Liczba sekund do oczekiwania przed zatrzymaniem (domyślnie 10)</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="command">
+            <h3><code>docker exec</code></h3>
+            <p>Uruchamia polecenie w działającym kontenerze.</p>
+            <p>Przykład: <code>docker exec -it moj-kontener bash</code></p>
+            <div class="flags">
+                <h4>Często używane flagi:</h4>
+                <ul>
+                    <li><code>-i, --interactive</code>: Utrzymuje STDIN otwarty nawet jeśli nie jest podłączony</li>
+                    <li><code>-t, --tty</code>: Przydziela pseudo-TTY</li>
+                    <li><code>-e, --env</code>: Ustawia zmienne środowiskowe</li>
+                    <li><code>-w, --workdir</code>: Ustawia katalog roboczy wewnątrz kontenera</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="command">
+            <h3><code>docker logs</code></h3>
+            <p>Wyświetla logi kontenera.</p>
+            <p>Przykład: <code>docker logs moj-kontener</code></p>
+            <div class="flags">
+                <h4>Często używane flagi:</h4>
+                <ul>
+                    <li><code>-f, --follow</code>: Śledzi logi na bieżąco</li>
+                    <li><code>--tail</code>: Liczba linii do pokazania z końca logów</li>
+                    <li><code>-t, --timestamps</code>: Pokazuje znaczniki czasu</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="command">
+            <h3><code>docker-compose</code></h3>
+            <p>Narzędzie do definiowania i uruchamiania aplikacji Docker składających się z wielu kontenerów.</p>
+            <p>Przykład: <code>docker-compose up -d</code></p>
+            <div class="flags">
+                <h4>Często używane flagi:</h4>
+                <ul>
+                    <li><code>up</code>: Tworzy i uruchamia kontenery</li>
+                    <li><code>down</code>: Zatrzymuje i usuwa kontenery, sieci, woluminy i obrazy</li>
+                    <li><code>-d, --detach</code>: Uruchamia w tle</li>
+                    <li><code>--build</code>: Buduje obrazy przed uruchomieniem kontenerów</li>
+                    <li><code>-f, --file</code>: Określa alternatywny plik compose</li>
+                </ul>
+            </div>
+        </div>
+        </div>
+
+        <div class="tip">
+            <strong>Wskazówka:</strong> Aby uzyskać pełną listę flag dla konkretnego polecenia, użyj <code>docker [polecenie] --help</code>, np. <code>docker run --help</code>.
+        </div>
+
+        <p>Pamiętaj, że Docker stale się rozwija, więc mogą pojawiać się nowe polecenia, opcje lub flagi. Zawsze warto sprawdzać oficjalną dokumentację Docker, aby być na bieżąco z najnowszymi zmianami i funkcjonalnościami.</p>
+    </div>
+
+
+
+<script>
+        document.addEventListener('DOMContentLoaded', function() {
+    const searchInput = document.getElementById('search-input');
+    const commandsList = document.getElementById('commands-list');
+    const commands = commandsList.getElementsByClassName('command');
+
+    // Zapisz oryginalną zawartość HTML każdego elementu command
+    const originalContent = Array.from(commands).map(command => command.innerHTML);
+
+    searchInput.addEventListener('input', function() {
+        const searchTerm = this.value.toLowerCase();
+
+        Array.from(commands).forEach(function(command, index) {
+            const commandText = command.textContent.toLowerCase();
+
+            if (searchTerm === '' || commandText.includes(searchTerm)) {
+                command.style.display = '';
+                // Przywróć oryginalną zawartość HTML
+                command.innerHTML = originalContent[index];
+                // Podświetl wyszukiwane słowo, jeśli nie jest puste
+                if (searchTerm !== '') {
+                    highlightText(command, searchTerm);
+                }
+            } else {
+                command.style.display = 'none';
+            }
+        });
+    });
+
+    function highlightText(element, searchTerm) {
+        const regex = new RegExp(`(${searchTerm})`, 'gi');
+        element.innerHTML = element.innerHTML.replace(regex, '<span class="highlight">$1</span>');
+    }
+});
+    </script>
+</body>
+</html>

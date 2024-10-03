@@ -6,11 +6,30 @@
     <title>Prosty i szczegółowy przewodnik po Dockerze</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Fira+Code&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="docker.css">
-   
+    <style>
+        #search-container {
+            margin: 20px 0;
+        }
+        #search-input {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        .highlight {
+            background-color: yellow;
+            font-weight: bold;
+        }
+    </style>
 </head>
 <body>
     <div class="container">
         <h1>Rozszerzony i szczegółowy przewodnik po Dockerze</h1>
+
+        <div id="search-container">
+            <input type="text" id="search-input" placeholder="Wyszukaj w przewodniku...">
+        </div>
 
         <div class="section">
             <h2>1. Co to jest Docker?</h2>
@@ -391,8 +410,66 @@ networks:
                 <strong>Wskazówka:</strong> Docker Compose jest świetnym narzędziem do lokalnego rozwoju i testowania, ale dla produkcyjnych wdrożeń rozważ użycie orkiestratorów kontenerów, takich jak Kubernetes lub Docker Swarm.
             </div>
 
-            <a href="./Przyklad.html" class="button">Przykładowy projekt</a>
+            <a href="./Przyklad.html" class="button">Przykładowy projekt</a> <a href="./Docker_polecenia.html" class="button">Lista polecen Dockera</a>
         </div>
     </div>
+
+
+     <script>
+        document.addEventListener('DOMContentLoaded', function() {
+    const searchInput = document.getElementById('search-input');
+    const sections = document.getElementsByClassName('section');
+    
+    // Przechowuj oryginalną zawartość sekcji
+    const originalContent = Array.from(sections).map(section => section.innerHTML);
+
+    searchInput.addEventListener('input', function() {
+        const searchTerm = this.value.toLowerCase();
+
+        Array.from(sections).forEach(function(section, index) {
+            const sectionText = section.textContent.toLowerCase();
+
+            if (searchTerm === '' || sectionText.includes(searchTerm)) {
+                section.style.display = '';
+                // Przywróć oryginalną zawartość HTML
+                section.innerHTML = originalContent[index];
+                
+                if (searchTerm !== '') {
+                    highlightText(section, searchTerm);
+                }
+            } else {
+                section.style.display = 'none';
+            }
+        });
+    });
+
+    function highlightText(element, searchTerm) {
+        const walker = document.createTreeWalker(element, NodeFilter.SHOW_TEXT, null, false);
+        let node;
+        while (node = walker.nextNode()) {
+            const parent = node.parentNode;
+            if (parent.nodeName !== 'SCRIPT' && parent.nodeName !== 'STYLE') {
+                const text = node.textContent;
+                const regex = new RegExp(searchTerm, 'gi');
+                if (regex.test(text)) {
+                    const fragment = document.createDocumentFragment();
+                    let lastIndex = 0;
+                    text.replace(regex, function(match, index) {
+                        fragment.appendChild(document.createTextNode(text.slice(lastIndex, index)));
+                        const span = document.createElement('span');
+                        span.className = 'highlight';
+                        span.textContent = match;
+                        fragment.appendChild(span);
+                        lastIndex = index + match.length;
+                        return match;
+                    });
+                    fragment.appendChild(document.createTextNode(text.slice(lastIndex)));
+                    parent.replaceChild(fragment, node);
+                }
+            }
+        }
+    }
+});
+    </script>
 </body>
 </html>
