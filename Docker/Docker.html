@@ -417,35 +417,6 @@ docker run --cap-drop=ALL --security-opt=no-new-privileges myimage</code></pre>
     </ul>
 </div>
 
-<div class="section">
-    <h2>7. Dockerfile - Zaawansowane zastosowania</h2>
-    
-    <h3>Efektywne zarządzanie warstwami</h3>
-    <p>Efektywne zarządzanie warstwami w Dockerfile jest kluczowe dla tworzenia mniejszych i bardziej wydajnych obrazów. Oto kilka technik:</p>
-    <ol>
-        <li>Łączenie poleceń RUN:
-            <pre><code><span class="keyword">RUN</span> apt-get update && \
-    apt-get install -y package1 package2 && \
-    apt-get clean && \
-    rm -rf /var/lib/apt/lists/*</code></pre>
-        </li>
-        <li>Użycie .dockerignore:
-            <p>Stwórz plik <code class="inline-code">.dockerignore</code> w katalogu z Dockerfile, aby wykluczyć niepotrzebne pliki:</p>
-            <pre><code>node_modules
-npm-debug.log
-*.tmp</code></pre>
-        </li>
-        <li>Uporządkowanie instrukcji od najmniej do najbardziej zmieniających się:
-            <pre><code><span class="keyword">FROM</span> node:14
-<span class="keyword">WORKDIR</span> /app
-<span class="keyword">COPY</span> package.json package-lock.json ./
-<span class="keyword">RUN</span> npm install
-<span class="keyword">COPY</span> . .
-<span class="keyword">CMD</span> [<span class="string">"npm"</span>, <span class="string">"start"</span>]</code></pre>
-        </li>
-    </ol>
-</div>
-
             <div class="section">
             <h2>7. Dockerfile - Zaawansowane zastosowania</h2>
             
