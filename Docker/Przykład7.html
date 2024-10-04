@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Docker Registry – Praktyczne wskazówki</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Fira+Code&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./przyklady.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Docker Registry – Praktyczne wskazówki</h1>
+
+        <h2>1. Co to jest Docker Registry?</h2>
+        <p>Docker Registry to usługa, która umożliwia przechowywanie, zarządzanie i dystrybucję obrazów kontenerów Docker. Użytkownicy mogą wysyłać (push) swoje obrazy do registry i pobierać (pull) je do uruchomienia na swoich maszynach.</p>
+
+        <h2>2. Docker Hub</h2>
+        <p>Docker Hub to publiczne registry oferowane przez Docker. Umożliwia przechowywanie i dystrybucję obrazów Docker na szeroką skalę. Jest to najpopularniejsze miejsce do hostowania obrazów, zarówno publicznych, jak i prywatnych.</p>
+
+        <h3>Przykład: Wysyłanie obrazu do Docker Hub</h3>
+        <pre>
+<code>
+# Logowanie do Docker Hub
+docker login
+
+# Tagowanie obrazu przed wysłaniem
+docker tag myapp:latest username/myapp:latest
+
+# Wysyłanie obrazu do Docker Hub
+docker push username/myapp:latest
+</code>
+        </pre>
+        <p>W tym przykładzie logujemy się do Docker Hub, tagujemy obraz <code>myapp</code> i wysyłamy go do naszego konta na Docker Hub.</p>
+
+        <h3>Pobieranie obrazu z Docker Hub:</h3>
+        <pre>
+<code>
+docker pull username/myapp:latest
+</code>
+        </pre>
+
+        <h2>3. Lokalny registry</h2>
+        <p>Lokalne registry to instancja Docker Registry uruchomiona na lokalnym serwerze, co umożliwia przechowywanie obrazów w prywatnej infrastrukturze. Jest to szczególnie przydatne w środowiskach, gdzie wymagana jest większa kontrola nad obrazami i prywatnością.</p>
+
+        <h3>Przykład: Uruchamianie lokalnego registry</h3>
+        <pre>
+<code>
+# Uruchomienie lokalnego registry
+docker run -d -p 5000:5000 --name registry registry:2
+
+# Tagowanie obrazu
+docker tag myapp:latest localhost:5000/myapp:latest
+
+# Wysyłanie obrazu do lokalnego registry
+docker push localhost:5000/myapp:latest
+</code>
+        </pre>
+        <p>Ten przykład pokazuje, jak uruchomić lokalne registry na porcie 5000, a następnie wysłać do niego obraz kontenera.</p>
+
+        <h3>Pobieranie obrazu z lokalnego registry:</h3>
+        <pre>
+<code>
+docker pull localhost:5000/myapp:latest
+</code>
+        </pre>
+
+        <h2>4. Przechowywanie i dystrybucja obrazów</h2>
+        <p>Obrazy Docker mogą być przechowywane i dystrybuowane za pomocą zarówno Docker Hub, jak i lokalnych rejestrów. Kluczową funkcjonalnością registry jest możliwość łatwego dostarczania obrazów do różnych środowisk, takich jak deweloperskie, testowe i produkcyjne.</p>
+
+        <h3>Przykład: Automatyczne pobieranie obrazów podczas uruchamiania kontenera</h3>
+        <pre>
+<code>
+# Automatyczne pobieranie obrazu z Docker Hub podczas uruchamiania
+docker run username/myapp:latest
+</code>
+        </pre>
+        <p>Gdy uruchamiasz kontener, Docker automatycznie pobierze najnowszy obraz z registry, jeśli nie jest on dostępny lokalnie.</p>
+
+        <div class="tip">
+            <strong>Wskazówka:</strong> Używaj lokalnych rejestrów w środowiskach korporacyjnych, aby zachować pełną kontrolę nad obrazami, a Docker Hub jako miejsce do dzielenia się obrazami z większą społecznością.
+        </div>
+
+        <h2>Podsumowanie</h2>
+        <p>Docker Registry, w tym Docker Hub i lokalne registry, umożliwia przechowywanie i dystrybucję obrazów Docker. Pozwala to na łatwe udostępnianie obrazów aplikacji pomiędzy różnymi środowiskami oraz automatyzację pobierania i aktualizacji obrazów kontenerów.</p>
+    </div>
+</body>
+</html>

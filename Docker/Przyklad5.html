@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bezpieczeństwo Dockera – Praktyczne wskazówki</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Fira+Code&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./docker.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Bezpieczeństwo Dockera – Praktyczne wskazówki</h1>
+
+        <h2>1. Praktyki bezpieczeństwa</h2>
+        <p>Bezpieczeństwo w Dockerze zależy od stosowania najlepszych praktyk, takich jak uruchamianie kontenerów jako użytkownicy nie-root, ograniczenie uprawnień, używanie minimalnych obrazów i regularne aktualizacje.</p>
+
+        <h3>Przykład: Uruchamianie kontenera jako użytkownik nie-root</h3>
+        <pre>
+<code>
+# Dockerfile
+FROM node:14-alpine
+
+# Tworzenie użytkownika aplikacji
+RUN addgroup -S appgroup && adduser -S appuser -G appgroup
+
+# Ustawienie użytkownika nie-root jako domyślnego
+USER appuser
+
+WORKDIR /app
+COPY . .
+RUN npm install
+
+CMD ["node", "app.js"]
+</code>
+        </pre>
+        <p>W powyższym Dockerfile tworzymy użytkownika `appuser` i uruchamiamy kontener z uprawnieniami tego użytkownika, co zwiększa bezpieczeństwo.</p>
+
+        <h2>2. Komendy bezpieczeństwa</h2>
+        <p>Docker oferuje kilka komend, które pomagają w utrzymaniu bezpieczeństwa kontenerów i obrazów. Oto niektóre z nich:</p>
+
+        <h3>Przykład: Ograniczenie uprawnień za pomocą <code>--cap-drop</code></h3>
+        <pre>
+<code>
+# Uruchamianie kontenera z ograniczonymi uprawnieniami
+docker run --rm -it --cap-drop=ALL --cap-add=NET_ADMIN ubuntu
+</code>
+        </pre>
+        <p>To polecenie uruchamia kontener z Ubuntu, ale zdejmuje wszystkie uprawnienia (capabilities) z wyjątkiem <code>NET_ADMIN</code>. Takie podejście minimalizuje ryzyko ataków.</p>
+
+        <h2>3. Obrazy rootless</h2>
+        <p>Obrazy rootless to obrazy Dockera, które są zaprojektowane tak, aby uruchamiać kontenery bez uprawnień root. Dzięki temu aplikacje działają bezpieczniej, nawet jeśli mają luki w zabezpieczeniach.</p>
+
+        <h3>Przykład: Uruchamianie kontenerów rootless</h3>
+        <pre>
+<code>
+# Włączenie trybu rootless w Dockerze (tylko dla wspieranych systemów)
+dockerd-rootless.sh
+</code>
+        </pre>
+        <p>Tryb rootless pozwala na uruchamianie kontenerów bez uprawnień root. Wymaga on odpowiedniej konfiguracji systemu operacyjnego, ale znacząco zwiększa bezpieczeństwo.</p>
+
+        <h2>4. Skanowanie obrazów</h2>
+        <p>Skanowanie obrazów pod kątem luk w zabezpieczeniach to kolejna ważna praktyka. Narzędzia takie jak <strong>Trivy</strong> i <strong>Clair</strong> mogą automatycznie wykrywać znane luki w obrazach Docker.</p>
+
+        <h3>Przykład: Skanowanie obrazu za pomocą Trivy</h3>
+        <pre>
+<code>
+# Instalacja narzędzia Trivy
+brew install aquasecurity/trivy/trivy
+
+# Skanowanie obrazu
+trivy image my_image
+</code>
+        </pre>
+        <p>Trivy skanuje obraz <code>my_image</code> pod kątem luk w zabezpieczeniach, dzięki czemu możemy zidentyfikować i naprawić potencjalne problemy przed wdrożeniem aplikacji.</p>
+
+        <div class="tip">
+            <strong>Wskazówka:</strong> Zawsze skanuj obrazy przed ich wdrożeniem w środowiskach produkcyjnych i regularnie aktualizuj obrazy bazowe, aby zmniejszyć ryzyko ataków.
+        </div>
+
+        <h2>Podsumowanie</h2>
+        <p>Bezpieczeństwo Dockera opiera się na stosowaniu najlepszych praktyk, uruchamianiu kontenerów z ograniczonymi uprawnieniami, korzystaniu z trybu rootless oraz regularnym skanowaniu obrazów pod kątem luk w zabezpieczeniach. Stosowanie tych technik pozwala na tworzenie bardziej bezpiecznych i odpornych na ataki aplikacji.</p>
+    </div>
+</body>
+</html>

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zarzadzanie sieciami - Praktyczne wskazówki</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Fira+Code&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./przyklady.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Zarządzanie sieciami w Dockerze – Wyjaśnienie na przykładzie</h1>
+
+        <h2>Docker Networks:</h2>
+        <pre>
+<code>
+# Tworzenie sieci typu 'bridge'
+docker network create my_bridge_network
+
+# Tworzenie sieci typu 'overlay' (dla klastra Swarm)
+docker network create -d overlay my_overlay_network
+
+# Tworzenie sieci typu 'macvlan'
+docker network create -d macvlan --subnet=192.168.1.0/24 --gateway=192.168.1.1 -o parent=eth0 my_macvlan_network
+
+# Uruchamianie kontenera w określonej sieci
+docker run -d --network my_bridge_network my_container_image
+
+# Podłączanie istniejącego kontenera do sieci
+docker network connect my_bridge_network my_existing_container
+
+# Usuwanie sieci
+docker network rm my_bridge_network
+</code>
+        </pre>
+
+        <h2>Wyjaśnienie krok po kroku:</h2>
+        
+        <h3>Tworzenie sieci typu <code>bridge</code></h3>
+        <p><strong>Kontekst:</strong> <code>bridge</code> to domyślny typ sieci w Dockerze, używany do komunikacji między kontenerami na tym samym hoście.</p>
+        <p>Za pomocą polecenia <code>docker network create my_bridge_network</code> tworzymy sieć typu <code>bridge</code>. Kontenery podłączone do tej sieci mogą się komunikować za pomocą prywatnych adresów IP.</p>
+
+        <h3>Tworzenie sieci typu <code>overlay</code></h3>
+        <p><strong>Kontekst:</strong> Sieci <code>overlay</code> są używane w klastrach Docker Swarm lub Kubernetes. Pozwalają na komunikację między kontenerami na różnych hostach.</p>
+        <p>Za pomocą polecenia <code>docker network create -d overlay my_overlay_network</code> tworzymy sieć typu <code>overlay</code>. Jest ona idealna do aplikacji rozproszonych, gdzie kontenery działają na różnych fizycznych maszynach.</p>
+
+        <h3>Tworzenie sieci typu <code>macvlan</code></h3>
+        <p><strong>Kontekst:</strong> Sieć <code>macvlan</code> pozwala przypisać kontenerom unikalne adresy MAC, co sprawia, że kontenery działają jak fizyczne urządzenia w sieci.</p>
+        <p>Za pomocą polecenia <code>docker network create -d macvlan --subnet=192.168.1.0/24 --gateway=192.168.1.1 -o parent=eth0 my_macvlan_network</code> tworzymy sieć <code>macvlan</code>, gdzie kontenery mogą zachowywać się jakby były fizycznymi maszynami w tej samej podsieci.</p>
+
+        <h3>Uruchamianie kontenera w określonej sieci</h3>
+        <p>Po stworzeniu sieci możemy uruchomić kontener, który będzie działał w tej sieci. Używamy polecenia <code>docker run -d --network my_bridge_network my_container_image</code>, aby uruchomić kontener w sieci <code>my_bridge_network</code>.</p>
+
+        <h3>Podłączanie istniejącego kontenera do sieci</h3>
+        <p>Jeśli mamy działający kontener, możemy go podłączyć do nowej sieci za pomocą polecenia <code>docker network connect my_bridge_network my_existing_container</code>. Dzięki temu kontener zyska możliwość komunikacji z innymi kontenerami w tej sieci.</p>
+
+        <h3>Usuwanie sieci</h3>
+        <p>Aby usunąć sieć, używamy polecenia <code>docker network rm my_bridge_network</code>. Należy pamiętać, że przed usunięciem sieci musimy odłączyć od niej wszystkie kontenery.</p>
+
+        <h2>Podsumowanie:</h2>
+        <p><strong>Tworzenie sieci:</strong> Docker umożliwia tworzenie różnych typów sieci, takich jak <code>bridge</code>, <code>overlay</code>, i <code>macvlan</code>, aby spełnić potrzeby komunikacyjne aplikacji.</p>
+        <p><strong>Uruchamianie i zarządzanie kontenerami:</strong> Możemy uruchamiać kontenery w określonych sieciach i podłączać je do nowych sieci w trakcie działania.</p>
+        <p><strong>Zarządzanie sieciami:</strong> Docker pozwala na usuwanie nieużywanych sieci oraz na elastyczną konfigurację komunikacji między kontenerami, zarówno na pojedynczym hoście, jak i w klastrach rozproszonych.</p>
+
+        <h3>Kluczowy punkt:</h3>
+        <p>Docker umożliwia pełną elastyczność w zarządzaniu sieciami, zapewniając różne typy sieci do różnych scenariuszy (lokalnych i rozproszonych), co pozwala na lepszą kontrolę komunikacji i izolacji między kontenerami.</p>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wolumeny – Praktyczne wskazówki</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Fira+Code&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./przyklady.css">
+
+</head>
+<body>
+    <div class="container">
+        <h1>Prosty przykład przechowywania danych w Dockerze</h1>
+
+        <h2>Opis aplikacji:</h2>
+        <p>W tym przykładzie stworzymy prostą aplikację Node.js, która zapisuje notatki w pliku tekstowym <code>notes.txt</code>. Użyjemy Docker volumes, aby dane były trwałe, nawet jeśli kontener zostanie usunięty. Ponadto omówimy bind mounts i tworzenie kopii zapasowych.</p>
+
+        <h2>Struktura projektu:</h2>
+        <div class="file-structure">
+            <pre>
+app/
+├── app.js      # Prosta aplikacja zapisująca notatki do pliku
+├── notes.txt   # Plik, w którym są zapisywane notatki
+├── package.json
+            </pre>
+        </div>
+
+        <h2>Kod aplikacji:</h2>
+        <pre>
+<code>
+const express = require('express');
+const fs = require('fs');
+const app = express();
+
+app.use(express.json());
+
+// Endpoint zapisujący notatkę do pliku
+app.post('/add-note', (req, res) => {
+    const note = req.body.note;
+    fs.appendFileSync('./notes.txt', note + '\n');
+    res.send('Notatka zapisana!');
+});
+
+// Endpoint wyświetlający wszystkie notatki
+app.get('/notes', (req, res) => {
+    const notes = fs.readFileSync('./notes.txt', 'utf-8');
+    res.send(notes);
+});
+
+app.listen(3000, () => console.log('Aplikacja działa na porcie 3000'));
+</code>
+        </pre>
+
+        <h2>Krok 1: Tworzenie obrazu Docker:</h2>
+        <pre>
+<code>
+# Dockerfile
+FROM node:14
+
+WORKDIR /app
+
+COPY package*.json ./
+RUN npm install
+
+COPY . .
+
+VOLUME [ "/app" ]
+
+CMD ["node", "app.js"]
+</code>
+        </pre>
+
+        <h2>Krok 2: Tworzenie i uruchamianie kontenera z wolumenem:</h2>
+        <pre>
+<code>
+# Tworzenie obrazu aplikacji
+docker build -t simple-notes-app .
+
+# Uruchamianie kontenera z wolumenem
+docker run -d -p 3000:3000 -v notes_data:/app --name notes_container simple-notes-app
+</code>
+        </pre>
+        <p>Kontener zostanie uruchomiony z zamontowanym wolumenem <code>notes_data</code>. Wszystkie dane zapisane w pliku <code>notes.txt</code> będą trwałe i dostępne nawet po usunięciu kontenera.</p>
+
+        <h2>Krok 3: Dodawanie i wyświetlanie notatek:</h2>
+        <pre>
+<code>
+# Dodawanie notatki za pomocą curl
+curl -X POST http://localhost:3000/add-note -H "Content-Type: application/json" -d '{"note": "To jest moja pierwsza notatka!"}'
+
+# Wyświetlanie wszystkich notatek
+curl http://localhost:3000/notes
+</code>
+        </pre>
+
+        <h2>Krok 4: Sprawdzanie trwałości danych:</h2>
+        <p>Po usunięciu kontenera dane będą nadal dostępne w wolumenie. Możesz usunąć kontener i uruchomić go ponownie:</p>
+        <pre>
+<code>
+# Usunięcie kontenera
+docker rm -f notes_container
+
+# Ponowne uruchomienie kontenera z tym samym wolumenem
+docker run -d -p 3000:3000 -v notes_data:/app --name notes_container simple-notes-app
+</code>
+        </pre>
+
+        <h2>Bind Mounts: Mapowanie plików z hosta:</h2>
+        <p>Jeśli chcesz współdzielić pliki między hostem a kontenerem, możesz użyć bind mounts:</p>
+        <pre>
+<code>
+docker run -d -p 3000:3000 -v /path/on/host:/app --name dev_container simple-notes-app
+</code>
+        </pre>
+        <p>Katalog <code>/path/on/host</code> będzie mapowany na katalog <code>/app</code> w kontenerze. Zmiany w plikach na hoście będą natychmiast widoczne w kontenerze, co jest przydatne podczas dewelopmentu.</p>
+
+        <h2>Tworzenie kopii zapasowej wolumenu:</h2>
+        <pre>
+<code>
+# Tworzenie kopii zapasowej pliku notes.txt z wolumenu
+docker run --rm -v notes_data:/app -v $(pwd):/backup busybox tar cvf /backup/notes_backup.tar /app/notes.txt
+
+# Przywracanie danych z kopii zapasowej
+docker run --rm -v notes_data:/app -v $(pwd):/backup busybox tar xvf /backup/notes_backup.tar -C /app
+</code>
+        </pre>
+
+        <h2>Podsumowanie:</h2>
+        <p>Ten prosty przykład pokazuje, jak używać wolumenów Docker do trwałego przechowywania danych, bind mounts do mapowania plików z hosta oraz jak tworzyć kopie zapasowe danych z wolumenów. Docker pozwala na elastyczne zarządzanie danymi w aplikacjach, co jest kluczowe w środowiskach produkcyjnych i deweloperskich.</p>
+    </div>
+</body>
+</html>

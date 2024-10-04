@@ -1,0 +1,81 @@
+:root {
+    --primary-color: #0056b3;
+    --secondary-color: #004085;
+    --background-color: #f8f9fa;
+    --text-color: #333;
+    --code-background: #272822;  /* Zwiększony kontrast dla kodu */
+    --pre-background: #1d1f21;  /* Ciemniejsze tło dla pre */
+    --pre-color: #f8f8f2;       /* Jaśniejszy tekst w kodzie */
+    --tip-background: #d4edda;
+    --tip-border: #c3e6cb;
+    --link-color: #007bff;
+    --link-hover-color: #0056b3;
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+    line-height: 1.6;
+    color: var(--text-color);
+    background-color: var(--background-color);
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    max-width: 1000px; /* Zwiększona szerokość kontenera dla większych ekranów */
+    margin: 40px auto; /* Większy margines dla lepszej czytelności */
+    padding: 30px;
+    background-color: white;
+    box-shadow: 0 0 20px rgba(0,0,0,0.1); /* Zwiększony cień */
+}
+
+h1, h2, h3 {
+    color: var(--primary-color);
+}
+
+h1 {
+    border-bottom: 3px solid var(--primary-color); /* Grubsza linia */
+    padding-bottom: 15px;
+}
+
+pre, code {
+    font-family: 'Fira Code', monospace;
+    background-color: var(--pre-background);  /* Ciemniejsze tło */
+    color: var(--pre-color);                 /* Jaśniejszy tekst */
+    border-radius: 8px;                      /* Większe zaokrąglenie */
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);    /* Delikatny cień */
+}
+
+pre {
+    padding: 20px;           /* Większy padding */
+    overflow-x: auto;
+    margin-bottom: 20px;     /* Większy margines */
+}
+
+code {
+    padding: 4px 8px;        /* Większy padding dla inline code */
+}
+
+.tip {
+    background-color: var(--tip-background);
+    border: 1px solid var(--tip-border);
+    border-radius: 8px;       /* Większe zaokrąglenie */
+    padding: 20px;            /* Większy padding */
+    margin: 30px 0;           /* Większy margines */
+    box-shadow: 0 0 10px rgba(0,0,0,0.1); /* Delikatny cień */
+}
+
+.file-structure {
+    background-color: var(--code-background);
+    color: var(--pre-color); /* Dodanie kontrastującego tekstu */
+    padding: 20px;           /* Większy padding */
+    border-radius: 8px;      /* Większe zaokrąglenie */
+    margin: 30px 0;          /* Większy margines */
+    box-shadow: 0 0 10px rgba(0,0,0,0.1); /* Delikatny cień */
+}
+ .badge {
+            font-size: 0.875em;
+            padding: 0.5em 0.75em;
+        }
+
+        

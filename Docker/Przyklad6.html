@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Docker Compose – Praktyczne wskazówki</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Fira+Code&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./przyklady.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Docker Compose – Praktyczne wskazówki</h1>
+
+        <h2>1. Co to jest Docker Compose?</h2>
+        <p>Docker Compose to narzędzie umożliwiające definiowanie i zarządzanie wielokontenerowymi aplikacjami Docker za pomocą prostych plików YAML. Zamiast uruchamiać kontenery jeden po drugim, możesz zarządzać całą aplikacją z jednego miejsca.</p>
+
+        <h2>2. Podstawowe komendy Docker Compose</h2>
+        <p>Docker Compose oferuje zestaw komend, które umożliwiają uruchamianie, budowanie i zarządzanie wielokontenerowymi aplikacjami.</p>
+        
+        <h3>Przykład: Uruchomienie aplikacji z Docker Compose</h3>
+        <pre>
+<code>
+# Uruchamianie kontenerów zdefiniowanych w docker-compose.yml
+docker-compose up
+
+# Uruchamianie w tle (detached mode)
+docker-compose up -d
+
+# Zatrzymywanie kontenerów
+docker-compose down
+</code>
+        </pre>
+
+        <h2>3. Profile w Docker Compose</h2>
+        <p>Profile w Docker Compose pozwalają na uruchamianie różnych zestawów usług w zależności od wybranego profilu. To przydatne, gdy chcesz uruchamiać różne środowiska (np. deweloperskie, testowe, produkcyjne).</p>
+
+        <h3>Przykład pliku <code>docker-compose.yml</code> z profilami:</h3>
+        <pre>
+<code>
+version: '3.9'
+
+services:
+  app:
+    image: myapp:latest
+    ports:
+      - "80:80"
+    profiles:
+      - development
+      - production
+
+  db:
+    image: postgres:latest
+    profiles:
+      - development
+</code>
+        </pre>
+        <p>W powyższym przykładzie usługa <code>app</code> działa w profilach <code>development</code> i <code>production</code>, natomiast usługa <code>db</code> tylko w <code>development</code>.</p>
+
+        <h3>Uruchamianie z określonym profilem:</h3>
+        <pre>
+<code>
+docker-compose --profile development up
+</code>
+        </pre>
+
+        <h2>4. Nadpisywanie plików w Docker Compose</h2>
+        <p>W Docker Compose możesz nadpisywać konfigurację za pomocą dodatkowych plików YAML. Dzięki temu możesz łatwo zmieniać ustawienia, np. dla różnych środowisk.</p>
+
+        <h3>Przykład: Użycie pliku <code>docker-compose.override.yml</code></h3>
+        <pre>
+<code>
+# docker-compose.override.yml
+
+services:
+  app:
+    environment:
+      - DEBUG=true
+    volumes:
+      - ./code:/app
+</code>
+        </pre>
+        <p>Ten plik nadpisuje ustawienia podstawowego pliku <code>docker-compose.yml</code>. W środowisku deweloperskim możesz na przykład zamontować kod źródłowy z hosta do kontenera.</p>
+
+        <h3>Uruchamianie z nadpisanymi plikami:</h3>
+        <pre>
+<code>
+docker-compose -f docker-compose.yml -f docker-compose.override.yml up
+</code>
+        </pre>
+
+        <h2>5. Budowanie i obserwowanie zmian</h2>
+        <p>Docker Compose pozwala również na automatyczne budowanie obrazów oraz obserwowanie zmian w kodzie źródłowym.</p>
+
+        <h3>Przykład: Automatyczne budowanie obrazów</h3>
+        <pre>
+<code>
+# docker-compose.yml
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+</code>
+        </pre>
+        <p>Jeśli zmienisz coś w plikach aplikacji, Docker Compose automatycznie zbuduje obraz na nowo podczas uruchamiania komendy <code>docker-compose up</code>.</p>
+
+        <h3>Obserwowanie zmian w kodzie źródłowym:</h3>
+        <pre>
+<code>
+# W trybie deweloperskim możesz uruchomić aplikację w tle i obserwować zmiany
+docker-compose up -d --build
+</code>
+        </pre>
+
+        <div class="tip">
+            <strong>Wskazówka:</strong> Używaj <code>docker-compose.override.yml</code> w środowiskach deweloperskich, aby mieć większą elastyczność w konfiguracji, oraz automatyzuj budowanie obrazów, aby oszczędzić czas.
+        </div>
+
+        <h2>Podsumowanie</h2>
+        <p>Docker Compose ułatwia zarządzanie aplikacjami wielokontenerowymi, oferując profile, nadpisywanie konfiguracji, automatyczne budowanie i obserwowanie zmian. Jest to kluczowe narzędzie w środowiskach deweloperskich, testowych i produkcyjnych.</p>
+    </div>
+</body>
+</html>
