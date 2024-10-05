@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Najlepsze praktyki CSS</title>
+    <link rel="stylesheet" href="/przyklady.css">
+
+</head>
+<body>
+    <div class="container">
+    <h1>Najlepsze praktyki CSS</h1>
+
+    <h2>1. Organizacja kodu CSS</h2>
+    <p>Dobrze zorganizowany kod CSS jest kluczem do łatwej konserwacji i skalowalności projektu.</p>
+    <h3>Przykład dobrej organizacji:</h3>
+    <pre><code>/* Reset i normalizacja */
+@import 'reset.css';
+
+/* Zmienne globalne */
+:root {
+  --primary-color: #007bff;
+  --font-size-base: 16px;
+}
+
+/* Typografia */
+body {
+  font-family: Arial, sans-serif;
+  font-size: var(--font-size-base);
+}
+
+/* Układ */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Komponenty */
+.button {
+  background-color: var(--primary-color);
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 4px;
+}
+
+/* Moduły */
+.header { /* ... */ }
+.footer { /* ... */ }
+
+/* Strony */
+.home-page { /* ... */ }
+.about-page { /* ... */ }
+
+/* Mediaqueries */
+@media (max-width: 768px) {
+  /* ... */
+}</code></pre>
+
+    <h2>2. Używanie klas zamiast ID do stylizacji</h2>
+    <p>Klasy są bardziej elastyczne i łatwiejsze do ponownego użycia niż ID.</p>
+    <h3>Przykład:</h3>
+    <pre><code>/* Nie zalecane */
+#main-header {
+  background-color: #f0f0f0;
+}
+
+/* Zalecane */
+.header {
+  background-color: #f0f0f0;
+}</code></pre>
+
+    <h2>3. Unikanie nadmiernej specyficzności</h2>
+    <p>Zbyt specyficzne selektory mogą utrudniać nadpisywanie stylów i zmniejszać elastyczność kodu.</p>
+    <h3>Przykład:</h3>
+    <pre><code>/* Zbyt specyficzne */
+body .wrapper .container ul li a {
+  color: red;
+}
+
+/* Lepsze podejście */
+.nav-link {
+  color: red;
+}</code></pre>
+
+    <h2>4. Używanie skróconych właściwości</h2>
+    <p>Skrócone właściwości CSS pomagają w utrzymaniu kodu zwięzłym i czytelnym.</p>
+    <h3>Przykład:</h3>
+    <pre><code>/* Nie zalecane */
+.box {
+  margin-top: 10px;
+  margin-right: 15px;
+  margin-bottom: 10px;
+  margin-left: 15px;
+}
+
+/* Zalecane */
+.box {
+  margin: 10px 15px;
+}</code></pre>
+
+    <h2>5. Stosowanie metodologii nazewnictwa</h2>
+    <p>Metodologie takie jak BEM (Block Element Modifier) pomagają w tworzeniu modularnego i zrozumiałego CSS.</p>
+    <h3>Przykład BEM:</h3>
+    <pre><code>.block {}
+.block__element {}
+.block--modifier {}
+
+/* Praktyczny przykład */
+.button {}
+.button__icon {}
+.button--large {}</code></pre>
+
+    <h2>6. Wykorzystywanie CSS Custom Properties (zmiennych)</h2>
+    <p>Zmienne CSS zwiększają elastyczność i ułatwiają zarządzanie wartościami w całym arkuszu stylów.</p>
+    <h3>Przykład:</h3>
+    <pre><code>:root {
+  --primary-color: #007bff;
+  --secondary-color: #6c757d;
+}
+
+.button-primary {
+  background-color: var(--primary-color);
+}
+
+.button-secondary {
+  background-color: var(--secondary-color);
+}</code></pre>
+
+    <div class="tip">
+        <strong>Wskazówka:</strong> Regularnie przeglądaj i refaktoryzuj swój CSS. Usuwaj nieużywane style, łącz podobne reguły i staraj się utrzymywać kod DRY (Don't Repeat Yourself).
+    </div>
+
+    <h2>7. Komentowanie kodu CSS</h2>
+    <p>Dodawanie znaczących komentarzy pomaga w zrozumieniu i utrzymaniu kodu, szczególnie w większych projektach.</p>
+    <h3>Przykład:</h3>
+    <pre><code>/* Main navigation styles */
+.nav {
+  /* Use flexbox for horizontal alignment */
+  display: flex;
+  justify-content: space-between;
+}
+
+/* Hero section */
+.hero {
+  /* Full viewport height with a minimum of 400px */
+  min-height: max(100vh, 400px);
+  
+  /* Background image with overlay */
+  background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('hero.jpg');
+  background-size: cover;
+  background-position: center;
+}</code></pre>
+
+    <h2>8. Progresywne ulepszanie</h2>
+    <p>Rozpoczynaj od podstawowej funkcjonalności i stopniowo dodawaj bardziej zaawansowane style i funkcje.</p>
+    <h3>Przykład:</h3>
+    <pre><code>/* Base styles for all browsers */
+.button {
+  padding: 10px 15px;
+  background-color: blue;
+  color: white;
+}
+
+/* Add gradients for browsers that support them */
+@supports (background: linear-gradient(45deg, blue, purple)) {
+  .button {
+    background: linear-gradient(45deg, blue, purple);
+  }
+}</code></pre>
+
+    <h2>9. Optymalizacja selektorów</h2>
+    <p>Używaj efektywnych selektorów, aby poprawić wydajność renderowania CSS.</p>
+    <h3>Przykład:</h3>
+    <pre><code>/* Avoid */
+#header .nav ul li a {
+  color: red;
+}
+
+/* Better */
+.nav-link {
+  color: red;
+}</code></pre>
+
+    <h2>10. Responsive Web Design</h2>
+    <p>Projektuj z myślą o różnych rozmiarach ekranów, używając technik responsywnego projektowania.</p>
+    <h3>Przykład:</h3>
+    <pre><code>.container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding: 0 15px;
+  }
+}</code></pre>
+
+    <div class="tip">
+        <strong>Wskazówka:</strong> Pamiętaj, że najlepsze praktyki CSS ewoluują wraz z rozwojem technologii webowych. Bądź na bieżąco z nowymi standardami i technikami, ale zawsze rozważaj ich wpływ na kompatybilność i wydajność twojego projektu.
+    </div>
+
+    </div>
+</body>
+</html>

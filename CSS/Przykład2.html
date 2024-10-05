@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zaawansowane techniki CSS</title>
+    <link rel="stylesheet" href="/przyklady.css">
+</head>
+<body>
+    <div class="container">
+    <h1>Zaawansowane techniki CSS</h1>
+
+    <h2>1. CSS Grid Layout</h2>
+    <p>CSS Grid to potężny system układu dwuwymiarowego, który pozwala na tworzenie złożonych layoutów strony.</p>
+    <h3>Przykład użycia CSS Grid:</h3>
+    <pre><code>.grid-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 20px;
+}
+
+.grid-item {
+  grid-column: span 2;
+}
+
+@media (max-width: 768px) {
+  .grid-container {
+    grid-template-columns: 1fr;
+  }
+}</code></pre>
+
+    <h2>2. CSS Custom Properties (zmienne CSS)</h2>
+    <p>Zmienne CSS pozwalają na dynamiczne modyfikowanie stylów i tworzenie bardziej elastycznych arkuszy stylów.</p>
+    <h3>Przykład zaawansowanego użycia zmiennych CSS:</h3>
+    <pre><code>:root {
+  --main-color: #007bff;
+  --text-color: #333;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --main-color: #4a90e2;
+    --text-color: #f4f4f4;
+  }
+}
+
+.button {
+  background-color: var(--main-color);
+  color: var(--text-color);
+  transition: all 0.3s ease;
+}
+
+.button:hover {
+  --main-color: #0056b3;
+}</code></pre>
+
+    <h2>3. CSS Animations i Keyframes</h2>
+    <p>CSS Animations pozwalają na tworzenie złożonych animacji bez użycia JavaScript.</p>
+    <h3>Przykład zaawansowanej animacji:</h3>
+    <pre><code>@keyframes rotate-scale {
+  0% {
+    transform: rotate(0deg) scale(1);
+  }
+  50% {
+    transform: rotate(180deg) scale(1.5);
+  }
+  100% {
+    transform: rotate(360deg) scale(1);
+  }
+}
+
+.animated-element {
+  animation: rotate-scale 3s ease-in-out infinite;
+}</code></pre>
+
+    <h2>4. CSS Shapes</h2>
+    <p>CSS Shapes pozwalają na tworzenie niestandardowych kształtów dla opływania tekstu.</p>
+    <h3>Przykład użycia CSS Shapes:</h3>
+    <pre><code>.circle-text {
+  width: 300px;
+  height: 300px;
+  shape-outside: circle(50%);
+  float: left;
+  margin-right: 20px;
+}
+
+.custom-shape {
+  shape-outside: polygon(0 0, 100% 0, 100% 75%, 75% 100%, 0 100%);
+  clip-path: polygon(0 0, 100% 0, 100% 75%, 75% 100%, 0 100%);
+  width: 200px;
+  height: 200px;
+  float: left;
+  background: #007bff;
+}</code></pre>
+
+    <h2>5. CSS Filters</h2>
+    <p>Filtry CSS pozwalają na stosowanie efektów graficznych do elementów.</p>
+    <h3>Przykład zaawansowanego użycia filtrów:</h3>
+    <pre><code>.image-filter {
+  filter: grayscale(50%) blur(2px) brightness(110%);
+  transition: filter 0.3s ease;
+}
+
+.image-filter:hover {
+  filter: grayscale(0%) blur(0) brightness(100%);
+}</code></pre>
+
+    <div class="tip">
+        <strong>Wskazówka:</strong> Pamiętaj o wydajności przy stosowaniu zaawansowanych technik CSS. Niektóre efekty mogą być kosztowne obliczeniowo, szczególnie na urządzeniach mobilnych.
+    </div>
+
+    <h2>6. CSS Mask</h2>
+    <p>CSS Mask pozwala na tworzenie masek dla elementów, kontrolując ich przezroczystość.</p>
+    <h3>Przykład użycia CSS Mask:</h3>
+    <pre><code>.masked-element {
+  width: 300px;
+  height: 200px;
+  background-image: url('image.jpg');
+  -webkit-mask-image: linear-gradient(to right, transparent, black);
+  mask-image: linear-gradient(to right, transparent, black);
+}</code></pre>
+
+    <h2>7. CSS Blend Modes</h2>
+    <p>Tryby mieszania CSS pozwalają na tworzenie efektów nakładania kolorów i obrazów.</p>
+    <h3>Przykład CSS Blend Modes:</h3>
+    <pre><code>.blend-element {
+  background-image: url('background.jpg');
+  background-color: #3498db;
+  background-blend-mode: multiply;
+}
+
+.text-blend {
+  mix-blend-mode: difference;
+  color: white;
+}</code></pre>
+
+    <h2>8. CSS Scroll Snap</h2>
+    <p>CSS Scroll Snap pozwala na kontrolowanie zachowania przewijania, tworząc efekt "przyciągania" do określonych punktów.</p>
+    <h3>Przykład CSS Scroll Snap:</h3>
+    <pre><code>.container {
+  scroll-snap-type: y mandatory;
+  overflow-y: scroll;
+  height: 100vh;
+}
+
+.section {
+  scroll-snap-align: start;
+  height: 100vh;
+}</code></pre>
+
+    <h2>9. CSS Logical Properties</h2>
+    <p>Logiczne właściwości CSS pozwalają na tworzenie layoutów niezależnych od kierunku pisma.</p>
+    <h3>Przykład użycia logicznych właściwości:</h3>
+    <pre><code>.box {
+  margin-inline: auto;
+  padding-block: 1rem;
+  border-inline-start: 2px solid black;
+}
+
+.rtl-text {
+  direction: rtl;
+}</code></pre>
+
+    <h2>10. CSS Houdini</h2>
+    <p>CSS Houdini to zestaw niskopoziomowych API, które dają programistom większą kontrolę nad silnikiem renderującym przeglądarki.</p>
+    <h3>Przykład użycia CSS Paint API (część Houdini):</h3>
+    <pre><code>CSS.paintWorklet.addModule('myPaintWorklet.js');
+
+.custom-background {
+  background-image: paint(myCustomPaint);
+}</code></pre>
+
+    <div class="tip">
+        <strong>Wskazówka:</strong> Zaawansowane techniki CSS często wymagają sprawdzenia kompatybilności z przeglądarkami. Zawsze testuj swoje rozwiązania w różnych środowiskach i stosuj fallbacki dla starszych przeglądarek.
+    </div>
+
+    </div>
+</body>
+</html>

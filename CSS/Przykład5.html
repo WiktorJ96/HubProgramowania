@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Narzędzia CSS</title>
+    <link rel="stylesheet" href="/przyklady.css">
+</head>
+<body>
+    <div class="container">
+    <h1>Narzędzia CSS</h1>
+
+    <h2>1. Preprocesory CSS</h2>
+    <p>Preprocesory CSS rozszerzają możliwości standardowego CSS, dodając funkcje takie jak zmienne, zagnieżdżanie i mixiny.</p>
+    <h3>Popularne preprocesory:</h3>
+    <ul>
+        <li>Sass</li>
+        <li>Less</li>
+        <li>Stylus</li>
+    </ul>
+    <h3>Przykład kodu Sass:</h3>
+    <pre><code>$primary-color: #007bff;
+
+.button {
+    background-color: $primary-color;
+    &:hover {
+        background-color: darken($primary-color, 10%);
+    }
+}</code></pre>
+
+    <h2>2. PostCSS</h2>
+    <p>PostCSS to narzędzie do transformowania CSS za pomocą wtyczek JavaScript.</p>
+    <h3>Popularne wtyczki PostCSS:</h3>
+    <ul>
+        <li>Autoprefixer</li>
+        <li>CSS Modules</li>
+        <li>PostCSS Preset Env</li>
+    </ul>
+    <h3>Przykład konfiguracji PostCSS:</h3>
+    <pre><code>module.exports = {
+    plugins: [
+        require('autoprefixer'),
+        require('postcss-preset-env')({ stage: 1 }),
+    ]
+}</code></pre>
+
+    <h2>3. CSS-in-JS</h2>
+    <p>Biblioteki CSS-in-JS pozwalają na pisanie stylów bezpośrednio w kodzie JavaScript.</p>
+    <h3>Popularne biblioteki CSS-in-JS:</h3>
+    <ul>
+        <li>Styled Components</li>
+        <li>Emotion</li>
+        <li>JSS</li>
+    </ul>
+    <h3>Przykład użycia Styled Components:</h3>
+    <pre><code>import styled from 'styled-components';
+
+const Button = styled.button`
+    background-color: #007bff;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+
+    &:hover {
+        background-color: #0056b3;
+    }
+`;</code></pre>
+
+    <h2>4. Narzędzia do optymalizacji CSS</h2>
+    <p>Te narzędzia pomagają w optymalizacji i minimalizacji kodu CSS.</p>
+    <h3>Popularne narzędzia:</h3>
+    <ul>
+        <li>PurgeCSS</li>
+        <li>cssnano</li>
+        <li>UnCSS</li>
+    </ul>
+    <h3>Przykład konfiguracji cssnano:</h3>
+    <pre><code>module.exports = {
+    plugins: [
+        require('cssnano')({
+            preset: 'default',
+        }),
+    ],
+};</code></pre>
+
+    <h2>5. Frameworki CSS</h2>
+    <p>Frameworki CSS dostarczają gotowe komponenty i systemy gridowe.</p>
+    <h3>Popularne frameworki:</h3>
+    <ul>
+        <li>Bootstrap</li>
+        <li>Tailwind CSS</li>
+        <li>Bulma</li>
+    </ul>
+    <h3>Przykład użycia klas Tailwind CSS:</h3>
+    <pre><code>&lt;button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"&gt;
+    Przycisk
+&lt;/button&gt;</code></pre>
+
+    <h2>6. Narzędzia do testowania CSS</h2>
+    <p>Te narzędzia pomagają w testowaniu i debugowaniu CSS.</p>
+    <h3>Przykłady:</h3>
+    <ul>
+        <li>Stylelint</li>
+        <li>CSS Validator</li>
+        <li>BrowserStack</li>
+    </ul>
+    <h3>Przykład konfiguracji Stylelint:</h3>
+    <pre><code>{
+    "extends": "stylelint-config-standard",
+    "rules": {
+        "indentation": 4,
+        "color-hex-case": "lower"
+    }
+}</code></pre>
+
+    <h2>7. Generatory CSS</h2>
+    <p>Narzędzia online do generowania specyficznych fragmentów CSS.</p>
+    <h3>Popularne generatory:</h3>
+    <ul>
+        <li>CSS Gradient Generator</li>
+        <li>CSS Grid Generator</li>
+        <li>CSS Flexbox Generator</li>
+    </ul>
+
+    <h2>8. Narzędzia do animacji CSS</h2>
+    <p>Ułatwiają tworzenie złożonych animacji CSS.</p>
+    <h3>Przykłady:</h3>
+    <ul>
+        <li>Animate.css</li>
+        <li>Keyframes.app</li>
+        <li>CSS Animation Kit</li>
+    </ul>
+
+    <h2>9. Narzędzia do zarządzania zmiennymi CSS</h2>
+    <p>Pomagają w organizacji i zarządzaniu zmiennymi CSS (Custom Properties).</p>
+    <h3>Przykłady:</h3>
+    <ul>
+        <li>CSS Dash</li>
+        <li>Themify</li>
+    </ul>
+
+    <h2>10. Narzędzia do analizy CSS</h2>
+    <p>Pomagają w analizie i zrozumieniu struktury oraz wydajności CSS.</p>
+    <h3>Przykłady:</h3>
+    <ul>
+        <li>CSS Stats</li>
+        <li>Wallace CSS</li>
+        <li>CSS Analyzer</li>
+    </ul>
+
+    <div class="tip">
+        <strong>Wskazówka:</strong> Wybór odpowiednich narzędzi CSS zależy od specyfiki projektu, zespołu i preferencji osobistych. Warto eksperymentować z różnymi narzędziami, aby znaleźć te, które najlepiej pasują do Twojego workflow.
+    </div>
+
+    </div>
+</body>
+</html>

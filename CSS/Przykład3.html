@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Optymalizacja CSS</title>
+    <link rel="stylesheet" href="/przyklady.css">
+</head>
+<body>
+    <div class="container">
+    <h1>Optymalizacja CSS</h1>
+
+    <h2>1. Minimalizacja CSS</h2>
+    <p>Minimalizacja CSS polega na usunięciu zbędnych znaków bez zmiany funkcjonalności kodu.</p>
+    <h3>Przykład przed i po minimalizacji:</h3>
+    <pre><code>/* Przed minimalizacją */
+.button {
+    background-color: #007bff;
+    color: #ffffff;
+    padding: 10px 15px;
+    border-radius: 5px;
+}
+
+/* Po minimalizacji */
+.button{background-color:#007bff;color:#fff;padding:10px 15px;border-radius:5px}</code></pre>
+
+    <h2>2. Łączenie plików CSS</h2>
+    <p>Łączenie wielu plików CSS w jeden zmniejsza liczbę żądań HTTP, co przyspiesza ładowanie strony.</p>
+    <h3>Przykład:</h3>
+    <pre><code>/* W HTML zamiast wielu linków: */
+&lt;link rel="stylesheet" href="styles.css"&gt;
+&lt;link rel="stylesheet" href="layout.css"&gt;
+&lt;link rel="stylesheet" href="components.css"&gt;
+
+/* Używamy jednego połączonego pliku: */
+&lt;link rel="stylesheet" href="combined.min.css"&gt;</code></pre>
+
+    <h2>3. Optymalizacja selektorów CSS</h2>
+    <p>Używanie efektywnych selektorów może znacznie poprawić wydajność renderowania CSS.</p>
+    <h3>Przykład optymalizacji selektorów:</h3>
+    <pre><code>/* Nieoptymalne */
+#header .navigation ul li a {
+    color: #333;
+}
+
+/* Zoptymalizowane */
+.nav-link {
+    color: #333;
+}</code></pre>
+
+    <h2>4. Używanie shorthand properties</h2>
+    <p>Skrócone właściwości CSS pomagają zmniejszyć rozmiar kodu i poprawić czytelność.</p>
+    <h3>Przykład:</h3>
+    <pre><code>/* Przed optymalizacją */
+.element {
+    margin-top: 10px;
+    margin-right: 15px;
+    margin-bottom: 10px;
+    margin-left: 15px;
+}
+
+/* Po optymalizacji */
+.element {
+    margin: 10px 15px;
+}</code></pre>
+
+    <h2>5. Usuwanie nieużywanych stylów</h2>
+    <p>Usuwanie nieużywanych stylów zmniejsza rozmiar pliku CSS i poprawia wydajność.</p>
+    <h3>Narzędzia do identyfikacji nieużywanych stylów:</h3>
+    <ul>
+        <li>PurgeCSS</li>
+        <li>UnCSS</li>
+        <li>Chrome DevTools Coverage</li>
+    </ul>
+
+    <div class="tip">
+        <strong>Wskazówka:</strong> Regularnie analizuj swój CSS, aby identyfikować i usuwać nieużywane style. Może to znacznie zmniejszyć rozmiar pliku CSS.
+    </div>
+
+    <h2>6. Optymalizacja Critical CSS</h2>
+    <p>Critical CSS to technika, która polega na wbudowaniu najważniejszych stylów bezpośrednio w HTML, aby przyspieszyć początkowe renderowanie strony.</p>
+    <h3>Przykład implementacji Critical CSS:</h3>
+    <pre><code>&lt;head&gt;
+    &lt;style&gt;
+        /* Critical CSS */
+        body { font-family: Arial, sans-serif; }
+        .header { background-color: #f8f9fa; }
+        .main-content { max-width: 1200px; margin: 0 auto; }
+    &lt;/style&gt;
+    &lt;link rel="preload" href="full-styles.css" as="style" onload="this.onload=null;this.rel='stylesheet'"&gt;
+    &lt;noscript&gt;&lt;link rel="stylesheet" href="full-styles.css"&gt;&lt;/noscript&gt;
+&lt;/head&gt;</code></pre>
+
+    <h2>7. Optymalizacja Media Queries</h2>
+    <p>Efektywne użycie media queries może pomóc w zmniejszeniu złożoności CSS i poprawie wydajności na różnych urządzeniach.</p>
+    <h3>Przykład optymalizacji media queries:</h3>
+    <pre><code>/* Zamiast wielu specyficznych breakpointów */
+@media (max-width: 600px) { ... }
+@media (max-width: 900px) { ... }
+@media (max-width: 1200px) { ... }
+
+/* Użyj mniej, ale bardziej elastycznych breakpointów */
+@media (max-width: 768px) { ... }  /* Mobile */
+@media (max-width: 1024px) { ... } /* Tablet */
+@media (min-width: 1025px) { ... } /* Desktop */</code></pre>
+
+    <h2>8. Lazy Loading CSS</h2>
+    <p>Lazy loading CSS polega na opóźnionym ładowaniu stylów, które nie są krytyczne dla początkowego renderowania strony.</p>
+    <h3>Przykład implementacji lazy loading CSS:</h3>
+    <pre><code>&lt;link rel="preload" href="non-critical.css" as="style" onload="this.onload=null;this.rel='stylesheet'"&gt;
+&lt;noscript&gt;&lt;link rel="stylesheet" href="non-critical.css"&gt;&lt;/noscript&gt;</code></pre>
+
+    <h2>9. Optymalizacja kaskady CSS</h2>
+    <p>Efektywne wykorzystanie kaskady CSS może zmniejszyć redundancję w kodzie i poprawić wydajność.</p>
+    <h3>Przykład optymalizacji kaskady:</h3>
+    <pre><code>/* Przed optymalizacją */
+.button { padding: 10px 15px; }
+.button-primary { padding: 10px 15px; background-color: blue; }
+.button-secondary { padding: 10px 15px; background-color: gray; }
+
+/* Po optymalizacji */
+.button { padding: 10px 15px; }
+.button-primary { background-color: blue; }
+.button-secondary { background-color: gray; }</code></pre>
+
+    <h2>10. Narzędzia do optymalizacji CSS</h2>
+    <p>Istnieje wiele narzędzi, które mogą pomóc w automatyzacji procesu optymalizacji CSS:</p>
+    <ul>
+        <li>CSS Nano: Minimalizator CSS</li>
+        <li>Autoprefixer: Automatyczne dodawanie prefiksów dostawców</li>
+        <li>StyleLint: Linter do identyfikacji problemów w CSS</li>
+        <li>CSS Stats: Analiza i wizualizacja arkuszy stylów</li>
+        <li>Critical: Ekstrakcja i wbudowanie critical CSS</li>
+    </ul>
+
+    <div class="tip">
+        <strong>Wskazówka:</strong> Optymalizacja CSS powinna być częścią szerszej strategii optymalizacji wydajności strony. Pamiętaj, aby zawsze testować zmiany i mierzyć ich wpływ na rzeczywistą wydajność strony.
+    </div>
+
+    </div>
+</body>
+</html>

@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dostępność w CSS</title>
+    <link rel="stylesheet" href="/przyklady.css">
+</head>
+<body>
+    <div class="container">
+    <h1>Dostępność w CSS</h1>
+
+    <h2>1. Kontrast kolorów</h2>
+    <p>Zapewnienie odpowiedniego kontrastu między tekstem a tłem jest kluczowe dla czytelności.</p>
+    <h3>Przykład:</h3>
+    <pre><code>/* Niewystarczający kontrast */
+.low-contrast {
+    color: #777;
+    background-color: #fff;
+}
+
+/* Lepszy kontrast */
+.high-contrast {
+    color: #333;
+    background-color: #fff;
+}</code></pre>
+    <div class="tip">
+        <strong>Wskazówka:</strong> Używaj narzędzi takich jak WebAIM Color Contrast Checker do weryfikacji kontrastu.
+    </div>
+
+    <h2>2. Responsywne jednostki tekstu</h2>
+    <p>Używanie responsywnych jednostek pozwala na lepsze skalowanie tekstu na różnych urządzeniach.</p>
+    <h3>Przykład:</h3>
+    <pre><code>body {
+    font-size: 16px; /* Bazowa wielkość czcionki */
+}
+
+h1 {
+    font-size: 2rem; /* 2 * bazowa wielkość czcionki */
+}
+
+p {
+    font-size: 1rem;
+}
+
+@media (max-width: 768px) {
+    body {
+        font-size: 14px; /* Mniejsza bazowa wielkość na mniejszych ekranach */
+    }
+}</code></pre>
+
+    <h2>3. Fokus i nawigacja klawiaturą</h2>
+    <p>Zapewnienie widocznego fokusa jest kluczowe dla użytkowników korzystających z klawiatury.</p>
+    <h3>Przykład:</h3>
+    <pre><code>/* Domyślny styl fokusa przeglądarki */
+:focus {
+    outline: 2px solid blue;
+}
+
+/* Niestandardowy styl fokusa */
+.custom-focus:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.5);
+}</code></pre>
+
+    <h2>4. Skip linki</h2>
+    <p>Skip linki pozwalają użytkownikom klawiatury na szybkie przejście do głównej zawartości strony.</p>
+    <h3>Przykład:</h3>
+    <pre><code>.skip-link {
+    position: absolute;
+    top: -40px;
+    left: 0;
+    background: #000;
+    color: white;
+    padding: 8px;
+    z-index: 100;
+}
+
+.skip-link:focus {
+    top: 0;
+}</code></pre>
+
+    <h2>5. Właściwe użycie semantycznego HTML i CSS</h2>
+    <p>CSS powinien wspierać semantyczną strukturę HTML, a nie ją zastępować.</p>
+    <h3>Przykład:</h3>
+    <pre><code>/* Zamiast tego */
+.fake-button {
+    display: inline-block;
+    padding: 10px;
+    background-color: blue;
+    color: white;
+    cursor: pointer;
+}
+
+/* Użyj prawdziwego przycisku i stylizuj go */
+button {
+    padding: 10px;
+    background-color: blue;
+    color: white;
+    border: none;
+    cursor: pointer;
+}</code></pre>
+
+    <h2>6. Ukrywanie treści dostępnie</h2>
+    <p>Czasami trzeba ukryć treść wizualnie, ale zachować ją dla czytników ekranu.</p>
+    <h3>Przykład:</h3>
+    <pre><code>.visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}</code></pre>
+
+    <h2>7. Dostępne formularze</h2>
+    <p>CSS może pomóc w tworzeniu bardziej dostępnych formularzy.</p>
+    <h3>Przykład:</h3>
+    <pre><code>label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+input[type="text"],
+input[type="email"],
+textarea {
+    width: 100%;
+    padding: 10px;
+    border: 2px solid #ccc;
+    border-radius: 4px;
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus,
+textarea:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25);
+}</code></pre>
+
+    <h2>8. Responsywny design dla dostępności</h2>
+    <p>Responsywny design pomaga w dostępności na różnych urządzeniach.</p>
+    <h3>Przykład:</h3>
+    <pre><code>@media screen and (max-width: 600px) {
+    .menu {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .menu-item {
+        margin-bottom: 10px;
+    }
+}</code></pre>
+
+    <h2>9. Dostępne animacje i przejścia</h2>
+    <p>Niektórzy użytkownicy mogą być wrażliwi na animacje. CSS pozwala na kontrolowanie animacji dla tych użytkowników.</p>
+    <h3>Przykład:</h3>
+    <pre><code>@media (prefers-reduced-motion: reduce) {
+    * {
+        animation: none !important;
+        transition: none !important;
+    }
+}</code></pre>
+
+    <h2>10. Dostępne tabele</h2>
+    <p>CSS może pomóc w tworzeniu bardziej czytelnych i dostępnych tabel.</p>
+    <h3>Przykład:</h3>
+    <pre><code>table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+th {
+    background-color: #f2f2f2;
+    font-weight: bold;
+}
+
+@media screen and (max-width: 600px) {
+    table, thead, tbody, th, td, tr {
+        display: block;
+    }
+
+    thead tr {
+        position: absolute;
+        top: -9999px;
+        left: -9999px;
+    }
+
+    tr {
+        margin-bottom: 10px;
+    }
+
+    td {
+        border: none;
+        position: relative;
+        padding-left: 50%;
+    }
+
+    td:before {
+        position: absolute;
+        top: 6px;
+        left: 6px;
+        width: 45%;
+        padding-right: 10px;
+        white-space: nowrap;
+        content: attr(data-label);
+        font-weight: bold;
+    }
+}</code></pre>
+
+    <div class="tip">
+        <strong>Wskazówka:</strong> Pamiętaj, że dostępność to nie tylko CSS. Ważne jest również prawidłowe użycie semantycznego HTML i ARIA attributes. CSS powinien wspierać i wzmacniać dostępność, a nie być jedynym narzędziem do jej osiągnięcia.
+    </div>
+
+    </div>
+</body>
+</html>
