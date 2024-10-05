@@ -3,11 +3,55 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Przewodnik CSS</title>
+    <title>Rozszerzony przewodnik CSS</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Fira+Code&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/style.css">
     <style>
-         #search-container {
+        body {
+            font-family: 'Roboto', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        h1, h2, h3, h4 {
+            color: #2c3e50;
+        }
+        pre {
+            background-color: #f4f4f4;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 15px;
+            overflow-x: auto;
+        }
+        code {
+            font-family: 'Fira Code', monospace;
+            background-color: #f4f4f4;
+            padding: 2px 4px;
+            border-radius: 4px;
+        }
+        .tip {
+            background-color: #e7f3fe;
+            border-left: 6px solid #2196F3;
+            padding: 10px;
+            margin: 15px 0;
+        }
+        .warning {
+            background-color: #fff3cd;
+            border-left: 6px solid #ffc107;
+            padding: 10px;
+            margin: 15px 0;
+        }
+        .button {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #3498db;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            margin: 10px 5px;
+        }
+        #search-container {
             margin: 20px 0;
         }
         #search-input {
@@ -21,36 +65,19 @@
             background-color: yellow;
             font-weight: bold;
         }
-    pre {
-        background-color: #1e1e1e;
-        color: #d4d4d4;
-        border-radius: 4px;
-        padding: 16px;
-        margin: 20px 0;
-        overflow-x: auto;
-        position: relative;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        border: 1px solid #333;
-    }
-    code {
-        font-family: 'Fira Code', 'Consolas', 'Monaco', 'Andale Mono', 'Ubuntu Mono', monospace;
-        font-size: 14px;
-        line-height: 1.5;
-    }
-    pre code {
-        display: block;
-        padding-top: 8px;
-    }
-    /* Dodatkowe style dla wyróżnienia składni */
-    .keyword { color: #569cd6; }
-    .string { color: #ce9178; }
-    .number { color: #b5cea8; }
-    .comment { color: #6a9955; font-style: italic; }
-    .operator { color: #d4d4d4; }
-    .punctuation { color: #d4d4d4; }
-    .class-name { color: #4ec9b0; }
-    .function { color: #dcdcaa; }
-    .variable { color: #9cdcfe; }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin: 15px 0;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
     </style>
 </head>
 <body>
@@ -65,53 +92,124 @@
             <h2>1. Podstawy CSS</h2>
             <p>CSS (Cascading Style Sheets) to język arkuszy stylów używany do opisywania wyglądu strony napisanej w języku znaczników, takim jak HTML. CSS pozwala na oddzielenie struktury dokumentu od jego prezentacji.</p>
             
-            <h3>Kluczowe koncepcje:</h3>
+            <h3>1.1. Kluczowe koncepcje</h3>
             <ul>
                 <li><strong>Selektory:</strong> Określają, które elementy HTML mają być stylizowane.</li>
                 <li><strong>Właściwości:</strong> Definiują, co dokładnie ma być zmienione (np. kolor, rozmiar).</li>
                 <li><strong>Wartości:</strong> Określają konkretne ustawienia dla właściwości.</li>
             </ul>
 
-            <h3>Przykład podstawowej składni CSS:</h3>
+            <h3>1.2. Podstawowa składnia CSS</h3>
             <pre><code>selector {
     property: value;
 }</code></pre>
+            <p>Na przykład:</p>
+            <pre><code>p {
+    color: blue;
+    font-size: 16px;
+}</code></pre>
 
-            <h3>Sposoby dodawania CSS do HTML:</h3>
+            <h3>1.3. Sposoby dodawania CSS do HTML</h3>
             <ol>
                 <li><strong>Inline CSS:</strong> Dodawanie stylów bezpośrednio do elementów HTML.</li>
+                <pre><code>&lt;p style="color: blue; font-size: 16px;"&gt;Tekst&lt;/p&gt;</code></pre>
                 <li><strong>Internal CSS:</strong> Umieszczanie CSS w sekcji &lt;style&gt; w &lt;head&gt; dokumentu HTML.</li>
+                <pre><code>&lt;head&gt;
+    &lt;style&gt;
+        p {
+            color: blue;
+            font-size: 16px;
+        }
+    &lt;/style&gt;
+&lt;/head&gt;</code></pre>
                 <li><strong>External CSS:</strong> Linkowanie zewnętrznego pliku CSS.</li>
+                <pre><code>&lt;head&gt;
+    &lt;link rel="stylesheet" href="styles.css"&gt;
+&lt;/head&gt;</code></pre>
             </ol>
+
+            <div class="tip">
+                <strong>Wskazówka:</strong> External CSS jest zazwyczaj preferowaną metodą, ponieważ pozwala na łatwe utrzymanie i aktualizację stylów dla całej witryny.
+            </div>
         </div>
 
         <div class="section">
             <h2>2. Selektory CSS</h2>
             <p>Selektory CSS określają, które elementy HTML mają być stylizowane. Istnieje wiele typów selektorów, które pozwalają na precyzyjne celowanie w elementy.</p>
 
-            <h3>Podstawowe typy selektorów:</h3>
-            <ul>
-                <li><strong>Selektor elementu:</strong> <code>p { color: blue; }</code></li>
-                <li><strong>Selektor klasy:</strong> <code>.klasa { font-size: 16px; }</code></li>
-                <li><strong>Selektor ID:</strong> <code>#id { background-color: yellow; }</code></li>
-                <li><strong>Selektor atrybutu:</strong> <code>[type="text"] { border: 1px solid gray; }</code></li>
-            </ul>
+            <h3>2.1. Podstawowe typy selektorów</h3>
+            <table>
+                <tr>
+                    <th>Typ selektora</th>
+                    <th>Przykład</th>
+                    <th>Opis</th>
+                </tr>
+                <tr>
+                    <td>Selektor elementu</td>
+                    <td><code>p { color: blue; }</code></td>
+                    <td>Wybiera wszystkie elementy &lt;p&gt;</td>
+                </tr>
+                <tr>
+                    <td>Selektor klasy</td>
+                    <td><code>.klasa { font-size: 16px; }</code></td>
+                    <td>Wybiera wszystkie elementy z class="klasa"</td>
+                </tr>
+                <tr>
+                    <td>Selektor ID</td>
+                    <td><code>#id { background-color: yellow; }</code></td>
+                    <td>Wybiera element z id="id"</td>
+                </tr>
+                <tr>
+                    <td>Selektor atrybutu</td>
+                    <td><code>[type="text"] { border: 1px solid gray; }</code></td>
+                    <td>Wybiera wszystkie elementy z atrybutem type="text"</td>
+                </tr>
+            </table>
 
-            <h3>Zaawansowane selektory:</h3>
-            <ul>
-                <li><strong>Selektory potomków:</strong> <code>div p { margin-bottom: 10px; }</code></li>
-                <li><strong>Selektory dzieci:</strong> <code>ul > li { list-style-type: square; }</code></li>
-                <li><strong>Selektory rodzeństwa:</strong> <code>h1 + p { font-weight: bold; }</code></li>
-                <li><strong>Pseudoklasy:</strong> <code>a:hover { text-decoration: underline; }</code></li>
-                <li><strong>Pseudoelementy:</strong> <code>p::first-line { font-variant: small-caps; }</code></li>
-            </ul>
+            <h3>2.2. Zaawansowane selektory</h3>
+            <table>
+                <tr>
+                    <th>Typ selektora</th>
+                    <th>Przykład</th>
+                    <th>Opis</th>
+                </tr>
+                <tr>
+                    <td>Selektory potomków</td>
+                    <td><code>div p { margin-bottom: 10px; }</code></td>
+                    <td>Wybiera wszystkie elementy &lt;p&gt; wewnątrz &lt;div&gt;</td>
+                </tr>
+                <tr>
+                    <td>Selektory dzieci</td>
+                    <td><code>ul > li { list-style-type: square; }</code></td>
+                    <td>Wybiera wszystkie elementy &lt;li&gt; będące bezpośrednimi dziećmi &lt;ul&gt;</td>
+                </tr>
+                <tr>
+                    <td>Selektory rodzeństwa</td>
+                    <td><code>h1 + p { font-weight: bold; }</code></td>
+                    <td>Wybiera pierwszy element &lt;p&gt; po każdym &lt;h1&gt;</td>
+                </tr>
+                <tr>
+                    <td>Pseudoklasy</td>
+                    <td><code>a:hover { text-decoration: underline; }</code></td>
+                    <td>Wybiera linki w stanie najechania myszką</td>
+                </tr>
+                <tr>
+                    <td>Pseudoelementy</td>
+                    <td><code>p::first-line { font-variant: small-caps; }</code></td>
+                    <td>Wybiera pierwszą linię każdego elementu &lt;p&gt;</td>
+                </tr>
+            </table>
+
+            <div class="tip">
+                <strong>Wskazówka:</strong> Używaj jak najbardziej specyficznych selektorów, aby uniknąć konfliktów i niepożądanych efektów kaskadowych.
+            </div>
         </div>
 
         <div class="section">
             <h2>3. Box Model i Layout</h2>
             <p>Model pudełkowy (Box Model) jest fundamentalną koncepcją w CSS, która opisuje, jak elementy HTML są renderowane jako prostokątne "pudełka" z zawartością, paddingiem, obramowaniem i marginesem.</p>
 
-            <h3>Komponenty Box Model:</h3>
+            <h3>3.1. Komponenty Box Model</h3>
             <ul>
                 <li><strong>Content:</strong> Zawartość elementu (tekst, obrazy, itp.)</li>
                 <li><strong>Padding:</strong> Przestrzeń między zawartością a obramowaniem</li>
@@ -119,7 +217,7 @@
                 <li><strong>Margin:</strong> Przestrzeń poza obramowaniem</li>
             </ul>
 
-            <h3>Przykład użycia Box Model:</h3>
+            <h3>3.2. Przykład użycia Box Model</h3>
             <pre><code>div {
     width: 300px;
     padding: 20px;
@@ -127,51 +225,113 @@
     margin: 10px;
 }</code></pre>
 
-            <h3>Właściwość box-sizing:</h3>
+            <h3>3.3. Właściwość box-sizing</h3>
             <p><code>box-sizing: border-box;</code> sprawia, że padding i border są wliczane w całkowitą szerokość i wysokość elementu.</p>
+            <pre><code>* {
+    box-sizing: border-box;
+}</code></pre>
 
-            <h3>Układy (Layouts):</h3>
-            <ul>
-                <li><strong>Display:</strong> Kontroluje zachowanie elementu (block, inline, inline-block, flex, grid)</li>
-                <li><strong>Position:</strong> Określa metodę pozycjonowania elementu (static, relative, absolute, fixed)</li>
-                <li><strong>Float:</strong> Pozwala elementom "pływać" w lewo lub prawo</li>
-                <li><strong>Flexbox:</strong> Jednowymiarowy system układu</li>
-                <li><strong>Grid:</strong> Dwuwymiarowy system układu</li>
-            </ul>
+            <h3>3.4. Układy (Layouts)</h3>
+            <table>
+                <tr>
+                    <th>Właściwość</th>
+                    <th>Opis</th>
+                    <th>Przykład</th>
+                </tr>
+                <tr>
+                    <td>Display</td>
+                    <td>Kontroluje zachowanie elementu</td>
+                    <td><code>display: block; display: inline; display: inline-block;</code></td>
+                </tr>
+                <tr>
+                    <td>Position</td>
+                    <td>Określa metodę pozycjonowania elementu</td>
+                    <td><code>position: static; position: relative; position: absolute; position: fixed;</code></td>
+                </tr>
+                <tr>
+                    <td>Float</td>
+                    <td>Pozwala elementom "pływać" w lewo lub prawo</td>
+                    <td><code>float: left; float: right;</code></td>
+                </tr>
+                <tr>
+                    <td>Flexbox</td>
+                    <td>Jednowymiarowy system układu</td>
+                    <td><code>display: flex;</code></td>
+                </tr>
+                <tr>
+                    <td>Grid</td>
+                    <td>Dwuwymiarowy system układu</td>
+                    <td><code>display: grid;</code></td>
+                </tr>
+            </table>
+
+            <div class="tip">
+                <strong>Wskazówka:</strong> Flexbox i Grid są nowoczesnymi, potężnymi narzędziami do tworzenia layoutów i są preferowane w stosunku do starszych technik, takich jak float.
+            </div>
         </div>
 
         <div class="section">
             <h2>4. Responsywne projektowanie</h2>
             <p>Responsywne projektowanie to podejście, które sprawia, że strony internetowe dobrze wyglądają na różnych urządzeniach i rozmiarach ekranów.</p>
 
-            <h3>Kluczowe techniki:</h3>
-            <ul>
-                <li><strong>Media Queries:</strong> Pozwalają na zastosowanie różnych stylów w zależności od cech urządzenia.</li>
-                <li><strong>Fluid Grids:</strong> Używanie procentowych szerokości zamiast stałych.</li>
-                <li><strong>Elastyczne obrazy:</strong> Skalowanie obrazów w zależności od rozmiaru kontenera.</li>
-            </ul>
-
-            <h3>Przykład Media Query:</h3>
+            <h3>4.1. Media Queries</h3>
+            <p>Media Queries pozwalają na zastosowanie różnych stylów w zależności od cech urządzenia.</p>
             <pre><code>@media screen and (max-width: 600px) {
     body {
         font-size: 14px;
     }
 }</code></pre>
 
-            <h3>Jednostki względne:</h3>
-            <ul>
-                <li><code>em</code>: Relatywna do rozmiaru czcionki rodzica</li>
-                <li><code>rem</code>: Relatywna do rozmiaru czcionki elementu root (zwykle &lt;html&gt;)</li>
-                <li><code>vw/vh</code>: Relatywna do szerokości/wysokości viewport</li>
-            </ul>
+            <h3>4.2. Fluid Grids</h3>
+            <p>Używanie procentowych szerokości zamiast stałych pozwala na elastyczne dostosowanie layoutu.</p>
+            <pre><code>.container {
+    width: 100%;
+    max-width: 1200px;
+}
+.column {
+    width: 33.33%;
+}</code></pre>
+
+            <h3>4.3. Elastyczne obrazy</h3>
+            <p>Obrazy powinny być skalowalne, aby dostosować się do różnych rozmiarów ekranu.</p>
+            <pre><code>img {
+    max-width: 100%;
+    height: auto;
+}</code></pre>
+
+            <h3>4.4. Jednostki względne</h3>
+            <table>
+                <tr>
+                    <th>Jednostka</th>
+                    <th>Opis</th>
+                </tr>
+                <tr>
+                    <td><code>em</code></td>
+                    <td>Relatywna do rozmiaru czcionki rodzica</td>
+                </tr>
+                <tr>
+                    <td><code>rem</code></td>
+                    <td>Relatywna do rozmiaru czcionki elementu root (zwykle &lt;html&gt;)</td>
+                </tr>
+                <tr>
+                    <td><code>vw</code></td>
+                    <td>1% szerokości viewport</td>
+                </tr>
+                <tr><td><code>vh</code></td>
+                    <td>1% wysokości viewport</td>
+                </tr>
+            </table>
+
+            <div class="tip">
+                <strong>Wskazówka:</strong> Używanie jednostek względnych, takich jak em, rem, vw i vh, może znacznie ułatwić tworzenie responsywnych layoutów.
+            </div>
         </div>
 
         <div class="section">
-            <h2>5. Flexbox i Grid</h2>
-            <p>Flexbox i Grid to potężne systemy układu w CSS, które znacznie ułatwiają tworzenie złożonych i responsywnych layoutów.</p>
+            <h2>5. Flexbox</h2>
+            <p>Flexbox to potężny system układu w CSS, który znacznie ułatwia tworzenie elastycznych i responsywnych layoutów.</p>
 
-            <h3>Flexbox:</h3>
-            <p>Jednowymiarowy system układu, idealny do tworzenia elastycznych kontenerów.</p>
+            <h3>5.1. Podstawy Flexbox</h3>
             <pre><code>.container {
     display: flex;
     justify-content: space-between;
@@ -182,8 +342,64 @@
     flex: 1;
 }</code></pre>
 
-            <h3>Grid:</h3>
-            <p>Dwuwymiarowy system układu, doskonały do tworzenia złożonych layoutów strony.</p>
+            <h3>5.2. Właściwości kontenera Flex</h3>
+            <table>
+                <tr>
+                    <th>Właściwość</th>
+                    <th>Opis</th>
+                </tr>
+                <tr>
+                    <td><code>flex-direction</code></td>
+                    <td>Określa kierunek głównej osi (row, column, row-reverse, column-reverse)</td>
+                </tr>
+                <tr>
+                    <td><code>flex-wrap</code></td>
+                    <td>Określa, czy elementy flex powinny się zawijać (nowrap, wrap, wrap-reverse)</td>
+                </tr>
+                <tr>
+                    <td><code>justify-content</code></td>
+                    <td>Wyrównuje elementy wzdłuż głównej osi (flex-start, flex-end, center, space-between, space-around)</td>
+                </tr>
+                <tr>
+                    <td><code>align-items</code></td>
+                    <td>Wyrównuje elementy wzdłuż osi poprzecznej (stretch, flex-start, flex-end, center, baseline)</td>
+                </tr>
+            </table>
+
+            <h3>5.3. Właściwości elementów Flex</h3>
+            <table>
+                <tr>
+                    <th>Właściwość</th>
+                    <th>Opis</th>
+                </tr>
+                <tr>
+                    <td><code>flex-grow</code></td>
+                    <td>Określa współczynnik wzrostu elementu względem innych elementów flex</td>
+                </tr>
+                <tr>
+                    <td><code>flex-shrink</code></td>
+                    <td>Określa współczynnik kurczenia elementu względem innych elementów flex</td>
+                </tr>
+                <tr>
+                    <td><code>flex-basis</code></td>
+                    <td>Określa początkowy rozmiar elementu flex</td>
+                </tr>
+                <tr>
+                    <td><code>align-self</code></td>
+                    <td>Pozwala na nadpisanie wyrównania dla pojedynczego elementu</td>
+                </tr>
+            </table>
+
+            <div class="tip">
+                <strong>Wskazówka:</strong> Flexbox jest szczególnie przydatny do tworzenia jednowymiarowych layoutów, takich jak nawigacja, karty produktów czy galerie zdjęć.
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>6. Grid</h2>
+            <p>CSS Grid Layout to dwuwymiarowy system układu, który pozwala na tworzenie złożonych layoutów strony.</p>
+
+            <h3>6.1. Podstawy Grid</h3>
             <pre><code>.container {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -193,13 +409,61 @@
 .item {
     grid-column: span 2;
 }</code></pre>
+
+            <h3>6.2. Właściwości kontenera Grid</h3>
+            <table>
+                <tr>
+                    <th>Właściwość</th>
+                    <th>Opis</th>
+                </tr>
+                <tr>
+                    <td><code>grid-template-columns</code></td>
+                    <td>Definiuje kolumny siatki</td>
+                </tr>
+                <tr>
+                    <td><code>grid-template-rows</code></td>
+                    <td>Definiuje wiersze siatki</td>
+                </tr>
+                <tr>
+                    <td><code>grid-template-areas</code></td>
+                    <td>Definiuje nazwane obszary siatki</td>
+                </tr>
+                <tr>
+                    <td><code>grid-gap</code></td>
+                    <td>Określa odstępy między komórkami siatki</td>
+                </tr>
+            </table>
+
+            <h3>6.3. Właściwości elementów Grid</h3>
+            <table>
+                <tr>
+                    <th>Właściwość</th>
+                    <th>Opis</th>
+                </tr>
+                <tr>
+                    <td><code>grid-column</code></td>
+                    <td>Określa położenie elementu w kolumnach siatki</td>
+                </tr>
+                <tr>
+                    <td><code>grid-row</code></td>
+                    <td>Określa położenie elementu w wierszach siatki</td>
+                </tr>
+                <tr>
+                    <td><code>grid-area</code></td>
+                    <td>Przypisuje element do nazwanego obszaru siatki</td>
+                </tr>
+            </table>
+
+            <div class="tip">
+                <strong>Wskazówka:</strong> Grid jest idealny do tworzenia złożonych, dwuwymiarowych layoutów, takich jak strony główne, dashboardy czy galerie zdjęć.
+            </div>
         </div>
 
         <div class="section">
-            <h2>6. Animacje i Przejścia</h2>
+            <h2>7. Animacje i Przejścia</h2>
             <p>CSS oferuje potężne narzędzia do tworzenia animacji i płynnych przejść, co może znacznie poprawić UX strony.</p>
 
-            <h3>Przejścia (Transitions):</h3>
+            <h3>7.1. Przejścia (Transitions)</h3>
             <pre><code>.button {
     background-color: blue;
     transition: background-color 0.3s ease;
@@ -209,7 +473,31 @@
     background-color: red;
 }</code></pre>
 
-            <h3>Animacje:</h3>
+            <h3>7.2. Właściwości przejść</h3>
+            <table>
+                <tr>
+                    <th>Właściwość</th>
+                    <th>Opis</th>
+                </tr>
+                <tr>
+                    <td><code>transition-property</code></td>
+                    <td>Określa, które właściwości CSS mają być animowane</td>
+                </tr>
+                <tr>
+                    <td><code>transition-duration</code></td>
+                    <td>Określa czas trwania przejścia</td>
+                </tr>
+                <tr>
+                    <td><code>transition-timing-function</code></td>
+                    <td>Określa krzywą czasową przejścia (np. ease, linear, cubic-bezier)</td>
+                </tr>
+                <tr>
+                    <td><code>transition-delay</code></td>
+                    <td>Określa opóźnienie przed rozpoczęciem przejścia</td>
+                </tr>
+            </table>
+
+            <h3>7.3. Animacje</h3>
             <pre><code>@keyframes slide-in {
     from { transform: translateX(-100%); }
     to { transform: translateX(0); }
@@ -218,13 +506,49 @@
 .animated-element {
     animation: slide-in 1s ease-out;
 }</code></pre>
+
+            <h3>7.4. Właściwości animacji</h3>
+            <table>
+                <tr>
+                    <th>Właściwość</th>
+                    <th>Opis</th>
+                </tr>
+                <tr>
+                    <td><code>animation-name</code></td>
+                    <td>Określa nazwę animacji keyframes</td>
+                </tr>
+                <tr>
+                    <td><code>animation-duration</code></td>
+                    <td>Określa czas trwania animacji</td>
+                </tr>
+                <tr>
+                    <td><code>animation-timing-function</code></td>
+                    <td>Określa krzywą czasową animacji</td>
+                </tr>
+                <tr>
+                    <td><code>animation-delay</code></td>
+                    <td>Określa opóźnienie przed rozpoczęciem animacji</td>
+                </tr>
+                <tr>
+                    <td><code>animation-iteration-count</code></td>
+                    <td>Określa, ile razy animacja powinna się powtórzyć</td>
+                </tr>
+                <tr>
+                    <td><code>animation-direction</code></td>
+                    <td>Określa, czy animacja powinna się odtwarzać do przodu, do tyłu lub na przemian</td>
+                </tr>
+            </table>
+
+            <div class="tip">
+                <strong>Wskazówka:</strong> Używaj animacji z umiarem. Zbyt wiele animacji może być przytłaczające dla użytkownika i negatywnie wpłynąć na wydajność strony.
+            </div>
         </div>
 
         <div class="section">
-            <h2>7. Zaawansowane techniki CSS</h2>
+            <h2>8. Zaawansowane techniki CSS</h2>
             <p>Poznanie zaawansowanych technik CSS pozwala na tworzenie bardziej złożonych i interaktywnych interfejsów.</p>
 
-            <h3>CSS Variables (Custom Properties):</h3>
+            <h3>8.1. CSS Variables (Custom Properties)</h3>
             <pre><code>:root {
     --main-color: #3498db;
 }
@@ -233,7 +557,7 @@
     background-color: var(--main-color);
 }</code></pre>
 
-            <h3>CSS Shapes:</h3>
+            <h3>8.2. CSS Shapes</h3>
             <pre><code>.circle {
     width: 100px;
     height: 100px;
@@ -241,105 +565,43 @@
     shape-outside: circle();
 }</code></pre>
 
-            <h3>CSS Filters:</h3>
+            <h3>8.3. CSS Filters</h3>
             <pre><code>img {
     filter: grayscale(50%) blur(2px);
 }</code></pre>
+
+            <h3>8.4. CSS Transforms</h3>
+            <pre><code>.rotated {
+    transform: rotate(45deg) scale(1.5);
+}</code></pre>
+
+            <h3>8.5. CSS Grid Layout z auto-fill i auto-fit</h3>
+            <pre><code>.container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 20px;
+}</code></pre>
+
+            <div class="tip">
+                <strong>Wskazówka:</strong> Zaawansowane techniki CSS mogą znacznie zwiększyć możliwości twojego projektu, ale pamiętaj o sprawdzeniu kompatybilności przeglądarek przed ich użyciem w produkcji.
+            </div>
         </div>
 
         <div class="section">
-        <h2>8. Typografia w CSS</h2>
-        <p>Efektywne wykorzystanie typografii jest kluczowe dla czytelności i estetyki strony. CSS oferuje wiele narzędzi do kontrolowania wyglądu tekstu.</p>
+            <h2>9. Optymalizacja i wydajność CSS</h2>
+            <p>Optymalizacja CSS jest kluczowa dla zapewnienia szybkiego ładowania i płynnego działania strony.</p>
 
-        <h3>Podstawowe właściwości typograficzne:</h3>
-        <ul>
-            <li><code>font-family</code>: Określa rodzinę czcionek</li>
-            <li><code>font-size</code>: Kontroluje rozmiar czcionki</li>
-            <li><code>font-weight</code>: Ustawia grubość czcionki</li>
-            <li><code>line-height</code>: Kontroluje wysokość linii</li>
-            <li><code>letter-spacing</code>: Ustawia odstępy między literami</li>
-            <li><code>text-align</code>: Kontroluje wyrównanie tekstu</li>
-        </ul>
+            <h3>9.1. Techniki optymalizacji</h3>
+            <ul>
+                <li>Minimalizacja CSS</li>
+                <li>Używanie skróconych właściwości</li>
+                <li>Unikanie nadmiarowych selektorów</li>
+                <li>Optymalizacja kaskady</li>
+                <li>Lazy loading dla CSS niekrytycznego</li>
+            </ul>
 
-        <h3>Zaawansowane techniki typograficzne:</h3>
-        <pre><code>body {
-    font-family: 'Roboto', sans-serif;
-    font-size: 16px;
-    line-height: 1.5;
-}
-
-h1 {
-    font-size: 2.5em;
-    font-weight: 700;
-    letter-spacing: -0.5px;
-}
-
-p {
-    max-width: 60ch; /* Optymalna długość linii dla czytelności */
-    text-align: justify;
-    hyphens: auto; /* Automatyczne dzielenie wyrazów */
-}
-
-@font-face {
-    font-family: 'CustomFont';
-    src: url('path/to/font.woff2') format('woff2');
-    font-display: swap; /* Optymalizacja ładowania czcionek */
-}</code></pre>
-    </div>
-
-    <div class="section">
-        <h2>9. Efekty wizualne i grafika</h2>
-        <p>CSS umożliwia tworzenie zaawansowanych efektów wizualnych bez konieczności używania grafik rastrowych.</p>
-
-        <h3>Gradienty:</h3>
-        <pre><code>.gradient-bg {
-    background: linear-gradient(45deg, #f3ec78, #af4261);
-}
-
-.radial-gradient {
-    background: radial-gradient(circle, #f3ec78, #af4261);
-}</code></pre>
-
-        <h3>Cienie:</h3>
-        <pre><code>.box-shadow {
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-.text-shadow {
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-}</code></pre>
-
-        <h3>Transformacje:</h3>
-        <pre><code>.transformed {
-    transform: rotate(45deg) scale(1.2) translateX(20px);
-}</code></pre>
-
-        <h3>Maski i klipy:</h3>
-        <pre><code>.masked-element {
-    -webkit-mask-image: url('mask.svg');
-    mask-image: url('mask.svg');
-}
-
-.clipped-element {
-    clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
-}</code></pre>
-    </div>
-
-    <div class="section">
-        <h2>10. Optymalizacja i wydajność CSS</h2>
-        <p>Optymalizacja CSS jest kluczowa dla zapewnienia szybkiego ładowania i płynnego działania strony.</p>
-
-        <h3>Techniki optymalizacji:</h3>
-        <ul>
-            <li>Minimalizacja CSS</li>
-            <li>Używanie skróconych właściwości</li>
-            <li>Unikanie nadmiarowych selektorów</li>
-            <li>Optymalizacja kaskady</li>
-            <li>Lazy loading dla CSS niekrytycznego</li>
-        </ul>
-
-        <h3>Przykład optymalizacji:</h3>
-        <pre><code>/* Przed optymalizacją */
+            <h3>9.2. Przykład optymalizacji</h3>
+            <pre><code>/* Przed optymalizacją */
 .box {
     margin-top: 10px;
     margin-right: 15px;
@@ -356,16 +618,28 @@ p {
     border: 1px solid black;
 }</code></pre>
 
-        <h3>Critical CSS:</h3>
-        <p>Technika polegająca na wbudowaniu krytycznego CSS bezpośrednio w HTML, aby przyspieszyć początkowe renderowanie strony.</p>
-    </div>
+            <h3>9.3. Critical CSS</h3>
+            <p>Technika polegająca na wbudowaniu krytycznego CSS bezpośrednio w HTML, aby przyspieszyć początkowe renderowanie strony.</p>
+            <pre><code>&lt;head&gt;
+    &lt;style&gt;
+        /* Critical CSS */
+        body { font-family: sans-serif; }
+        header { background-color: #333; color: white; }
+    &lt;/style&gt;
+    &lt;link rel="preload" href="full-styles.css" as="style" onload="this.onload=null;this.rel='stylesheet'"&gt;
+&lt;/head&gt;</code></pre>
 
-    <div class="section">
-        <h2>11. Metodologie organizacji CSS</h2>
-        <p>Stosowanie metodologii CSS pomaga w utrzymaniu czystego, skalowalnego i łatwego w zarządzaniu kodu.</p>
+            <div class="tip">
+                <strong>Wskazówka:</strong> Narzędzia takie jak PurgeCSS mogą pomóc w usunięciu nieużywanych stylów CSS, co może znacznie zmniejszyć rozmiar pliku CSS.
+            </div>
+        </div>
 
-        <h3>BEM (Block Element Modifier):</h3>
-        <pre><code>/* Block component */
+        <div class="section">
+            <h2>10. Metodologie organizacji CSS</h2>
+            <p>Stosowanie metodologii CSS pomaga w utrzymaniu czystego, skalowalnego i łatwego w zarządzaniu kodu.</p>
+
+            <h3>10.1. BEM (Block Element Modifier)</h3>
+            <pre><code>/* Block component */
 .btn {}
 
 /* Element that depends upon the block */ 
@@ -375,39 +649,108 @@ p {
 .btn--orange {} 
 .btn--big {}</code></pre>
 
-        <h3>OOCSS (Object Oriented CSS):</h3>
-        <p>Skupia się na oddzieleniu struktury od skórki i kontenera od zawartości.</p>
+            <h3>10.2. OOCSS (Object Oriented CSS)</h3>
+            <p>Skupia się na oddzieleniu struktury od skórki i kontenera od zawartości.</p>
+            <pre><code>/* Structure */
+.header { /* ... */ }
+.footer { /* ... */ }
 
-        <h3>SMACSS (Scalable and Modular Architecture for CSS):</h3>
-        <p>Kategoryzuje reguły CSS na: Base, Layout, Module, State i Theme.</p>
+/* Skin */
+.btn-primary { /* ... */ }
+.btn-secondary { /* ... */ }</code></pre>
 
-        <h3>Atomic CSS:</h3>
-        <p>Polega na tworzeniu małych, jednozadaniowych klas.</p>
-        <pre><code>.mt-10 { margin-top: 10px; }
+            <h3>10.3. SMACSS (Scalable and Modular Architecture for CSS)</h3>
+            <p>Kategoryzuje reguły CSS na: Base, Layout, Module, State i Theme.</p>
+            <pre><code>/* Base */
+body, form { /* ... */ }
+
+/* Layout */
+.l-header { /* ... */ }
+
+/* Module */
+.widget { /* ... */ }
+
+/* State */
+.is-hidden { /* ... */ }
+
+/* Theme */
+.theme-dark { /* ... */ }</code></pre>
+
+            <h3>10.4. Atomic CSS</h3>
+            <p>Polega na tworzeniu małych, jednozadaniowych klas.</p>
+            <pre><code>.mt-10 { margin-top: 10px; }
 .text-center { text-align: center; }
 .bg-primary { background-color: #007bff; }</code></pre>
-    </div>
 
-    <div class="section">
-        <h2>12. CSS i dostępność</h2>
-        <p>Tworzenie dostępnych stron internetowych jest kluczowe dla zapewnienia równego dostępu do informacji dla wszystkich użytkowników.</p>
+            <h3>10.5. CSS Modules</h3>
+            <p>Podejście, które zapewnia lokalny zakres dla klas CSS w aplikacjach JavaScript.</p>
+            <pre><code>/* button.module.css */
+.button {
+    background-color: blue;
+    color: white;
+}
 
-        <h3>Kluczowe aspekty dostępności w CSS:</h3>
-        <ul>
-            <li>Odpowiedni kontrast kolorów</li>
-            <li>Czytelne rozmiary czcionek</li>
-            <li>Responsywny design</li>
-            <li>Właściwe użycie focus states</li>
-            <li>Ukrywanie treści w sposób dostępny</li>
-        </ul>
+/* W komponencie JavaScript */
+import styles from './button.module.css';
 
-        <h3>Przykład dostępnego fokusa:</h3>
-        <pre><code>a:focus {
+function Button() {
+    return &lt;button className={styles.button}&gt;Click me&lt;/button&gt;;
+}</code></pre>
+
+            <div class="tip">
+                <strong>Wskazówka:</strong> Wybór metodologii zależy od skali projektu i preferencji zespołu. Najważniejsze jest konsekwentne stosowanie wybranego podejścia.
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>11. CSS i dostępność</h2>
+            <p>Tworzenie dostępnych stron internetowych jest kluczowe dla zapewnienia równego dostępu do informacji dla wszystkich użytkowników.</p>
+
+            <h3>11.1. Kontrast kolorów</h3>
+            <p>Zapewnienie odpowiedniego kontrastu między tekstem a tłem jest kluczowe dla czytelności.</p>
+            <pre><code>/* Dobry kontrast */
+.text {
+    color: #000000;
+    background-color: #ffffff;
+}
+
+/* Słaby kontrast */
+.text-poor-contrast {
+    color: #777777;
+    background-color: #999999;
+}</code></pre>
+
+            <h3>11.2. Rozmiary czcionek i jednostki relatywne</h3>
+            <p>Używanie jednostek relatywnych pozwala użytkownikom na łatwe skalowanie treści.</p>
+            <pre><code>body {
+    font-size: 16px; /* Bazowy rozmiar czcionki */
+}
+
+h1 {
+    font-size: 2rem; /* 2 * rozmiar bazowy */
+}
+
+p {
+    font-size: 1rem;
+    line-height: 1.5;
+}</code></pre>
+
+            <h3>11.3. Focus states</h3>
+            <p>Zapewnienie widocznego stanu fokusa jest kluczowe dla nawigacji klawiaturą.</p>
+            <pre><code>a:focus {
     outline: 2px solid #4A90E2;
     outline-offset: 2px;
 }
 
-.visually-hidden {
+/* Jeśli chcesz usunąć domyślny outline, zawsze zapewnij alternatywę */
+button:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, .5);
+}</code></pre>
+
+            <h3>11.4. Ukrywanie treści</h3>
+            <p>Czasami trzeba ukryć treść wizualnie, ale zachować ją dla czytników ekranu.</p>
+            <pre><code>.visually-hidden {
     position: absolute;
     width: 1px;
     height: 1px;
@@ -418,25 +761,117 @@ p {
     white-space: nowrap;
     border: 0;
 }</code></pre>
-    </div>
 
-
-        <div class="tip">
-        <strong>Wskazówka:</strong> Pamiętaj, że CSS jest potężnym narzędziem, ale zawsze należy myśleć o użytkownikach końcowych. Staraj się tworzyć nie tylko estetyczne, ale również funkcjonalne, wydajne i dostępne strony internetowe.
+            <div class="warning">
+                <strong>Uwaga:</strong> Dostępność nie jest opcjonalna. Jest to prawny wymóg w wielu krajach i kluczowy aspekt tworzenia inkluzywnych stron internetowych.
+            </div>
         </div>
+
+        <div class="section">
+            <h2>12. Narzędzia CSS</h2>
+            <p>Istnieje wiele narzędzi, które mogą ułatwić pracę z CSS i poprawić wydajność procesu rozwoju.</p>
+
+            <h3>12.1. Preprocesory CSS</h3>
+            <p>Preprocesory jak Sass, Less czy Stylus dodają funkcjonalności do CSS, takie jak zmienne, zagnieżdżanie czy mixiny.</p>
+            <pre><code>// Przykład Sass
+$primary-color: #3498db;
+
+.button {
+    background-color: $primary-color;
+    &:hover {
+        background-color: darken($primary-color, 10%);
+    }
+}</code></pre>
+
+            <h3>12.2. PostCSS</h3>
+            <p>PostCSS to narzędzie do transformowania CSS za pomocą pluginów JavaScript.</p>
+            <pre><code>// Przykład użycia Autoprefixer (plugin PostCSS)
+.box {
+    display: flex;
+}
+
+// Po przetworzeniu
+.box {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+}</code></pre>
+
+            <h3>12.3. CSS-in-JS</h3>
+            <p>Biblioteki CSS-in-JS pozwalają na pisanie CSS bezpośrednio w kodzie JavaScript.</p>
+            <pre><code>import styled from 'styled-components';
+
+const Button = styled.button`
+    background-color: blue;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+`;</code></pre>
+
+            <h3>12.4. Narzędzia do analizy i optymalizacji CSS</h3>
+            <ul>
+                <li>PurgeCSS - usuwa nieużywane style</li>
+                <li>StyleLint - linter dla CSS</li>
+                <li>CSS Stats - analizuje i wizualizuje statystyki CSS</li>
+            </ul>
+
+            <div class="tip">
+                <strong>Wskazówka:</strong> Wybór narzędzi zależy od specyfiki projektu i preferencji zespołu. Warto eksperymentować z różnymi narzędziami, aby znaleźć te, które najlepiej pasują do twojego workflow.
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>13. Przyszłość CSS</h2>
+            <p>CSS stale ewoluuje, wprowadzając nowe funkcje i możliwości. Oto kilka obszarów, na które warto zwrócić uwagę:</p>
+
+            <h3>13.1. CSS Houdini</h3>
+            <p>Zestaw niskopoziomowych API, które dają programistom bezpośredni dostęp do silnika renderowania CSS przeglądarki.</p>
+            <pre><code>CSS.paintWorklet.addModule('my-paint-worklet.js');</code></pre>
+
+            <h3>13.2. Container Queries</h3>
+            <p>Pozwalają na stylizację elementów na podstawie rozmiaru ich kontenera, a nie całego viewport.</p>
+            <pre><code>@container (min-width: 400px) {
+    .card {
+        display: grid;
+        grid-template-columns: 2fr 1fr;
+    }
+}</code></pre>
+
+            <h3>13.3. Nesting</h3>
+            <p>Natywne zagnieżdżanie selektorów w CSS, podobne do tego, co oferują preprocesory.</p>
+            <pre><code>.card {
+    background: white;
+    & .title {
+        color: black;
+    }
+    &:hover {
+        background: gray;
+    }
+}</code></pre>
+
+            <h3>13.4. Funkcje matematyczne</h3>
+            <p>Nowe funkcje matematyczne w CSS, takie jak min(), max(), i clamp().</p>
+            <pre><code>.responsive-text {
+    font-size: clamp(1rem, 2.5vw, 2rem);
+}</code></pre>
+
+            <div class="tip">
+                <strong>Wskazówka:</strong> Śledź specyfikacje CSS Working Group i eksperymentuj z nowymi funkcjami w środowisku deweloperskim, aby być przygotowanym na przyszłe zmiany w CSS.
+            </div>
+        </div>
+
         <div class="tip">
-            <strong>Wskazówka:</strong> Regularnie ćwicz i eksperymentuj z różnymi właściwościami CSS. Tworzenie małych projektów lub wyzwań CodePen może znacznie przyspieszyć naukę i zrozumienie CSS.
+            <strong>Końcowa wskazówka:</strong> CSS jest potężnym narzędziem do stylizacji stron internetowych, ale wymaga praktyki i ciągłego uczenia się. Eksperymentuj z różnymi technikami, śledź najnowsze trendy i pamiętaj o tworzeniu dostępnych i wydajnych stron.
         </div>
 
         <div class="buttons">
-            <a href="https://www.cssportal.com/" class="button">CSS PORTAL</a>
-            <a href="Przykład.html" class="button">Najlepsze praktyki</a>
-            <a href="Przykład2.html" class="button">Zaawansowane techniki CSS</a>
-            <a href="Przykład3.html" class="button">Optymalizacja CSS</a>
-            <a href="Przykład4.html" class="button">Dostępność w CSS</a>
-            <a href="Przykład5.html" class="button">Narzędzia CSS</a>
+            <a href="https://developer.mozilla.org/en-US/docs/Web/CSS" class="button">MDN Web Docs - CSS</a>
+            <a href="https://www.w3.org/Style/CSS/" class="button">W3C CSS Working Group</a>
+            <a href="https://caniuse.com/" class="button">Can I use</a>
+            <a href="https://css-tricks.com/" class="button">CSS-Tricks</a>
+            <a href="https://csswizardry.com/" class="button">CSS Wizardry</a>
         </div>
-
+    </div>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
@@ -462,38 +897,37 @@ p {
                         }
                     } else {
                         section.style.display = 'none';
-                    }});
-        });
+                    }
+                });
+            });
 
-        function highlightText(element, searchTerm) {
-            const walker = document.createTreeWalker(element, NodeFilter.SHOW_TEXT, null, false);
-            let node;
-            while (node = walker.nextNode()) {
-                const parent = node.parentNode;
-                if (parent.nodeName !== 'SCRIPT' && parent.nodeName !== 'STYLE') {
-                    const text = node.textContent;
-                    const regex = new RegExp(searchTerm, 'gi');
-                    if (regex.test(text)) {
-                        const fragment = document.createDocumentFragment();
-                        let lastIndex = 0;
-                        text.replace(regex, function(match, index) {
-                            fragment.appendChild(document.createTextNode(text.slice(lastIndex, index)));
-                            const span = document.createElement('span');
-                            span.className = 'highlight';
-                            span.textContent = match;
-                            fragment.appendChild(span);
-                            lastIndex = index + match.length;
-                            return match;
-                        });
-                        fragment.appendChild(document.createTextNode(text.slice(lastIndex)));
-                        parent.replaceChild(fragment, node);
+            function highlightText(element, searchTerm) {
+                const walker = document.createTreeWalker(element, NodeFilter.SHOW_TEXT, null, false);
+                let node;
+                while (node = walker.nextNode()) {
+                    const parent = node.parentNode;
+                    if (parent.nodeName !== 'SCRIPT' && parent.nodeName !== 'STYLE') {
+                        const text = node.textContent;
+                        const regex = new RegExp(searchTerm, 'gi');
+                        if (regex.test(text)) {
+                            const fragment = document.createDocumentFragment();
+                            let lastIndex = 0;
+                            text.replace(regex, function(match, index) {
+                                fragment.appendChild(document.createTextNode(text.slice(lastIndex, index)));
+                                const span = document.createElement('span');
+                                span.className = 'highlight';
+                                span.textContent = match;
+                                fragment.appendChild(span);
+                                lastIndex = index + match.length;
+                                return match;
+                            });
+                            fragment.appendChild(document.createTextNode(text.slice(lastIndex)));
+                            parent.replaceChild(fragment, node);
+                        }
                     }
                 }
             }
-        }
-    });
+        });
     </script>
-
-    
 </body>
 </html>

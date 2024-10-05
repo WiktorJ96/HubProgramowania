@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rozszerzony przewodnik HTML</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Fira+Code&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        h1, h2, h3, h4 {
+            color: #2c3e50;
+        }
+        pre {
+            background-color: #f4f4f4;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 15px;
+            overflow-x: auto;
+        }
+        code {
+            font-family: 'Fira Code', monospace;
+            background-color: #f4f4f4;
+            padding: 2px 4px;
+            border-radius: 4px;
+        }
+        .tip {
+            background-color: #e7f3fe;
+            border-left: 6px solid #2196F3;
+            padding: 10px;
+            margin: 15px 0;
+        }
+        .warning {
+            background-color: #fff3cd;
+            border-left: 6px solid #ffc107;
+            padding: 10px;
+            margin: 15px 0;
+        }
+        .button {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #3498db;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            margin: 10px 5px;
+        }
+        #search-container {
+            margin: 20px 0;
+        }
+        #search-input {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        .highlight {
+            background-color: yellow;
+            font-weight: bold;
+        }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin: 15px 0;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Rozszerzony i szczegółowy przewodnik po HTML</h1>
+
+        <div id="search-container">
+            <input type="text" id="search-input" placeholder="Wyszukaj w przewodniku...">
+        </div>
+
+        <div class="section">
+            <h2>1. Podstawy HTML</h2>
+            <p>HTML (HyperText Markup Language) to standardowy język znaczników używany do tworzenia stron internetowych. HTML definiuje strukturę i semantykę zawartości strony.</p>
+            
+            <h3>1.1. Struktura dokumentu HTML</h3>
+            <pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang="pl"&gt;
+    &lt;head&gt;
+        &lt;meta charset="UTF-8"&gt;
+        &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+        &lt;title&gt;Tytuł strony&lt;/title&gt;
+    &lt;/head&gt;
+    &lt;body&gt;
+        &lt;!-- Zawartość strony --&gt;
+    &lt;/body&gt;
+&lt;/html&gt;</code></pre>
+            <p><strong>Wyjaśnienie:</strong></p>
+            <ul>
+                <li><code>&lt;!DOCTYPE html&gt;</code>: Deklaracja typu dokumentu, informująca przeglądarkę, że jest to dokument HTML5.</li>
+                <li><code>&lt;html&gt;</code>: Element główny, zawierający całą zawartość strony.</li>
+                <li><code>&lt;head&gt;</code>: Zawiera metadane i informacje o dokumencie.</li>
+                <li><code>&lt;body&gt;</code>: Zawiera widoczną zawartość strony.</li>
+            </ul>
+
+            <h3>1.2. Znaczniki i atrybuty</h3>
+            <p>HTML wykorzystuje znaczniki do definiowania struktury i zawartości strony. Atrybuty dostarczają dodatkowych informacji o elementach.</p>
+            <pre><code>&lt;a href="https://example.com" target="_blank" title="Odwiedź Example.com"&gt;Link do Example.com&lt;/a&gt;</code></pre>
+            <p><strong>Wyjaśnienie:</strong></p>
+            <ul>
+                <li><code>&lt;a&gt;</code>: Znacznik definiujący hiperłącze.</li>
+                <li><code>href</code>: Atrybut określający docelowy URL linku.</li>
+                <li><code>target="_blank"</code>: Atrybut powodujący otwarcie linku w nowej karcie.</li>
+                <li><code>title</code>: Atrybut dostarczający dodatkowych informacji, wyświetlanych po najechaniu myszką.</li>
+            </ul>
+
+            <h3>1.3. Komentarze w HTML</h3>
+            <p>Komentarze w HTML są niewidoczne dla użytkowników, ale mogą być pomocne dla programistów.</p>
+            <pre><code>&lt;!-- To jest komentarz w HTML --&gt;</code></pre>
+
+            <h3>1.4. Podstawowe znaczniki tekstowe</h3>
+            <table>
+                <tr>
+                    <th>Znacznik</th>
+                    <th>Opis</th>
+                </tr>
+                <tr>
+                    <td><code>&lt;p&gt;</code></td>
+                    <td>Paragraf</td>
+                </tr>
+                <tr>
+                    <td><code>&lt;h1&gt; do &lt;h6&gt;</code></td>
+                    <td>Nagłówki (od najważniejszego do najmniej ważnego)</td>
+                </tr>
+                <tr>
+                    <td><code>&lt;strong&gt;</code></td>
+                    <td>Tekst o dużej wadze (zwykle pogrubiony)</td>
+                </tr>
+                <tr>
+                    <td><code>&lt;em&gt;</code></td>
+                    <td>Tekst wyróżniony (zwykle kursywą)</td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="section">
+            <h2>2. Struktura i Semantyka</h2>
+            <p>Semantyczny HTML pomaga w lepszym zrozumieniu struktury dokumentu zarówno przez przeglądarki, jak i ludzi, co jest kluczowe dla dostępności i SEO.</p>
+
+            <h3>2.1. Semantyczne znaczniki HTML5</h3>
+            <pre><code>&lt;header&gt;
+    &lt;nav&gt;
+        &lt;ul&gt;
+            &lt;li&gt;&lt;a href="#"&gt;Strona główna&lt;/a&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;a href="#"&gt;O nas&lt;/a&gt;&lt;/li&gt;
+        &lt;/ul&gt;
+    &lt;/nav&gt;
+&lt;/header&gt;
+&lt;main&gt;
+    &lt;article&gt;
+        &lt;h1&gt;Tytuł artykułu&lt;/h1&gt;
+        &lt;p&gt;Treść artykułu...&lt;/p&gt;
+    &lt;/article&gt;
+    &lt;aside&gt;
+        &lt;h2&gt;Powiązane artykuły&lt;/h2&gt;
+        &lt;ul&gt;
+            &lt;li&gt;&lt;a href="#"&gt;Artykuł 1&lt;/a&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;a href="#"&gt;Artykuł 2&lt;/a&gt;&lt;/li&gt;
+        &lt;/ul&gt;
+    &lt;/aside&gt;
+&lt;/main&gt;
+&lt;footer&gt;
+    &lt;p&gt;&copy; 2023 Moja Strona&lt;/p&gt;
+&lt;/footer&gt;</code></pre>
+            <p><strong>Wyjaśnienie semantycznych znaczników:</strong></p>
+            <ul>
+                <li><code>&lt;header&gt;</code>: Reprezentuje wprowadzenie do strony lub sekcji.</li>
+                <li><code>&lt;nav&gt;</code>: Zawiera główne elementy nawigacyjne.</li>
+                <li><code>&lt;main&gt;</code>: Zawiera główną treść dokumentu.</li>
+                <li><code>&lt;article&gt;</code>: Reprezentuje samodzielną kompozycję w dokumencie.</li>
+                <li><code>&lt;aside&gt;</code>: Reprezentuje treść luźno powiązaną z główną treścią.</li>
+                <li><code>&lt;footer&gt;</code>: Reprezentuje stopkę strony lub sekcji.</li>
+            </ul>
+
+            <h3>2.2. Prawidłowe użycie nagłówków</h3>
+            <p>Prawidłowa hierarchia nagłówków jest kluczowa dla struktury dokumentu i dostępności.</p>
+            <pre><code>&lt;h1&gt;Główny tytuł strony&lt;/h1&gt;
+&lt;h2&gt;Podtytuł sekcji&lt;/h2&gt;
+&lt;h3&gt;Podtytuł podsekcji&lt;/h3&gt;
+&lt;h4&gt;Mniejszy nagłówek&lt;/h4&gt;</code></pre>
+            <p>Pamiętaj, aby używać tylko jednego <code>&lt;h1&gt;</code> na stronie i zachować właściwą hierarchię nagłówków.</p>
+
+            <div class="tip">
+                <strong>Wskazówka:</strong> Używaj semantycznych znaczników HTML, aby poprawić dostępność i SEO swojej strony. Przeglądarki i czytniki ekranowe lepiej interpretują strukturę dokumentu, gdy jest ona prawidłowo oznaczona.
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>3. Formularze i Interakcja</h2>
+            <p>Formularze HTML umożliwiają zbieranie danych od użytkowników i interakcję ze stroną. HTML5 wprowadził wiele nowych typów pól formularza i atrybutów walidacji.</p>
+
+            <h3>3.1. Podstawowa struktura formularza</h3>
+            <pre><code>&lt;form action="/submit" method="post"&gt;
+    &lt;label for="name"&gt;Imię:&lt;/label&gt;
+    &lt;input type="text" id="name" name="name" required&gt;
+
+    &lt;label for="email"&gt;Email:&lt;/label&gt;
+    &lt;input type="email" id="email" name="email" required&gt;
+
+    &lt;label for="message"&gt;Wiadomość:&lt;/label&gt;
+    &lt;textarea id="message" name="message"&gt;&lt;/textarea&gt;
+
+    &lt;button type="submit"&gt;Wyślij&lt;/button&gt;
+&lt;/form&gt;</code></pre>
+            <p><strong>Wyjaśnienie:</strong></p>
+            <ul>
+                <li><code>action</code>: Określa, gdzie dane formularza zostaną wysłane.</li>
+                <li><code>method</code>: Określa metodę HTTP używaną do wysłania formularza (najczęściej "get" lub "post").</li>
+                <li><code>&lt;label&gt;</code>: Etykieta pola formularza, poprawiająca dostępność.</li>
+                <li><code>&lt;input&gt;</code>: Pole wejściowe formularza.</li>
+                <li><code>&lt;textarea&gt;</code>: Wielowierszowe pole tekstowe.</li>
+                <li><code>&lt;button&gt;</code>: Przycisk do wysłania formularza.</li>
+            </ul>
+
+            <h3>3.2. Typy pól formularza HTML5</h3>
+            <table>
+                <tr>
+                    <th>Typ</th>
+                    <th>Opis</th>
+                </tr>
+                <tr>
+                    <td><code>text</code></td>
+                    <td>Standardowe pole tekstowe</td>
+                </tr>
+                <tr>
+                    <td><code>email</code></td>
+                    <td>Pole do wprowadzania adresu email</td>
+                </tr>
+                <tr>
+                    <td><code>password</code></td>
+                    <td>Pole do wprowadzania hasła</td>
+                </tr>
+                <tr>
+                    <td><code>number</code></td>
+                    <td>Pole do wprowadzania liczb</td>
+                </tr>
+                <tr>
+                    <td><code>date</code></td>
+                    <td>Pole do wyboru daty</td>
+                </tr>
+                <tr>
+                    <td><code>checkbox</code></td>
+                    <td>Pole wyboru (można zaznaczyć wiele)</td>
+                </tr>
+                <tr>
+                    <td><code>radio</code></td>
+                    <td>Przycisk opcji (można wybrać jeden z grupy)</td>
+                </tr>
+            </table>
+
+            <h3>3.3. Walidacja formularzy</h3>
+            <p>HTML5 oferuje wbudowane atrybuty walidacji, które pozwalają na podstawową walidację po stronie klienta.</p>
+            <pre><code>&lt;input type="text" required&gt;required&gt;
+&lt;input type="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"&gt;
+&lt;input type="number" min="0" max="100"&gt;
+&lt;input type="text" minlength="3" maxlength="20"&gt;</code></pre>
+            <p><strong>Wyjaśnienie atrybutów walidacji:</strong></p>
+            <ul>
+                <li><code>required</code>: Pole musi być wypełnione przed wysłaniem formularza.</li>
+                <li><code>pattern</code>: Określa wyrażenie regularne, które wartość pola musi spełniać.</li>
+                <li><code>min</code> i <code>max</code>: Określają minimalną i maksymalną wartość dla pól liczbowych.</li>
+                <li><code>minlength</code> i <code>maxlength</code>: Określają minimalną i maksymalną długość tekstu.</li>
+            </ul>
+
+            <h3>3.4. Zaawansowane elementy formularzy</h3>
+            <pre><code>&lt;select name="country"&gt;
+    &lt;option value="pl"&gt;Polska&lt;/option&gt;
+    &lt;option value="de"&gt;Niemcy&lt;/option&gt;
+    &lt;option value="fr"&gt;Francja&lt;/option&gt;
+&lt;/select&gt;
+
+&lt;input type="file" accept="image/*"&gt;
+
+&lt;input type="color"&gt;
+
+&lt;input type="range" min="0" max="100" step="10"&gt;</code></pre>
+            <p><strong>Wyjaśnienie:</strong></p>
+            <ul>
+                <li><code>&lt;select&gt;</code>: Tworzy listę rozwijaną.</li>
+                <li><code>&lt;input type="file"&gt;</code>: Pozwala na przesyłanie plików.</li>
+                <li><code>&lt;input type="color"&gt;</code>: Tworzy selektor kolorów.</li>
+                <li><code>&lt;input type="range"&gt;</code>: Tworzy suwak do wyboru wartości z zakresu.</li>
+            </ul>
+
+            <div class="tip">
+                <strong>Wskazówka:</strong> Choć HTML5 oferuje podstawową walidację formularzy, zawsze warto implementować dodatkową walidację po stronie serwera dla bezpieczeństwa i niezawodności.
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>4. Multimedia i Grafika</h2>
+            <p>HTML5 wprowadził natywne wsparcie dla multimediów, eliminując potrzebę wtyczek zewnętrznych.</p>
+
+            <h3>4.1. Osadzanie wideo</h3>
+            <pre><code>&lt;video width="320" height="240" controls&gt;
+    &lt;source src="movie.mp4" type="video/mp4"&gt;
+    &lt;source src="movie.ogg" type="video/ogg"&gt;
+    Twoja przeglądarka nie obsługuje tagu video.
+&lt;/video&gt;</code></pre>
+            <p><strong>Wyjaśnienie:</strong></p>
+            <ul>
+                <li><code>controls</code>: Dodaje standardowe kontrolki odtwarzacza.</li>
+                <li><code>&lt;source&gt;</code>: Określa różne formaty wideo dla kompatybilności z różnymi przeglądarkami.</li>
+            </ul>
+
+            <h3>4.2. Osadzanie audio</h3>
+            <pre><code>&lt;audio controls&gt;
+    &lt;source src="music.mp3" type="audio/mpeg"&gt;
+    &lt;source src="music.ogg" type="audio/ogg"&gt;
+    Twoja przeglądarka nie obsługuje tagu audio.
+&lt;/audio&gt;</code></pre>
+
+            <h3>4.3. Obrazy responsywne</h3>
+            <pre><code>&lt;picture&gt;
+    &lt;source media="(min-width: 650px)" srcset="img_large.jpg"&gt;
+    &lt;source media="(min-width: 465px)" srcset="img_medium.jpg"&gt;
+    &lt;img src="img_small.jpg" alt="Opis obrazu" style="width:auto;"&gt;
+&lt;/picture&gt;</code></pre>
+            <p><strong>Wyjaśnienie:</strong></p>
+            <ul>
+                <li><code>&lt;picture&gt;</code>: Pozwala na definiowanie różnych źródeł obrazu dla różnych rozmiarów ekranu.</li>
+                <li><code>srcset</code>: Określa zestaw obrazów do wyboru przez przeglądarkę.</li>
+                <li><code>media</code>: Definiuje warunki, przy których dany obraz powinien być użyty.</li>
+            </ul>
+
+            <h3>4.4. SVG w HTML</h3>
+            <pre><code>&lt;svg width="100" height="100"&gt;
+    &lt;circle cx="50" cy="50" r="40" stroke="green" stroke-width="4" fill="yellow" /&gt;
+&lt;/svg&gt;</code></pre>
+            <p>SVG (Scalable Vector Graphics) pozwala na tworzenie skalowalnej grafiki wektorowej bezpośrednio w HTML.</p>
+
+            <div class="tip">
+                <strong>Wskazówka:</strong> Zawsze dodawaj tekst alternatywny do obrazów za pomocą atrybutu <code>alt</code>. Jest to kluczowe dla dostępności i SEO.
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>5. Dostępność</h2>
+            <p>Tworzenie dostępnych stron internetowych jest kluczowe dla zapewnienia równego dostępu do informacji dla wszystkich użytkowników, w tym osób z niepełnosprawnościami.</p>
+
+            <h3>5.1. ARIA (Accessible Rich Internet Applications)</h3>
+            <pre><code>&lt;button aria-label="Zamknij" onclick="closeModal()"&gt;X&lt;/button&gt;
+
+&lt;div role="alert" aria-live="assertive"&gt;
+    To jest ważna wiadomość!
+&lt;/div&gt;</code></pre>
+            <p><strong>Wyjaśnienie:</strong></p>
+            <ul>
+                <li><code>aria-label</code>: Zapewnia etykietę dla elementów, które nie mają widocznego tekstu.</li>
+                <li><code>role</code>: Określa rolę elementu dla technologii wspomagających.</li>
+                <li><code>aria-live</code>: Informuje czytniki ekranu o dynamicznych zmianach treści.</li>
+            </ul>
+
+            <h3>5.2. Prawidłowa struktura nagłówków</h3>
+            <p>Uporządkowana struktura nagłówków (h1-h6) jest kluczowa dla nawigacji przy użyciu czytników ekranu.</p>
+
+            <h3>5.3. Alternatywne opisy dla obrazów</h3>
+            <pre><code>&lt;img src="chart.png" alt="Wykres przedstawiający wzrost sprzedaży w Q4 2023"&gt;</code></pre>
+
+            <h3>5.4. Dostępne formularze</h3>
+            <pre><code>&lt;label for="name"&gt;Imię:&lt;/label&gt;
+&lt;input type="text" id="name" name="name" aria-required="true"&gt;</code></pre>
+            <p>Używaj etykiet (<code>&lt;label&gt;</code>) i odpowiednich atrybutów ARIA, aby formularze były dostępne dla wszystkich użytkowników.</p>
+
+            <div class="warning">
+                <strong>Uwaga:</strong> Dostępność nie jest opcjonalna. Jest to prawny wymóg w wielu krajach i kluczowy aspekt tworzenia inkluzywnych stron internetowych.
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>6. SEO i Metadane</h2>
+            <p>Prawidłowe użycie metadanych i struktury HTML może znacząco wpłynąć na SEO (Search Engine Optimization) strony.</p>
+
+            <h3>6.1. Metadane w &lt;head&gt;</h3>
+            <pre><code>&lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;meta name="description" content="Opis strony dla wyszukiwarek"&gt;
+    &lt;meta name="keywords" content="HTML, CSS, JavaScript"&gt;
+    &lt;meta name="author" content="Jan Kowalski"&gt;
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+    &lt;title&gt;Tytuł strony - kluczowy dla SEO&lt;/title&gt;
+&lt;/head&gt;</code></pre>
+            <p><strong>Wyjaśnienie:</strong></p>
+            <ul>
+                <li><code>description</code>: Krótki opis strony, który może być wyświetlany w wynikach wyszukiwania.</li>
+                <li><code>keywords</code>: Słowa kluczowe związane z zawartością strony (mniej ważne dla współczesnego SEO).</li>
+                <li><code>viewport</code>: Kluczowy dla responsywności strony na urządzeniach mobilnych.</li>
+            </ul>
+
+            <h3>6.2. Struktura nagłówków</h3>
+            <p>Prawidłowa hierarchia nagłówków (h1-h6) jest ważna zarówno dla SEO, jak i dostępności. Używaj tylko jednego &lt;h1&gt; na stronie.</p>
+
+            <h3>6.3. Przyjazne URL-e</h3>
+            <p>Używaj czytelnych i opisowych adresów URL dla swoich stron.</p>
+
+            <h3>6.4. Semantyczne znaczniki</h3>
+            <p>Używaj semantycznych znaczników HTML5 (<code>&lt;article&gt;</code>, <code>&lt;section&gt;</code>, <code>&lt;nav&gt;</code>, itp.) do strukturyzowania treści.</p>
+
+            <h3>6.5. Open Graph i Twitter Cards</h3>
+            <pre><code>&lt;meta property="og:title" content="Tytuł strony"&gt;
+&lt;meta property="og:description" content="Opis strony"&gt;
+&lt;meta property="og:image" content="url_do_obrazu.jpg"&gt;
+
+&lt;meta name="twitter:card" content="summary_large_image"&gt;
+&lt;meta name="twitter:site" content="@nazwaużytkownika"&gt;</code></pre>
+            <p>Te meta tagi pomagają kontrolować, jak strona jest prezentowana, gdy jest udostępniana w mediach społecznościowych.</p>
+
+            <div class="tip">
+                <strong>Wskazówka:</strong> Pamiętaj, że najlepsze praktyki SEO zmieniają się z czasem. Zawsze warto być na bieżąco z najnowszymi zaleceniami wyszukiwarek.
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>7. Zaawansowane Tematy HTML</h2>
+            <p>HTML oferuje zaawansowane funkcje, które mogą zwiększyć interaktywność i funkcjonalność stron.</p>
+
+            <h3>7.1. Web Components</h3>
+            <p>Web Components to zestaw technologii pozwalających na tworzenie wielokrotnego użytku, enkapsulowanych komponentów HTML.</p>
+            <pre><code>&lt;template id="my-paragraph"&gt;
+    &lt;p&gt;Mój akapit z &lt;slot name="my-text"&gt;domyślnym tekstem&lt;/slot&gt;&lt;/p&gt;
+&lt;/template&gt;
+
+&lt;script&gt;
+customElements.define('my-paragraph',
+    class extends HTMLElement {
+        constructor() {
+            super();
+            let template = document.getElementById('my-paragraph');
+            let templateContent = template.content;
+            const shadowRoot = this.attachShadow({mode: 'open'})
+                .appendChild(templateContent.cloneNode(true));
+        }
+    }
+)
+&lt;/script&gt;
+
+&lt;my-paragraph&gt;
+    &lt;span slot="my-text"&gt;Niestandardowy tekst&lt;/span&gt;
+&lt;/my-paragraph&gt;</code></pre>
+
+            <h3>7.2. HTML APIs</h3>
+            <p>HTML5 wprowadził wiele nowych API, które można wykorzystać do tworzenia bardziej interaktywnych stron:</p>
+            <ul>
+                <li><strong>Geolocation API:</strong> Pozwala na dostęp do lokalizacji użytkownika.</li>
+                <li><strong>Drag and Drop API:</strong> Umożliwia implementację funkcji przeciągnij i upuść.</li>
+                <li><strong>Web Storage API:</strong> Oferuje mechanizmy przechowywania danych w przeglądarce.</li>
+                <li><strong>Canvas API:</strong> Umożliwia rysowanie grafiki 2D za pomocą JavaScript.</li>
+            </ul>
+
+            <h3>7.3. Progresywne Wczytywanie</h3>
+            <p>Technika pozwalająca na stopniowe wczytywanie zawartości strony, poprawiająca wrażenia użytkownika.</p>
+            <pre><code>&lt;img src="low-res.jpg"
+     data-src="high-res.jpg"
+     loading="lazy"
+     alt="Opis obrazu"&gt;</code></pre>
+
+            <h3>7.4. Iframe i Embedding</h3>
+            <p>Iframe pozwala na osadzanie jednej strony HTML w innej.</p>
+            <pre><code>&lt;iframe src="https://www.example.com" title="Opis zawartości iframe"&gt;&lt;/iframe&gt;</code></pre>
+            <p>Pamiętaj o atrybucie <code>title</code> dla dostępności.</p>
+
+            <div class="warning">
+                <strong>Uwaga:</strong> Przy używaniu iframe'ów zawsze należy zachować ostrożność ze względów bezpieczeństwa. Używaj atrybutu <code>sandbox</code> do ograniczenia uprawnień osadzanej zawartości.
+            </div>
+
+            <h3>7.5. Mikroformaty i strukturyzowane dane</h3>
+            <p>Mikroformaty i strukturyzowane dane pomagają wyszukiwarkom lepiej zrozumieć zawartość strony.</p>
+            <pre><code>&lt;div itemscope itemtype="http://schema.org/Person"&gt;
+    &lt;span itemprop="name"&gt;Jan Kowalski&lt;/span&gt;
+    &lt;span itemprop="jobTitle"&gt;Programista&lt;/span&gt;
+    &lt;span itemprop="telephone"&gt;(48) 123-456-789&lt;/span&gt;
+    &lt;a href="mailto:jkowalski@example.com" itemprop="email"&gt;
+        jkowalski@example.com
+    &lt;/a&gt;
+&lt;/div&gt;</code></pre>
+            <p>Ten przykład używa schematu Schema.org do oznaczenia informacji o osobie.</p>
+        </div>
+
+        <div class="section">
+            <h2>8. Bezpieczeństwo w HTML</h2>
+            <p>Bezpieczeństwo jest kluczowym aspektem tworzenia stron internetowych. Oto kilka ważnych kwestii związanych z bezpieczeństwem w HTML:</p>
+
+            <h3>8.1. Cross-Site Scripting (XSS)</h3>
+            <p>XSS to jedna z najczęstszych luk bezpieczeństwa w aplikacjach webowych. Aby jej uniknąć:</p>
+            <ul>
+                <li>Zawsze waliduj i oczyszczaj dane wejściowe od użytkownika.</li>
+                <li>Używaj funkcji escapeHTML przy wyświetlaniu danych użytkownika.</li>
+                <li>Ustawiaj nagłówek Content Security Policy (CSP).</li>
+            </ul>
+            <pre><code>&lt;meta http-equiv="Content-Security-Policy" 
+    content="default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval';"&gt;</code></pre>
+
+            <h3>8.2. Clickjacking</h3>
+            <p>Aby zapobiec atakom clickjacking, używaj nagłówka X-Frame-Options:</p>
+            <pre><code>&lt;meta http-equiv="X-Frame-Options" content="DENY"&gt;</code></pre>
+
+            <h3>8.3. Bezpieczne formularze</h3>
+            <p>Przy tworzeniu formularzy:</p>
+            <ul>
+                <li>Używaj HTTPS dla stron z formularzami.</li>
+                <li>Implementuj CSRF tokeny dla formularzy.</li>
+                <li>Waliduj dane zarówno po stronie klienta, jak i serwera.</li>
+            </ul>
+
+            <div class="warning">
+                <strong>Uwaga:</strong> Bezpieczeństwo to proces ciągły. Regularnie aktualizuj swoją wiedzę o najnowszych zagrożeniach i najlepszych praktykach.
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>9. Wydajność HTML</h2>
+            <p>Optymalizacja wydajności HTML może znacząco poprawić szybkość ładowania strony i doświadczenia użytkownika.</p>
+
+            <h3>9.1. Minimalizacja HTML</h3>
+            <p>Usuń niepotrzebne białe znaki i komentarze z kodu produkcyjnego.</p>
+
+            <h3>9.2. Asynchroniczne ładowanie skryptów</h3>
+            <pre><code>&lt;script src="script.js" async&gt;&lt;/script&gt;
+&lt;script src="another-script.js" defer&gt;&lt;/script&gt;</code></pre>
+            <p><code>async</code> pozwala na asynchroniczne ładowanie skryptu, a <code>defer</code> opóźnia wykonanie skryptu do momentu załadowania całego dokumentu HTML.</p>
+
+            <h3>9.3. Optymalizacja obrazów</h3>
+            <p>Używaj odpowiednich formatów obrazów i rozważnie stosuj atrybuty <code>width</code> i <code>height</code>.</p>
+            <pre><code>&lt;img src="image.webp" alt="Opis" width="800" height="600" loading="lazy"&gt;</code></pre>
+            <p>Atrybut <code>loading="lazy"</code> pozwala na leniwe ładowanie obrazów.</p>
+
+            <h3>9.4. Preload i Prefetch</h3>
+            <pre><code>&lt;link rel="preload" href="critical.css" as="style"&gt;
+&lt;link rel="prefetch" href="non-critical.css"&gt;</code></pre>
+            <p><code>preload</code> informuje przeglądarkę o zasobach, które będą potrzebne natychmiast, a <code>prefetch</code> sugeruje zasoby, które mogą być potrzebne w przyszłości.</p>
+        </div>
+
+        <div class="section">
+            <h2>10. Najlepsze praktyki HTML</h2>
+            <p>Stosowanie się do najlepszych praktyk HTML pomoże w tworzeniu bardziej wydajnych, dostępnych i łatwych w utrzymaniu stron internetowych.</p>
+
+            <h3>10.1. Walidacja kodu</h3>
+            <p>Regularnie waliduj swój kod HTML za pomocą narzędzi takich jak W3C Validator.</p>
+
+            <h3>10.2. Semantyczne znaczniki</h3>
+            <p>Używaj semantycznych znaczników HTML5 zamiast generycznych <code>div</code> i <code>span</code>, gdy to możliwe.</p>
+
+            <h3>10.3. Dostępność</h3>
+            <p>Zawsze myśl o dostępności. Używaj atrybutów <code>alt</code> dla obrazów, odpowiednich etykiet dla formularzy, i zapewniaj wystarczający kontrast kolorów.</p>
+
+            <h3>10.4. Responsywny design</h3>
+            <p>Projektuj z myślą o różnych rozmiarach ekranów. Używaj meta tagu viewport i responsywnych technik CSS.</p>
+
+            <h3>10.5. Optymalizacja dla SEO</h3>
+            <p>Używaj odpowiednich znaczników meta, struktury nagłówków i przyjaznych dla SEO URL-i.</p>
+
+            <h3>10.6. Utrzymanie kodu</h3>
+            <p>Stosuj spójne formatowanie, używaj znaczących nazw klas i ID, i komentuj skomplikowane sekcje kodu.</p>
+
+            <div class="tip">
+                <strong>Wskazówka:</strong> Regularnie przeglądaj i aktualizuj swój kod. Technologie webowe szybko się zmieniają, a utrzymywanie kodu na bieżąco pomoże w zachowaniu jego jakości i wydajności.
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>11. Przyszłość HTML</h2>
+            <p>HTML stale ewoluuje. Oto kilka obszarów, na które warto zwrócić uwagę:</p>
+
+            <h3>11.1. HTML Living Standard</h3>
+            <p>HTML jest teraz "żywym standardem", co oznacza, że jest stale aktualizowany, zamiast wydawany w dużych wersjach.</p>
+
+            <h3>11.2. Web Components</h3>
+            <p>Technologia ta zyskuje na popularności, umożliwiając tworzenie własnych, wielokrotnego użytku elementów HTML.</p>
+
+            <h3>11.3. Progresywne Aplikacje Webowe (PWA)</h3>
+            <p>PWA łączą najlepsze cechy stron internetowych i natywnych aplikacji.</p>
+
+            <h3>11.4. WebAssembly</h3>
+            <p>Pozwala na uruchamianie kodu o wysokiej wydajności w przeglądarkach internetowych.</p>
+
+            <div class="tip">
+                <strong>Wskazówka:</strong> Śledź najnowsze trendy i specyfikacje HTML, aby być na bieżąco z nowymi możliwościami i najlepszymi praktykami.
+            </div>
+        </div>
+
+        <div class="tip">
+            <strong>Końcowa wskazówka:</strong> HTML jest fundamentem każdej strony internetowej. Dobrze ustrukturyzowany i semantyczny HTML nie tylko poprawia SEO i dostępność, ale także ułatwia późniejsze stylizowanie i dodawanie funkcjonalności poprzez CSS i JavaScript. Regularnie praktykuj, eksperymentuj z nowymi elementami i technikami, i zawsze myśl o końcowym użytkowniku podczas tworzenia stron internetowych.
+        </div>
+
+        <div class="buttons">
+            <a href="https://developer.mozilla.org/en-US/docs/Web/HTML" class="button">MDN Web Docs - HTML</a>
+            <a href="https://www.w3.org/TR/html/" class="button">Specyfikacja HTML</a>
+            <a href="https://validator.w3.org/" class="button">W3C Validator</a>
+            <a href="https://web.dev/learn/html/" class="button">web.dev - Learn HTML</a>
+            <a href="https://www.w3schools.com/html/" class="button">W3Schools HTML Tutorial</a>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const searchInput = document.getElementById('search-input');
+            const sections = document.getElementsByClassName('section');
+            
+            // Przechowuj oryginalną zawartość sekcji
+            const originalContent = Array.from(sections).map(section => section.innerHTML);
+
+            searchInput.addEventListener('input', function() {
+                const searchTerm = this.value.toLowerCase();
+
+                Array.from(sections).forEach(function(section, index) {
+                    const sectionText = section.textContent.toLowerCase();
+
+                    if (searchTerm === '' || sectionText.includes(searchTerm)) {
+                        section.style.display = '';
+                        // Przywróć oryginalną zawartość HTML
+                        section.innerHTML = originalContent[index];
+                        
+                        if (searchTerm !== '') {
+                            highlightText(section, searchTerm);
+                        }
+                    } else {
+                        section.style.display = 'none';
+                    }
+                });
+            });
+
+            function highlightText(element, searchTerm) {
+                const walker = document.createTreeWalker(element, NodeFilter.SHOW_TEXT, null, false);
+                let node;
+                while (node = walker.nextNode()) {
+                    const parent = node.parentNode;
+                    if (parent.nodeName !== 'SCRIPT' && parent.nodeName !== 'STYLE') {
+                        const text = node.textContent;
+                        const regex = new RegExp(searchTerm, 'gi');
+                        if (regex.test(text)) {
+                            const fragment = document.createDocumentFragment();
+                            let lastIndex = 0;
+                            text.replace(regex, function(match, index) {
+                                fragment.appendChild(document.createTextNode(text.slice(lastIndex, index)));
+                                const span = document.createElement('span');
+                                span.className = 'highlight';
+                                span.textContent = match;
+                                fragment.appendChild(span);
+                                lastIndex = index + match.length;
+                                return match;
+                            });
+                            fragment.appendChild(document.createTextNode(text.slice(lastIndex)));
+                            parent.replaceChild(fragment, node);
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
