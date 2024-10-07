@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rozszerzony przewodnik Figma</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Fira+Code&display=swap" rel="stylesheet">
+    <style>
+        body {
+    font-family: 'Inter', 'Roboto', sans-serif;
+    line-height: 1.6;
+    color: #333;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #FFFFFF;
+}
+
+h1, h2, h3, h4 {
+    color: #000000;
+    font-weight: 600;
+}
+
+h1 {
+    font-size: 32px;
+}
+
+h2 {
+    font-size: 24px;
+    margin-top: 40px;
+}
+
+h3 {
+    font-size: 20px;
+    color: #333;
+}
+
+pre {
+    background-color: #F3F4F6;
+    border: 1px solid #E5E7EB;
+    border-radius: 6px;
+    padding: 15px;
+    overflow-x: auto;
+}
+
+code {
+    font-family: 'SF Mono', 'Fira Code', monospace;
+    background-color: #F3F4F6;
+    color: #000000;
+    padding: 2px 4px;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.tip {
+    background-color: #E6F7FF;
+    border: 1px solid #91D5FF;
+    border-radius: 6px;
+    padding: 15px;
+    margin: 15px 0;
+}
+
+.warning {
+    background-color: #FFF7E6;
+    border: 1px solid #FFD591;
+    border-radius: 6px;
+    padding: 15px;
+    margin: 15px 0;
+}
+
+.button {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #0D99FF;
+    color: white;
+    text-decoration: none;
+    border-radius: 6px;
+    margin: 10px 5px;
+    font-weight: 500;
+    transition: background-color 0.3s ease;
+}
+
+.button:hover {
+    background-color: #007BE5;
+}
+
+#search-container {
+    margin: 20px 0;
+}
+
+#search-input {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #E5E7EB;
+    border-radius: 6px;
+    background-color: #F9FAFB;
+}
+
+.highlight {
+    background-color: #FFF9C4;
+    font-weight: bold;
+}
+
+table {
+    border-collapse: separate;
+    border-spacing: 0;
+    width: 100%;
+    margin: 15px 0;
+    border: 1px solid #E5E7EB;
+    border-radius: 6px;
+    overflow: hidden;
+}
+
+th, td {
+    border: 1px solid #E5E7EB;
+    padding: 12px;
+    text-align: left;
+}
+
+th {
+    background-color: #F3F4F6;
+    font-weight: 600;
+    color: #000000;
+}
+
+.section {
+    background-color: #FFFFFF;
+    border: 1px solid #E5E7EB;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 30px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+/* Dodatkowe style nawiązujące do Figmy */
+.figma-component {
+    border: 2px solid #E5E7EB;
+    border-radius: 8px;
+    padding: 15px;
+    margin: 15px 0;
+    position: relative;
+}
+
+.figma-component::before {
+    content: 'Component';
+    position: absolute;
+    top: -10px;
+    left: 10px;
+    background-color: #FFFFFF;
+    padding: 0 5px;
+    font-size: 12px;
+    color: #6B7280;
+}
+
+.figma-frame {
+    border: 1px dashed #9CA3AF;
+    border-radius: 4px;
+    padding: 10px;
+    margin: 10px 0;
+}
+
+.figma-layer {
+    margin-left: 20px;
+    position: relative;
+}
+
+.figma-layer::before {
+    content: '';
+    position: absolute;
+    left: -15px;
+    top: 50%;
+    width: 10px;
+    height: 1px;
+    background-color: #9CA3AF;
+}
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Rozszerzony i szczegółowy przewodnik po Figmie</h1>
+
+        <div id="search-container">
+            <input type="text" id="search-input" placeholder="Wyszukaj w przewodniku...">
+        </div>
+
+        <div class="section">
+            <h2>1. Wprowadzenie do Figmy</h2>
+            <p>Figma to potężne narzędzie do projektowania interfejsów użytkownika i prototypowania, które działa w przeglądarce internetowej.</p>
+            
+            <h3>1.1. Kluczowe cechy Figmy</h3>
+            <ul>
+                <li><strong>Współpraca w czasie rzeczywistym:</strong> Wiele osób może pracować nad tym samym projektem jednocześnie</li>
+                <li><strong>Dostępność w chmurze:</strong> Projekty są automatycznie zapisywane i dostępne z dowolnego urządzenia</li>
+                <li><strong>Wszechstronność:</strong> Służy do projektowania UI/UX, tworzenia prototypów i systemów projektowych</li>
+                <li><strong>Kompatybilność:</strong> Działa na różnych platformach (Windows, Mac, Linux) poprzez przeglądarkę</li>
+            </ul>
+
+            <h3>1.2. Interfejs użytkownika Figmy</h3>
+            <p>Główne elementy interfejsu Figmy:</p>
+            <ul>
+                <li><strong>Pasek narzędzi:</strong> Zawiera podstawowe narzędzia do tworzenia i edycji</li>
+                <li><strong>Obszar roboczy (Canvas):</strong> Główny obszar projektowania</li>
+                <li><strong>Panel warstw:</strong> Pokazuje hierarchię elementów w projekcie</li>
+                <li><strong>Panel właściwości:</strong> Pozwala na edycję właściwości wybranych elementów</li>
+                <li><strong>Panel zasobów:</strong> Przechowuje style, komponenty i inne zasoby projektu</li>
+            </ul>
+
+            <div class="tip">
+                <strong>Wskazówka:</strong> Poświęć czas na zapoznanie się z interfejsem Figmy. Efektywne poruszanie się po narzędziu znacznie przyspieszy Twoją pracę.
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>2. Podstawy projektowania w Figmie</h2>
+            <p>Zrozumienie podstawowych narzędzi i technik jest kluczowe dla efektywnej pracy w Figmie.</p>
+
+            <h3>2.1. Tworzenie kształtów i obiektów</h3>
+            <ul>
+                <li><strong>Narzędzie kształtu:</strong> Prostokąty, elipsy, wielokąty, linie</li>
+                <li><strong>Pen tool:</strong> Do tworzenia niestandardowych kształtów i ścieżek</li>
+                <li><strong>Tekst:</strong> Dodawanie i formatowanie tekstu</li>
+            </ul>
+
+            <h3>2.2. Manipulacja obiektami</h3>
+            <ul>
+                <li><strong>Selekcja:</strong> Klikanie, przeciąganie, selekcja grupowa</li>
+                <li><strong>Transformacje:</strong> Skalowanie, obracanie, przechylanie</li>
+                <li><strong>Align i distribute:</strong> Precyzyjne układanie obiektów</li>
+            </ul>
+
+            <h3>2.3. Warstwy i grupowanie</h3>
+            <p>Organizacja projektu poprzez:</p>
+            <ul>
+                <li>Grupowanie powiązanych elementów</li>
+                <li>Nazywanie warstw dla łatwiejszej nawigacji</li>
+                <li>Używanie folderów do kategoryzacji elementów</li>
+            </ul>
+
+            <div class="tip">
+                <strong>Wskazówka:</strong> Utrzymuj porządek w swoich warstwach od samego początku projektu. To zaoszczędzi Ci mnóstwo czasu w późniejszych etapach.
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>3. Zaawansowane techniki projektowania</h2>
+            <p>Opanowanie zaawansowanych technik pozwoli Ci tworzyć bardziej złożone i dopracowane projekty.</p>
+
+            <h3>3.1. Auto Layout</h3>
+            <p>Auto Layout to potężna funkcja Figmy, która automatycznie dostosowuje układ elementów.</p>
+            <ul>
+                <li>Tworzenie responsywnych układów</li>
+                <li>Automatyczne rozmieszczanie elementów</li>
+                <li>Łatwe zarządzanie odstępami i wyrównaniem</li>
+            </ul>
+
+            <h3>3.2. Komponenty i warianty</h3>
+            <p>Komponenty to wielokrotnie używane elementy, które można aktualizować globalnie.</p>
+            <ul>
+                <li>Tworzenie komponentów głównych (master components)</li>
+                <li>Używanie instancji komponentów</li>
+                <li>Tworzenie wariantów dla różnych stanów komponentu</li>
+            </ul>
+
+            <h3>3.3. Stylizacja</h3>
+            <p>Efektywne używanie stylów w Figmie:</p>
+            <ul>
+                <li>Tworzenie i stosowanie stylów kolorów</li>
+                <li>Definiowanie stylów tekstu</li>
+                <li>Tworzenie stylów efektów (cienie, rozmycia)</li>
+            </ul>
+
+            <div class="tip">
+                <strong>Wskazówka:</strong> Stosowanie komponentów i stylów nie tylko przyspiesza pracę, ale także zapewnia spójność w całym projekcie.
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>4. Prototypowanie</h2>
+            <p>Prototypowanie w Figmie pozwala na tworzenie interaktywnych wersji projektu.</p>
+
+            <h3>4.1. Podstawy prototypowania</h3>
+            <ul>
+                <li>Łączenie ramek (ekranów) za pomocą połączeń</li>
+                <li>Definiowanie interakcji (kliknięcia, najechania)</li>
+                <li>Ustawianie animacji przejść</li>
+            </ul>
+
+            <h3>4.2. Zaawansowane prototypowanie</h3>
+            <ul>
+                <li>Tworzenie stanów komponentów dla różnych interakcji</li>
+                <li>Używanie zmiennych do dynamicznego prototypowania</li>
+                <li>Tworzenie scrollowalnych obszarów</li>
+            </ul>
+
+            <h3>4.3. Testowanie i udostępnianie prototypów</h3>
+            <ul>
+                <li>Tryb prezentacji do testowania prototypu</li>
+                <li>Udostępnianie linków do prototypu</li>
+                <li>Zbieranie opinii poprzez komentarze</li>
+            </ul>
+
+            <div class="tip">
+                <strong>Wskazówka:</strong> Prototypowanie jest kluczowe dla testowania i iteracji projektu. Wykorzystaj je do wczesnego zbierania opinii od interesariuszy.
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>5. Współpraca w Figmie</h2>
+            <p>Figma wyróżnia się swoimi możliwościami współpracy, które umożliwiają efektywną pracę zespołową.</p>
+
+            <h3>5.1. Współpraca w czasie rzeczywistym</h3>
+            <ul>
+                <li>Jednoczesna praca wielu osób nad tym samym plikiem</li>
+                <li>Obserwowanie kursorów innych użytkowników</li>
+                <li>Komunikacja poprzez czat i komentarze</li>
+            </ul>
+
+            <h3>5.2. Zarządzanie dostępem</h3>
+            <ul>
+                <li>Ustawianie uprawnień dla różnych użytkowników (edycja, komentowanie, przeglądanie)</li>
+                <li>Tworzenie zespołów i projektów</li>
+                <li>Udostępnianie konkretnych plików lub folderów</li>
+            </ul>
+
+            <h3>5.3. Wersjonowanie i historia</h3>
+            <ul>
+                <li>Automatyczne zapisywanie zmian</li>
+                <li>Przeglądanie historii wersji</li>
+                <li>Przywracanie poprzednich wersji projektu</li>
+            </ul>
+
+            <div class="tip">
+                <strong>Wskazówka:</strong> Efektywna współpraca wymaga jasnej komunikacji. Ustal z zespołem zasady nazewnictwa i organizacji plików.
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>6. Systemy projektowe w Figmie</h2>
+            <p>Systemy projektowe pomagają w utrzymaniu spójności i skalowalności projektów.</p>
+
+            <h3>6.1. Tworzenie biblioteki komponentów</h3>
+            <ul>
+                <li>Organizacja komponentów w kategorie</li>
+                <li>Tworzenie komponentów elastycznych i wielowariantowych</li>
+                <li>Dokumentacja użycia komponentów</li>
+            </ul>
+
+            <h3>6.2. Style globalne</h3>
+            <ul>
+                <li>Definiowanie palety kolorów</li>
+                <li>Tworzenie systemów typograficznych</li>
+                <li>Ustalanie stylów dla efektów i siatek</li>
+            </ul>
+
+            <h3>6.3. Zarządzanie biblioteką</h3>
+            <ul>
+                <li>Publikowanie i aktualizacja biblioteki</li>
+                <li>Udostępnianie biblioteki innym projektom i zespołom</li>
+                <li>Śledzenie użycia komponentów w różnych projektach</li>
+            </ul>
+
+            <div class="tip">
+                <strong>Wskazówka:</strong> Dobrze zorganizowany system projektowy może znacznie przyspieszyć pracę i zapewnić spójność w skali całej organizacji.
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>7. Integracje i wtyczki</h2>
+            <p>Figma oferuje szeroki zakres integracji i wtyczek, które rozszerzają jej funkcjonalność.</p>
+
+            <h3>7.1. Popularne wtyczki</h3>
+            <ul>
+                <li><strong>Content Reel:</strong> Do szybkiego wypełniania projektu realistycznymi danymi</li>
+                <li><strong>Autoflow:</strong> Automatyczne tworzenie diagramów przepływu</li>
+                <li><strong>Figma to Code:</strong> Generowanie kodu HTML/CSS z projektów Figmy</li>
+            </ul>
+
+            <h3>7.2. Integracje z innymi narzędziami</h3>
+            <ul>
+                <li>Zintegrowane zarządzanie zadaniami (np. z Jira, Trello)</li>
+                <li>Eksport do narzędzi do prototypowania (np. Principle, ProtoPie)</li>
+                <li<li>Integracja z systemami kontroli wersji (np. GitHub, GitLab)</li>
+            </ul>
+
+            <h3>7.3. API Figmy</h3>
+            <p>API Figmy pozwala na tworzenie własnych integracji i automatyzacji:</p>
+            <ul>
+                <li>Pobieranie danych z projektów Figmy</li>
+                <li>Automatyzacja zadań projektowych</li>
+                <li>Tworzenie niestandardowych narzędzi i wtyczek</li>
+            </ul>
+
+            <div class="tip">
+                <strong>Wskazówka:</strong> Eksperymentuj z różnymi wtyczkami, ale uważaj, aby nie przesadzić. Zbyt wiele wtyczek może spowolnić Twój workflow.
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>8. Optymalizacja wydajności w Figmie</h2>
+            <p>Przy pracy nad dużymi i złożonymi projektami, optymalizacja wydajności staje się kluczowa.</p>
+
+            <h3>8.1. Organizacja plików</h3>
+            <ul>
+                <li>Dzielenie dużych projektów na mniejsze pliki</li>
+                <li>Używanie stron do organizacji różnych sekcji projektu</li>
+                <li>Regularne czyszczenie nieużywanych elementów</li>
+            </ul>
+
+            <h3>8.2. Optymalizacja komponentów</h3>
+            <ul>
+                <li>Unikanie zbyt głębokiego zagnieżdżania komponentów</li>
+                <li>Używanie wariantów zamiast wielu oddzielnych komponentów</li>
+                <li>Ograniczanie liczby efektów na elementach</li>
+            </ul>
+
+            <h3>8.3. Zarządzanie zasobami</h3>
+            <ul>
+                <li>Optymalizacja rozmiaru importowanych obrazów</li>
+                <li>Używanie lokalnych stylów i komponentów zamiast bibliotek, gdy to możliwe</li>
+                <li>Regularne czyszczenie nieużywanych stylów i komponentów</li>
+            </ul>
+
+            <div class="tip">
+                <strong>Wskazówka:</strong> Regularne "sprzątanie" projektu może znacznie poprawić wydajność, szczególnie w przypadku dużych, długotrwałych projektów.
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>9. Zaawansowane techniki projektowania UI/UX w Figmie</h2>
+            <p>Figma oferuje zaawansowane narzędzia, które pomagają w tworzeniu bardziej zaawansowanych i realistycznych projektów UI/UX.</p>
+
+            <h3>9.1. Projektowanie responsywne</h3>
+            <ul>
+                <li>Używanie Auto Layout do tworzenia elastycznych układów</li>
+                <li>Stosowanie ograniczeń (constraints) do kontroli zachowania elementów przy zmianie rozmiaru</li>
+                <li>Tworzenie wariantów komponentów dla różnych rozmiarów ekranu</li>
+            </ul>
+
+            <h3>9.2. Mikrointerakcje</h3>
+            <ul>
+                <li>Używanie Smart Animate do tworzenia płynnych przejść między stanami</li>
+                <li>Projektowanie stanów hover, focus i active dla interaktywnych elementów</li>
+                <li>Wykorzystanie przejść i animacji w prototypowaniu</li>
+            </ul>
+
+            <h3>9.3. Design systemowy</h3>
+            <ul>
+                <li>Tworzenie i utrzymywanie spójnego systemu projektowego</li>
+                <li>Dokumentowanie zasad użycia komponentów i stylów</li>
+                <li>Wykorzystanie właściwości komponentów do tworzenia elastycznych, wielowariantowych elementów</li>
+            </ul>
+
+            <div class="tip">
+                <strong>Wskazówka:</strong> Zaawansowane techniki projektowania w Figmie pozwalają na tworzenie bardziej realistycznych i interaktywnych prototypów, co może znacznie usprawnić proces testowania i iteracji.
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>10. Najlepsze praktyki w pracy z Figmą</h2>
+            <p>Stosowanie najlepszych praktyk może znacznie zwiększyć efektywność pracy i jakość projektów w Figmie.</p>
+
+            <h3>10.1. Organizacja i nazewnictwo</h3>
+            <ul>
+                <li>Stosowanie spójnego systemu nazewnictwa dla plików, stron i warstw</li>
+                <li>Grupowanie powiązanych elementów i używanie folderów do organizacji</li>
+                <li>Używanie emotikonów lub kolorowych ikon do oznaczania statusu elementów</li>
+            </ul>
+
+            <h3>10.2. Praca z komponentami</h3>
+            <ul>
+                <li>Tworzenie elastycznych komponentów z wykorzystaniem właściwości</li>
+                <li>Używanie wariantów do zarządzania różnymi stanami komponentów</li>
+                <li>Regularne aktualizowanie biblioteki komponentów</li>
+            </ul>
+
+            <h3>10.3. Współpraca i komunikacja</h3>
+            <ul>
+                <li>Używanie komentarzy do komunikacji z zespołem i klientami</li>
+                <li>Tworzenie stron z dokumentacją projektu w ramach pliku Figmy</li>
+                <li>Regularne prezentacje i zbieranie opinii na temat projektu</li>
+            </ul>
+
+            <div class="tip">
+                <strong>Wskazówka:</strong> Dobre praktyki pracy w Figmie nie tylko usprawniają Twoją pracę, ale także ułatwiają współpracę i przekazywanie projektów innym członkom zespołu.
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>11. Przygotowanie projektów do produkcji</h2>
+            <p>Ostatnim etapem pracy w Figmie jest często przygotowanie projektu do implementacji przez zespół deweloperski.</p>
+
+            <h3>11.1. Inspekcja i eksport zasobów</h3>
+            <ul>
+                <li>Używanie panelu Inspect do generowania CSS i innych informacji o stylach</li>
+                <li>Eksportowanie ikon i grafik w odpowiednich formatach i rozmiarach</li>
+                <li>Tworzenie styleguide'ów z dokładnymi specyfikacjami kolorów, typografii i odstępów</li>
+            </ul>
+
+            <h3>11.2. Handoff dla deweloperów</h3>
+            <ul>
+                <li>Przygotowanie dokumentacji technicznej projektu</li>
+                <li>Opisywanie interakcji i zachowań elementów dynamicznych</li>
+                <li>Udostępnianie prototypów do testowania funkcjonalności</li>
+            </ul>
+
+            <h3>11.3. Zarządzanie zmianami</h3>
+            <ul>
+                <li>Utrzymywanie spójności między projektem a implementacją</li>
+                <li>Komunikacja zmian w projekcie do zespołu deweloperskiego</li>
+                <li>Współpraca z deweloperami przy rozwiązywaniu problemów implementacyjnych</li>
+            </ul>
+
+            <div class="tip">
+                <strong>Wskazówka:</strong> Ścisła współpraca z zespołem deweloperskim od wczesnych etapów projektu może znacznie usprawnić proces implementacji i zmniejszyć liczbę nieporozumień.
+            </div>
+        </div>
+
+        <div class="tip">
+            <strong>Końcowa wskazówka:</strong> Figma to potężne narzędzie, które stale ewoluuje. Śledź aktualizacje i nowe funkcje, eksperymentuj z nimi i nie bój się dostosowywać swojego workflow do nowych możliwości, jakie oferuje Figma.
+        </div>
+
+        <div class="buttons">
+            <a href="https://www.figma.com/resources" class="button">Oficjalne zasoby Figmy</a>
+            <a href="https://www.figma.com/community" class="button">Społeczność Figmy</a>
+            <a href="https://help.figma.com/" class="button">Centrum pomocy Figmy</a>
+            <a href="https://www.figma.com/blog/" class="button">Blog Figmy</a>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const searchInput = document.getElementById('search-input');
+            const sections = document.getElementsByClassName('section');
+            
+            // Przechowuj oryginalną zawartość sekcji
+            const originalContent = Array.from(sections).map(section => section.innerHTML);
+
+            searchInput.addEventListener('input', function() {
+                const searchTerm = this.value.toLowerCase();
+
+                Array.from(sections).forEach(function(section, index) {
+                    const sectionText = section.textContent.toLowerCase();
+
+                    if (searchTerm === '' || sectionText.includes(searchTerm)) {
+                        section.style.display = '';
+                        // Przywróć oryginalną zawartość HTML
+                        section.innerHTML = originalContent[index];
+                        
+                        if (searchTerm !== '') {
+                            highlightText(section, searchTerm);
+                        }
+                    } else {
+                        section.style.display = 'none';
+                    }
+                });
+            });
+
+            function highlightText(element, searchTerm) {
+                const walker = document.createTreeWalker(element, NodeFilter.SHOW_TEXT, null, false);
+                let node;
+                while (node = walker.nextNode()) {
+                    const parent = node.parentNode;
+                    if (parent.nodeName !== 'SCRIPT' && parent.nodeName !== 'STYLE') {
+                        const text = node.textContent;
+                        const regex = new RegExp(searchTerm, 'gi');
+                        if (regex.test(text)) {
+                            const fragment = document.createDocumentFragment();
+                            let lastIndex = 0;
+                            text.replace(regex, function(match, index) {
+                                fragment.appendChild(document.createTextNode(text.slice(lastIndex, index)));
+                                const span = document.createElement('span');
+                                span.className = 'highlight';
+                                span.textContent = match;
+                                fragment.appendChild(span);
+                                lastIndex = index + match.length;
+                                return match;
+                            });
+                            fragment.appendChild(document.createTextNode(text.slice(lastIndex)));
+                            parent.replaceChild(fragment, node);
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>

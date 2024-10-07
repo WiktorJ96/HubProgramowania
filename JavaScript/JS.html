@@ -1,0 +1,994 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rozszerzony przewodnik JavaScript</title>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;700&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;700&family=Inter:wght@400;600;700&display=swap');
+
+        :root {
+            --js-yellow: #f7df1e;
+            --js-black: #323330;
+            --background: #f8f9fa;
+            --text: #333;
+            --code-background: #282c34;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.8;
+            color: var(--text);
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: var(--background);
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Inter', sans-serif;
+            color: var(--js-black);
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+
+        h1 {
+            font-size: 40px;
+            border-bottom: 6px solid var(--js-yellow);
+            padding-bottom: 10px;
+            margin-bottom: 30px;
+        }
+
+        h2 {
+            font-size: 32px;
+            margin-top: 50px;
+        }
+
+        h3 {
+            font-size: 24px;
+            color: #555;
+        }
+
+        pre {
+            background-color: var(--code-background);
+            color: #ffffff;
+            border-left: 5px solid var(--js-yellow);
+            border-radius: 0 8px 8px 0;
+            padding: 20px;
+            overflow-x: auto;
+            font-family: 'Fira Code', monospace;
+            font-size: 14px;
+            line-height: 1.6;
+            margin: 20px 0;
+        }
+
+        code {
+            font-family: 'Fira Code', monospace;
+            background-color: var(--code-background);
+            color: #ffffff;
+            padding: 3px 6px;
+            border-radius: 4px;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .tip, .warning {
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+            font-weight: 500;
+            position: relative;
+            padding-left: 50px;
+        }
+
+        .tip::before, .warning::before {
+            font-family: 'Inter', sans-serif;
+            font-weight: 700;
+            position: absolute;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 24px;
+        }
+
+        .tip {
+            background-color: #e6f7ff;
+            border-left: 5px solid #1890ff;
+        }
+
+        .tip::before {
+            content: "💡";
+        }
+
+        .warning {
+            background-color: #fff7e6;
+            border-left: 5px solid #ffa940;
+        }
+
+        .warning::before {
+            content: "⚠️";
+        }
+
+        .button {
+            display: inline-block;
+            padding: 12px 24px;
+            background-color: var(--js-yellow);
+            color: var(--js-black);
+            text-decoration: none;
+            border-radius: 8px;
+            margin: 10px 5px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border: 2px solid var(--js-black);
+            box-shadow: 4px 4px 0 var(--js-black);
+        }
+
+        .button:hover {
+            background-color: var(--js-black);
+            color: var(--js-yellow);
+            transform: translate(2px, 2px);
+            box-shadow: 2px 2px 0 var(--js-black);
+        }
+
+        #search-container {
+            margin: 30px 0;
+        }
+
+        #search-input {
+            width: 100%;
+            padding: 15px;
+            font-size: 16px;
+            border: 2px solid var(--js-black);
+            border-radius: 8px;
+            background-color: #ffffff;
+            font-family: 'Inter', sans-serif;
+            transition: all 0.3s ease;
+        }
+
+        #search-input:focus {
+            outline: none;
+            box-shadow: 0 0 0 3px var(--js-yellow);
+        }
+
+        .highlight {
+            background-color: var(--js-yellow);
+            color: var(--js-black);
+            font-weight: bold;
+            padding: 2px 4px;
+            border-radius: 4px;
+        }
+
+        table {
+            border-collapse: separate;
+            border-spacing: 0;
+            width: 100%;
+            margin: 20px 0;
+            background-color: #ffffff;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        th, td {
+            border: 1px solid #e0e0e0;
+            padding: 15px;
+            text-align: left;
+        }
+
+        th {
+            background-color: var(--js-yellow);
+            color: var(--js-black);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .section {
+            background-color: #ffffff;
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 40px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            border: 2px solid var(--js-black);
+        }
+
+        .js-keyword {
+            color: #c678dd;
+        }
+
+        .js-string {
+            color: #98c379;
+        }
+
+        .js-comment {
+            color: #5c6370;
+            font-style: italic;
+        }
+
+        .js-number {
+            color: #d19a66;
+        }
+
+        .js-function {
+            color: #61afef;
+        }
+
+        .interactive-demo {
+            background-color: #f1f3f5;
+            border: 2px solid var(--js-black);
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .interactive-demo button {
+            background-color: var(--js-yellow);
+            color: var(--js-black);
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .interactive-demo button:hover {
+            background-color: var(--js-black);
+            color: var(--js-yellow);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Rozszerzony i szczegółowy przewodnik po JavaScript</h1>
+
+        <div id="search-container">
+            <input type="text" id="search-input" placeholder="Wyszukaj w przewodniku...">
+        </div>
+
+        <div class="section">
+            <h2>1. Podstawy JavaScript</h2>
+            <p>JavaScript to wszechstronny język programowania, który pozwala na tworzenie interaktywnych stron internetowych i aplikacji.</p>
+            
+            <h3>1.1. Kluczowe koncepcje</h3>
+            <ul>
+                <li><strong>Zmienne:</strong> Przechowują dane</li>
+                <li><strong>Funkcje:</strong> Bloki kodu wielokrotnego użytku</li>
+                <li><strong>Obiekty:</strong> Struktury danych zawierające właściwości i metody</li>
+                <li><strong>Zdarzenia:</strong> Akcje wykrywane przez przeglądarkę</li>
+            </ul>
+
+            <h3>1.2. Podstawowa składnia JavaScript</h3>
+            <pre><code><span class="js-comment">// Deklaracja zmiennej</span>
+<span class="js-keyword">let</span> message = <span class="js-string">"Hello, World!"</span>;
+
+<span class="js-comment">// Funkcja</span>
+<span class="js-keyword">function</span> <span class="js-function">greet</span>(name) {
+    <span class="js-keyword">return</span> <span class="js-string">`Hello, ${name}!`</span>;
+}
+
+<span class="js-comment">// Obiekt</span>
+<span class="js-keyword">const</span> person = {
+    name: <span class="js-string">"John"</span>,
+    age: <span class="js-number">30</span>,
+    sayHello: <span class="js-keyword">function</span>() {
+        console.log(<span class="js-string">"Hi there!"</span>);
+    }
+};
+
+<span class="js-comment">// Nasłuchiwanie zdarzeń</span>
+document.querySelector(<span class="js-string">"button"</span>).addEventListener(<span class="js-string">"click"</span>, <span class="js-keyword">function</span>() {
+    alert(<span class="js-string">"Button clicked!"</span>);
+});</code></pre>
+
+            <h3>1.3. Sposoby dodawania JavaScript do HTML</h3>
+            <ol>
+                <li><strong>Inline JavaScript:</strong>
+                <pre><code>&lt;button onclick="alert('Hello!')"&gt;Click me&lt;/button&gt;</code></pre>
+                </li>
+                <li><strong>Internal JavaScript:</strong>
+                <pre><code>&lt;script&gt;
+    console.log("This is internal JavaScript");
+&lt;/script&gt;</code></pre>
+                </li>
+                <li><strong>External JavaScript:</strong>
+                <pre><code>&lt;script src="script.js"&gt;&lt;/script&gt;</code></pre>
+                </li>
+            </ol>
+
+            <div class="tip">
+                <strong>Wskazówka:</strong> External JavaScript jest zazwyczaj preferowaną metodą, ponieważ pozwala na łatwe utrzymanie i aktualizację kodu dla całej witryny.
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>2. Typy danych i struktury</h2>
+            <p>JavaScript ma kilka wbudowanych typów danych i struktur, które są fundamentalne dla języka.</p>
+
+            <h3>2.1. Podstawowe typy danych</h3>
+            <ul>
+                <li><strong>Number:</strong> Liczby całkowite i zmiennoprzecinkowe</li>
+                <li><strong>String:</strong> Ciągi znaków</li>
+                <li><strong>Boolean:</strong> true lub false</li>
+                <li><strong>Undefined:</strong> Zmienna zadeklarowana, ale bez przypisanej wartości</li>
+                <li><strong>Null:</strong> Celowy brak wartości</li>
+                <li><strong>Symbol (ES6):</strong> Unikalny identyfikator</li>
+            </ul>
+
+            <h3>2.2. Struktury danych</h3>
+            <ul>
+                <li><strong>Array:</strong> Uporządkowana lista wartości</li>
+                <li><strong>Object:</strong> Kolekcja par klucz-wartość</li>
+                <li><strong>Map (ES6):</strong> Kolekcja par klucz-wartość z lepszą wydajnością dla dużych zbiorów danych</li>
+                <li><strong>Set (ES6):</strong> Kolekcja unikalnych wartości</li>
+            </ul>
+
+            <pre><code><span class="js-comment">// Array</span>
+<span class="js-keyword">let</span> fruits = [<span class="js-string">'apple'</span>, <span class="js-string">'banana'</span>, <span class="js-string">'orange'</span>];
+
+<span class="js-comment">// Object</span>
+<span class="js-keyword">let</span> person = {
+    name: <span class="js-string">'John'</span>,
+    age: <span class="js-number">30</span>,
+    city: <span class="js-string">'New York'</span>
+};
+
+<span class="js-comment">// Map</span>
+<span class="js-keyword">let</span> map = <span class="js-keyword">new</span> Map();
+map.set(<span class="js-string">'key1'</span>, <span class="js-string">'value1'</span>);
+map.set(<span class="js-string">'key2'</span>, <span class="js-string">'value2'</span>);
+
+<span class="js-comment">// Set</span>
+<span class="js-keyword">let</span> set = <span class="js-keyword">new</span> Set([<span class="js-number">1</span>, <span class="js-number">2</span>, <span class="js-number">3</span>, <span class="js-number">3</span>, <span class="js-number">4</span>]); <span class="js-comment">// Set(4) {1, 2, 3, 4}</span></code></pre>
+
+            <div class="tip">
+                <strong>Wskazówka:</strong> Zrozumienie typów danych i struktur jest kluczowe dla efektywnego programowania w JavaScript.
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>3. Funkcje i zakresy</h2>
+            <p>Funkcje są podstawowymi blokami budulcowymi w JavaScript, a zrozumienie zakresów jest kluczowe dla pisania czystego i wydajnego kodu.</p>
+
+            <h3>3.1. Deklaracja funkcji</h3>
+            <pre><code><span class="js-comment">// Deklaracja funkcji</span>
+<span class="js-keyword">function</span> <span class="js-function">greet</span>(name) {
+    <span class="js-keyword">return</span> <span class="js-string">`Hello, ${name}!`</span>;
+}
+
+<span class="js-comment">// Wyrażenie funkcyjne</span>
+<span class="js-keyword">const</span> greet = <span class="js-keyword">function</span>(name) {
+    <span class="js-keyword">return</span> <span class="js-string">`Hello, ${name}!`</span>;
+};
+
+<span class="js-comment">// Arrow function (ES6)</span>
+<span class="js-keyword">const</span> greet = (name) => <span class="js-string">`Hello, ${name}!`</span>;</code></pre>
+
+            <h3>3.2. Zakresy</h3>
+            <ul>
+                <li><strong>Zakres globalny:</strong> Zmienne dostępne w całym skrypcie</li>
+                <li><strong>Zakres funkcyjny:</strong> Zmienne dostępne tylko wewnątrz funkcji</li>
+                <li><strong>Zakres blokowy (ES6):</strong> Zmienne zadeklarowane z let i const są ograniczone do bloku</li>
+            </ul>
+
+            <pre><code><span class="js-keyword">let</span> globalVar = <span class="js-string">"I'm global"</span>;
+
+<span class="js-keyword">function</span> <span class="js-function">exampleFunction</span>() {
+    <span class="js-keyword">let</span> functionVar = <span class="js-string">"I'm function-scoped"</span>;
+    <span class="js-keyword">if</span> (<span class="js-keyword">true</span>) {
+        <span class="js-keyword">let</span> blockVar = <span class="js-string">"I'm block-scoped"</span>;
+        <span class="js-keyword">var</span> functionScopedVar = <span class="js-string">"I'm function-scoped too"</span>;
+    }
+    console.log(functionVar); <span class="js-comment">// OK</span>
+    console.log(functionScopedVar); <span class="js-comment">// OK</span>
+    console.log(blockVar); <span class="js-comment">// ReferenceError</span>
+}
+
+console.log(globalVar); <span class="js-comment">// OK</span>
+console.log(functionVar); <span class="js-comment">// ReferenceError</span></code></pre>
+
+            <h3>3.3. Domknięcia (Closures)</h3>
+            <p>Domknięcia pozwalają funkcji na dostęp do zmiennych z jej zakresu leksykalnego, nawet po zakończeniu wykonywania funkcji zewnętrznej.</p>
+
+            <pre><code><span class="js-keyword">function</span> <span class="js-function">outerFunction</span>(x) {
+    <span class="js-keyword">return function</span>(y) {
+        <span class="js-keyword">return</span> x + y;
+    };
+}
+
+<span class="js-keyword">const</span> add5 = outerFunction(<span class="js-number">5</span>);
+console.log(add5(<span class="js-number">3</span>)); <span class="js-comment">// 8</span></code></pre>
+
+            <div class="tip">
+                <strong>Wskazówka:</strong> Domknięcia są potężnym narzędziem w JavaScript, umożliwiającym tworzenie prywatnych zmiennych i funkcji pomocniczych.
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>4. Obiekty i prototypy</h2>
+            <p>JavaScript jest językiem opartym na prototypach, co oznacza, że dziedziczenie jest realizowane poprzez łańcuch prototypów.</p>
+
+            <h3>4.1. Tworzenie obiektów</h3>
+            <pre><code><span class="js-comment">// Literał obiektu</span>
+<span class="js-keyword">let</span> person = {
+    name: <span class="js-string">"John"</span>,
+    age: <span class="js-number">30</span>,
+    greet: <span class="js-keyword">function</span>() {
+        console.log(<span class="js-string">`Hello, my name is ${this.name}`</span>);
+    }
+};
+
+<span class="js-comment">// Konstruktor</span>
+<span class="js-keyword">function</span> <span class="js-function">Person</span>(name, age) {
+    <span class="js-keyword">this</span>.name = name;
+    <span class="js-keyword">this</span>.age = age;
+}
+Person.prototype.greet = <span class="js-keyword">function</span>() {
+    console.log(<span class="js-string">`Hello, my name is ${this.name}`</span>);
+};
+
+<span class="js-keyword">let</span> john = <span class="js-keyword">new</span> Person(<span class="js-string">"John"</span>, <span class="js-number">30</span>);
+
+<span class="js-comment">// Klasy ES6</span>
+<span class="js-keyword">class</span> PersonES6 {
+    <span class="js-keyword">constructor</span>(name, age) {
+        <span class="js-keyword">this</span>.name = name;
+        <span class="js-keyword">this</span>.age = age;
+    }
+    greet() {
+        console.log(<span class="js-string">`Hello, my name is ${this.name}`</span>);
+    }
+}</code></pre>
+
+            <h3>4.2. Prototypy i dziedziczenie</h3>
+            <pre><code><span class="js-keyword">function</span> <span class="js-function">Animal</span>(name) {
+    <span class="js-keyword">this</span>.name = name;
+}
+Animal.prototype.speak = <span class="js-keyword">function</span>() {
+    console.log(<span class="js-string">`${this.name} makes a sound.`</span>);
+};
+
+<span class="js-keyword">function</span> <span class="js-function">Dog</span>(name) {
+    Animal.call(<span class="js-keyword">this</span>, name);
+}
+Dog.prototype = Object.create(Animal.prototype);
+Dog.prototype.constructor = Dog;
+
+Dog.prototype.bark = <span class="js-keyword">function</span>() {
+    console.log(<span class="js-string">`${this.name} barks.`</span>);
+};
+
+<span class="js-keyword">let</span> dog = <span class="js-keyword">new</span> Dog(<span class="js-string">'Rex'</span>);
+dog.speak(); <span class="js-comment">// Rex makes a sound.</span>
+dog.bark(); <span class="js-comment">// Rex barks.</span></code></pre>
+
+            <div class="tip">
+                <strong>Wskazówka:</strong> Zrozumienie prototypów jest kluczowe dla efektywnego wykorzystania dziedziczenia w JavaScript.
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>5. Asynchroniczność w JavaScript</h2>
+            <p>JavaScript jest jednowątkowy, ale może obsługiwać operacje asynchroniczne za pomocą callbacków, promises i async/await.</p>
+
+            <h3>5.1. Callbacki</h3>
+            <pre><code><span class="js-keyword">function</span> <span class="js-function">fetchData</span>(callback) {
+    setTimeout(() => {
+        callback(<span class="js-string">'Data fetched'</span>);
+    }, <span class="js-number">1000</span>);
+}
+
+fetchData((result) => {
+    console.log(result);
+});</code></pre>
+
+            <h3>5.2. Promises</h3>
+            <pre><code><span class="js-keyword">function</span> <span class="js-function">fetchData</span>() {
+    <span class="js-keyword">return new</span> Promise((resolve, reject) => {
+        setTimeout(() => {
+            resolve(<span class="js-string">'Data fetched'</span>);
+        }, <span class="js-number">1000</span>);
+    });
+}
+
+fetchData()
+    .then(result => console.log(result))
+    .catch(error => console.error(error));</code></pre>
+
+            <h3>5.3. Async/Await (ES8)</h3>
+            <pre><code><span class="js-keyword">async function</span> <span class="js-function">fetchDataAsync</span>() {
+    <span class="js-keyword">try</span> {
+        <span class="js-keyword">const</span> result = <span class="js-keyword">await</span> fetchData();
+        console.log(result);
+    } <span class="js-keyword">catch</span> (error) {
+        console.error(error);
+    }
+}
+
+fetchDataAsync();</code></pre>
+
+            <div class="tip">
+                <strong>Wskazówka:</strong> Async/await to najnowszy i najbardziej czytelny sposób obsługi asynchroniczności w JavaScript.
+            </div>
+        </div>
+        
+
+        <div class="section">
+    <h2>6. Manipulacja DOM</h2>
+    <p>Document Object Model (DOM) to programowy interfejs do HTML i XML, umożliwiający dynamiczną modyfikację struktury, stylu i zawartości dokumentu.</p>
+
+    <h3>6.1. Wybieranie elementów</h3>
+    <pre><code><span class="js-comment">// Pojedynczy element</span>
+<span class="js-keyword">const</span> element = document.getElementById(<span class="js-string">'myId'</span>);
+<span class="js-keyword">const</span> element = document.querySelector(<span class="js-string">'.myClass'</span>);
+
+<span class="js-comment">// Wiele elementów</span>
+<span class="js-keyword">const</span> elements = document.getElementsByClassName(<span class="js-string">'myClass'</span>);
+<span class="js-keyword">const</span> elements = document.querySelectorAll(<span class="js-string">'div'</span>);</code></pre>
+
+    <h3>6.2. Modyfikacja elementów</h3>
+    <pre><code><span class="js-comment">// Zmiana zawartości</span>
+element.textContent = <span class="js-string">'Nowy tekst'</span>;
+element.innerHTML = <span class="js-string">'&lt;span&gt;Nowy HTML&lt;/span&gt;'</span>;
+
+<span class="js-comment">// Zmiana atrybutów</span>
+element.setAttribute(<span class="js-string">'class'</span>, <span class="js-string">'newClass'</span>);
+element.style.color = <span class="js-string">'red'</span>;</code></pre>
+
+    <h3>6.3. Dodawanie i usuwanie elementów</h3>
+    <pre><code><span class="js-comment">// Tworzenie nowego elementu</span>
+<span class="js-keyword">const</span> newElement = document.createElement(<span class="js-string">'div'</span>);
+newElement.textContent = <span class="js-string">'Nowy element'</span>;
+
+<span class="js-comment">// Dodawanie elementu</span>
+parentElement.appendChild(newElement);
+
+<span class="js-comment">// Usuwanie elementu</span>
+parentElement.removeChild(childElement);
+<span class="js-comment">// lub</span>
+childElement.remove();</code></pre>
+
+    <h3>6.4. Obsługa zdarzeń</h3>
+    <pre><code><span class="js-comment">// Dodawanie nasłuchiwacza zdarzeń</span>
+element.addEventListener(<span class="js-string">'click'</span>, <span class="js-keyword">function</span>(event) {
+    console.log(<span class="js-string">'Element clicked!'</span>);
+});
+
+<span class="js-comment">// Usuwanie nasłuchiwacza zdarzeń</span>
+element.removeEventListener(<span class="js-string">'click'</span>, handlerFunction);</code></pre>
+
+    <div class="tip">
+        <strong>Wskazówka:</strong> Manipulacja DOM jest kluczowa dla tworzenia interaktywnych stron internetowych, ale nadmierne modyfikacje mogą wpłynąć na wydajność. Staraj się minimalizować bezpośrednie manipulacje DOM.
+    </div>
+</div>
+
+<div class="section">
+    <h2>7. AJAX i Fetch API</h2>
+    <p>AJAX (Asynchronous JavaScript and XML) umożliwia asynchroniczną komunikację z serwerem bez przeładowywania strony. Fetch API to nowoczesny interfejs do wykonywania żądań HTTP.</p>
+
+    <h3>7.1. XMLHttpRequest (starsza metoda)</h3>
+    <pre><code><span class="js-keyword">const</span> xhr = <span class="js-keyword">new</span> XMLHttpRequest();
+xhr.open(<span class="js-string">'GET'</span>, <span class="js-string">'https://api.example.com/data'</span>, <span class="js-keyword">true</span>);
+xhr.onload = <span class="js-keyword">function</span>() {
+    <span class="js-keyword">if</span> (xhr.status === <span class="js-number">200</span>) {
+        console.log(JSON.parse(xhr.responseText));
+    } <span class="js-keyword">else</span> {
+        console.error(<span class="js-string">'Request failed. Status:'</span>, xhr.status);
+    }
+};
+xhr.send();</code></pre>
+
+    <h3>7.2. Fetch API</h3>
+    <pre><code>fetch(<span class="js-string">'https://api.example.com/data'</span>)
+    .then(response => response.json())
+    .then(data => console.log(data))
+    .catch(error => console.error(<span class="js-string">'Error:'</span>, error));</code></pre>
+
+    <h3>7.3. Async/Await z Fetch</h3>
+    <pre><code><span class="js-keyword">async function</span> <span class="js-function">fetchData</span>() {
+    <span class="js-keyword">try</span> {
+        <span class="js-keyword">const</span> response = <span class="js-keyword">await</span> fetch(<span class="js-string">'https://api.example.com/data'</span>);
+        <span class="js-keyword">const</span> data = <span class="js-keyword">await</span> response.json();
+        console.log(data);
+    } <span class="js-keyword">catch</span> (error) {
+        console.error(<span class="js-string">'Error:'</span>, error);
+    }
+}
+
+fetchData();</code></pre>
+
+    <div class="tip">
+        <strong>Wskazówka:</strong> Fetch API jest preferowanym sposobem wykonywania żądań HTTP w nowoczesnych aplikacjach JavaScript ze względu na jego prostotę i wsparcie dla Promises.
+    </div>
+</div>
+        
+
+        <div class="section">
+    <h2>8. ES6+ Funkcje</h2>
+    <p>ECMAScript 2015 (ES6) i późniejsze wersje wprowadziły wiele nowych funkcji do JavaScript, które znacznie usprawniają pracę z językiem.</p>
+
+    <h3>8.1. Destrukturyzacja</h3>
+    <pre><code><span class="js-comment">// Destrukturyzacja obiektów</span>
+<span class="js-keyword">const</span> person = { name: <span class="js-string">'John'</span>, age: <span class="js-number">30</span> };
+<span class="js-keyword">const</span> { name, age } = person;
+
+<span class="js-comment">// Destrukturyzacja tablic</span>
+<span class="js-keyword">const</span> colors = [<span class="js-string">'red'</span>, <span class="js-string">'green'</span>, <span class="js-string">'blue'</span>];
+<span class="js-keyword">const</span> [firstColor, secondColor] = colors;</code></pre>
+
+    <h3>8.2. Spread i Rest operatory</h3>
+    <pre><code><span class="js-comment">// Spread operator</span>
+<span class="js-keyword">const</span> arr1 = [<span class="js-number">1</span>, <span class="js-number">2</span>, <span class="js-number">3</span>];
+<span class="js-keyword">const</span> arr2 = [...arr1, <span class="js-number">4</span>, <span class="js-number">5</span>]; <span class="js-comment">// [1, 2, 3, 4, 5]</span>
+
+<span class="js-comment">// Rest operator</span>
+<span class="js-keyword">function</span> <span class="js-function">sum</span>(...numbers) {
+    <span class="js-keyword">return</span> numbers.reduce((total, num) => total + num, <span class="js-number">0</span>);
+}
+console.log(sum(<span class="js-number">1</span>, <span class="js-number">2</span>, <span class="js-number">3</span>, <span class="js-number">4</span>)); <span class="js-comment">// 10</span></code></pre>
+
+    <h3>8.3. Template literals</h3>
+    <pre><code><span class="js-keyword">const</span> name = <span class="js-string">'John'</span>;
+<span class="js-keyword">const</span> greeting = <span class="js-string">`Hello, ${name}!
+Welcome to our website.`</span>;</code></pre>
+
+    <h3>8.4. Default parameters</h3>
+    <pre><code><span class="js-keyword">function</span> <span class="js-function">greet</span>(name = <span class="js-string">'Guest'</span>) {
+    console.log(<span class="js-string">`Hello, ${name}!`</span>);
+}
+greet(); <span class="js-comment">// Hello, Guest!</span>
+greet(<span class="js-string">'John'</span>); <span class="js-comment">// Hello, John!</span></code></pre>
+
+    <div class="tip">
+        <strong>Wskazówka:</strong> Korzystanie z nowoczesnych funkcji JavaScript może znacznie poprawić czytelność i zwięzłość kodu.
+    </div>
+</div>
+
+<div class="section">
+    <h2>9. Moduły JavaScript</h2>
+    <p>Moduły pozwalają na organizację kodu w oddzielne, wielokrotnego użytku jednostki.</p>
+
+    <h3>9.1. Export</h3>
+    <pre><code><span class="js-comment">// math.js</span>
+<span class="js-keyword">export function</span> <span class="js-function">add</span>(a, b) {
+    <span class="js-keyword">return</span> a + b;
+}
+
+<span class="js-keyword">export const</span> PI = <span class="js-number">3.14159</span>;</code></pre>
+
+    <h3>9.2. Import</h3>
+    <pre><code><span class="js-comment">// main.js</span>
+<span class="js-keyword">import</span> { add, PI } <span class="js-keyword">from</span> <span class="js-string">'./math.js'</span>;
+
+console.log(add(<span class="js-number">2</span>, <span class="js-number">3</span>)); <span class="js-comment">// 5</span>
+console.log(PI); <span class="js-comment">// 3.14159</span></code></pre>
+
+    <h3>9.3. Default export/import</h3>
+    <pre><code><span class="js-comment">// person.js</span>
+<span class="js-keyword">export default class</span> <span class="js-function">Person</span> {
+    <span class="js-keyword">constructor</span>(name) {
+        <span class="js-keyword">this</span>.name = name;
+    }
+}
+
+<span class="js-comment">// main.js</span>
+<span class="js-keyword">import</span> Person <span class="js-keyword">from</span> <span class="js-string">'./person.js'</span>;
+<span class="js-keyword">const</span> john = <span class="js-keyword">new</span> Person(<span class="js-string">'John'</span>);</code></pre>
+
+    <div class="tip">
+        <strong>Wskazówka:</strong> Moduły pomagają w utrzymaniu czystej struktury kodu i unikaniu konfliktów nazw w globalnej przestrzeni nazw.
+    </div>
+</div>
+        
+
+        <div class="section">
+    <h2>10. Nowoczesne praktyki i wzorce</h2>
+    <p>Stosowanie nowoczesnych praktyk i wzorców projektowych może znacznie poprawić jakość i utrzymywalność kodu JavaScript.</p>
+
+    <h3>10.1. Programowanie funkcyjne</h3>
+    <pre><code><span class="js-keyword">const</span> numbers = [<span class="js-number">1</span>, <span class="js-number">2</span>, <span class="js-number">3</span>, <span class="js-number">4</span>, <span class="js-number">5</span>];
+
+<span class="js-keyword">const</span> doubledNumbers = numbers.map(<span class="js-function">num</span> => num * <span class="js-number">2</span>);
+<span class="js-keyword">const</span> evenNumbers = numbers.filter(<span class="js-function">num</span> => num % <span class="js-number">2</span> === <span class="js-number">0</span>);
+<span class="js-keyword">const</span> sum = numbers.reduce((<span class="js-function">total, num</span>) => total + num, <span class="js-number">0</span>);</code></pre>
+
+    <h3>10.2. Immutability</h3>
+    <pre><code><span class="js-keyword">const</span> originalArray = [<span class="js-number">1</span>, <span class="js-number">2</span>, <span class="js-number">3</span>];
+<span class="js-keyword">const</span> newArray = [...originalArray, <span class="js-number">4</span>]; <span class="js-comment">// [1, 2, 3, 4]</span>
+
+<span class="js-keyword">const</span> originalObject = { x: <span class="js-number">1</span>, y: <span class="js-number">2</span> };
+<span class="js-keyword">const</span> newObject = { ...originalObject, z: <span class="js-number">3</span> }; <span class="js-comment">// { x: 1, y: 2, z: 3 }</span></code></pre>
+
+    <h3>10.3. Wzorzec modułu</h3>
+    <pre><code><span class="js-keyword">const</span> MyModule = (<span class="js-keyword">function</span>() {
+    <span class="js-keyword">let</span> privateVar = <span class="js-number">0</span>;
+
+    <span class="js-keyword">function</span> <span class="js-function">privateFunction</span>() {
+        console.log(<span class="js-string">'This is private'</span>);
+    }
+
+    <span class="js-keyword">return</span> {
+        publicMethod: <span class="js-keyword">function</span>() {
+            privateFunction();
+            console.log(privateVar);
+        }
+    };
+})();</code></pre>
+
+    <div class="tip">
+        <strong>Wskazówka:</strong> Stosowanie nowoczesnych praktyk i wzorców pomaga w tworzeniu bardziej przewidywalnego, testowalnego i łatwiejszego w utrzymaniu kodu.
+    </div>
+</div>
+
+<div class="section">
+    <h2>11. Testowanie i debugowanie</h2>
+    <p>Testowanie i debugowanie są kluczowymi aspektami w procesie rozwoju oprogramowania JavaScript.</p>
+
+    <h3>11.1. Testowanie jednostkowe</h3>
+    <p>Przykład z użyciem biblioteki Jest:</p>
+    <pre><code><span class="js-comment">// sum.js</span>
+<span class="js-keyword">function</span> <span class="js-function">sum</span>(a, b) {
+    <span class="js-keyword">return</span> a + b;
+}
+module.exports = sum;
+
+<span class="js-comment">// sum.test.js</span>
+<span class="js-keyword">const</span> sum = require(<span class="js-string">'./sum'</span>);
+
+test(<span class="js-string">'adds 1 + 2 to equal 3'</span>, () => {
+    expect(sum(<span class="js-number">1</span>, <span class="js-number">2</span>)).toBe(<span class="js-number">3</span>);
+});</code></pre>
+
+    <h3>11.2. Debugowanie</h3>
+    <ul>
+        <li>Używaj <code>console.log()</code> do wyświetlania wartości zmiennych</li>
+        <li>Korzystaj z narzędzi deweloperskich przeglądarki (np. Chrome DevTools)</li>
+        <li>Używaj słowa kluczowego <code>debugger</code> do ustawiania punktów wstrzymania w kodzie</li>
+    </ul>
+
+    <div class="tip">
+        <strong>Wskazówka:</strong> Regularne testowanie i efektywne debugowanie mogą zaoszczędzić dużo czasu i frustracji w długoterminowym rozwoju projektu.
+    </div>
+</div>
+
+<div class="section">
+    <h2>12. Optymalizacja wydajności</h2>
+    <p>Optymalizacja wydajności jest kluczowa dla tworzenia szybkich i responsywnych aplikacji JavaScript.</p>
+
+    <h3>12.1. Minimalizacja manipulacji DOM</h3>
+    <pre><code><span class="js-comment">// Nieoptymalne</span>
+<span class="js-keyword">for</span> (<span class="js-keyword">let</span> i = <span class="js-number">0</span>; i < <span class="js-number">1000</span>; i++) {
+    document.body.innerHTML += <span class="js-string">'&lt;div&gt;'</span> + i + <span class="js-string">'&lt;/div&gt;'</span>;
+}
+
+<span class="js-comment">// Optymalne</span>
+<span class="js-keyword">let</span> html = <span class="js-string">''</span>;
+<span class="js-keyword">for</span> (<span class="js-keyword">let</span> i = <span class="js-number">0</span>; i < <span class="js-number">1000</span>; i++) {
+    html += <span class="js-string">'&lt;div&gt;'</span> + i + <span class="js-string">'&lt;/div&gt;'</span>;
+}
+document.body.innerHTML = html;</code></pre>
+
+    <h3>12.2. Unikanie wycieków pamięci</h3>
+    <pre><code><span class="js-comment">// Potencjalny wyciek pamięci</span>
+<span class="js-keyword">function</span> <span class="js-function">addHandler</span>() {
+    <span class="js-keyword">const</span> element = document.getElementById(<span class="js-string">'button'</span>);
+    element.addEventListener(<span class="js-string">'click'</span>, () => {
+        <span class="js-comment">// Duży obiekt, który nie zostanie zwolniony</span>
+        <span class="js-keyword">const</span> largeObject = <span class="js-keyword">new</span> Array(<span class="js-number">1000000</span>).fill(<span class="js-string">'data'</span>);
+        console.log(<span class="js-string">'Button clicked!'</span>, largeObject);
+    });
+}
+
+<span class="js-comment">// Poprawione</span>
+<span class="js-keyword">function</span> <span class="js-function">addHandler</span>() {
+    <span class="js-keyword">const</span> element = document.getElementById(<span class="js-string">'button'</span>);
+    <span class="js-keyword">const</span> handleClick = () => {
+        console.log(<span class="js-string">'Button clicked!'</span>);
+    };
+    element.addEventListener(<span class="js-string">'click'</span>, handleClick);
+    <span class="js-comment">// Pamiętaj o usunięciu nasłuchiwacza, gdy nie jest już potrzebny</span>
+    <span class="js-comment">// element.removeEventListener('click', handleClick);</span>
+}</code></pre>
+
+    <h3>12.3. Asynchroniczne ładowanie skryptów</h3>
+    <pre><code>&lt;script src=<span class="js-string">"script.js"</span> async&gt;&lt;/script&gt;
+&lt;script src=<span class="js-string">"script.js"</span> defer&gt;&lt;/script&gt;</code></pre>
+
+    <div class="tip">
+        <strong>Wskazówka:</strong> Zawsze mierz wpływ optymalizacji na wydajność. Czasami przedwczesna optymalizacja może prowadzić do bardziej skomplikowanego i trudniejszego w utrzymaniu kodu.
+    </div>
+</div>
+
+<div class="section">
+    <h2>13. Bezpieczeństwo w JavaScript</h2>
+    <p>Bezpieczeństwo jest krytycznym aspektem w rozwoju aplikacji JavaScript, szczególnie w kontekście aplikacji webowych.</p>
+
+    <h3>13.1. Cross-Site Scripting (XSS)</h3>
+    <p>Zapobieganie atakom XSS poprzez sanityzację danych wejściowych:</p>
+    <pre><code><span class="js-keyword">function</span> <span class="js-function">sanitizeHTML</span>(str) {
+    <span class="js-keyword">return</span> str.replace(<span class="js-regex">/[&<>'"]/g</span>, 
+        <span class="js-function">tag</span> => ({
+            <span class="js-string">'&'</span>: <span class="js-string">'&amp;'</span>,
+            <span class="js-string">'<'</span>: <span class="js-string">'&lt;'</span>,
+            <span class="js-string">'>'</span>: <span class="js-string">'&gt;'</span>,
+            <span class="js-string">"'"</span>: <span class="js-string">'&#39;'</span>,
+            <span class="js-string">'"'</span>: <span class="js-string">'&quot;'</span>
+        }[tag] || tag)
+    );
+}
+
+<span class="js-keyword">const</span> userInput = <span class="js-string">'&lt;script&gt;alert("XSS");&lt;/script&gt;'</span>;
+<span class="js-keyword">const</span> sanitizedInput = sanitizeHTML(userInput);
+document.getElementById(<span class="js-string">'output'</span>).innerHTML = sanitizedInput;</code></pre>
+
+    <h3>13.2. Content Security Policy (CSP)</h3>
+    <p>Implementacja CSP w nagłówkach HTTP lub meta tagach:</p>
+    <pre><code>&lt;meta http-equiv=<span class="js-string">"Content-Security-Policy"</span> 
+    content=<span class="js-string">"default-src 'self'; script-src 'self' https://trusted.cdn.com"</span>&gt;</code></pre>
+
+    <h3>13.3. Bezpieczne przechowywanie danych</h3>
+    <p>Unikanie przechowywania wrażliwych informacji w localStorage:</p>
+    <pre><code><span class="js-comment">// Niebezpieczne</span>
+localStorage.setItem(<span class="js-string">'token'</span>, <span class="js-string">'sensitive_token_value'</span>);
+
+<span class="js-comment">// Bezpieczniejsze (choć nadal nie idealne dla bardzo wrażliwych danych)</span>
+sessionStorage.setItem(<span class="js-string">'token'</span>, <span class="js-string">'sensitive_token_value'</span>);</code></pre>
+
+    <div class="warning">
+        <strong>Uwaga:</strong> Bezpieczeństwo front-endu to tylko jedna warstwa ochrony. Zawsze implementuj odpowiednie zabezpieczenia po stronie serwera.
+    </div>
+</div>
+
+<div class="section">
+    <h2>14. Frameworki i biblioteki JavaScript</h2>
+    <p>Frameworki i biblioteki JavaScript znacznie ułatwiają tworzenie złożonych aplikacji webowych, oferując gotowe rozwiązania dla często spotykanych problemów.</p>
+
+    <h3>14.1. React</h3>
+    <p>React to popularna biblioteka do budowania interfejsów użytkownika, opracowana przez Facebooka.</p>
+    <pre><code><span class="js-keyword">import</span> React <span class="js-keyword">from</span> <span class="js-string">'react'</span>;
+<span class="js-keyword">import</span> ReactDOM <span class="js-keyword">from</span> <span class="js-string">'react-dom'</span>;
+
+<span class="js-keyword">function</span> <span class="js-function">HelloWorld</span>() {
+    <span class="js-keyword">return</span> &lt;h1&gt;Hello, World!&lt;/h1&gt;;
+}
+
+ReactDOM.render(&lt;HelloWorld /&gt;, document.getElementById(<span class="js-string">'root'</span>));</code></pre>
+
+    <h3>14.2. Vue.js</h3>
+    <p>Vue.js to progresywny framework do budowania interfejsów użytkownika.</p>
+    <pre><code>&lt;div id=<span class="js-string">"app"</span>&gt;
+  {{ message }}
+&lt;/div&gt;
+
+&lt;script&gt;
+<span class="js-keyword">new</span> Vue({
+  el: <span class="js-string">'#app'</span>,
+  data: {
+    message: <span class="js-string">'Hello Vue!'</span>
+  }
+})
+&lt;/script&gt;</code></pre>
+
+    <h3>14.3. Angular</h3>
+    <p>Angular to kompleksowy framework do tworzenia aplikacji webowych, opracowany przez Google.</p>
+    <pre><code><span class="js-keyword">import</span> { Component } <span class="js-keyword">from</span> <span class="js-string">'@angular/core'</span>;
+
+@Component({
+  selector: <span class="js-string">'app-root'</span>,
+  template: <span class="js-string">'&lt;h1&gt;{{title}}&lt;/h1&gt;'</span>
+})
+<span class="js-keyword">export class</span> AppComponent {
+  title = <span class="js-stringtitle = <span class="js-string">'Hello Angular!'</span>;
+}</code></pre>
+
+    <h3>14.4. Node.js</h3>
+    <p>Node.js to środowisko uruchomieniowe JavaScript po stronie serwera.</p>
+    <pre><code><span class="js-keyword">const</span> http = require(<span class="js-string">'http'</span>);
+
+<span class="js-keyword">const</span> server = http.createServer((req, res) => {
+  res.statusCode = <span class="js-number">200</span>;
+  res.setHeader(<span class="js-string">'Content-Type'</span>, <span class="js-string">'text/plain'</span>);
+  res.end(<span class="js-string">'Hello World'</span>);
+});
+
+server.listen(<span class="js-number">3000</span>, <span class="js-string">'localhost'</span>, () => {
+  console.log(<span class="js-string">'Server running at http://localhost:3000/'</span>);
+});</code></pre>
+
+    <div class="tip">
+        <strong>Wskazówka:</strong> Wybór odpowiedniego frameworka lub biblioteki zależy od specyfiki projektu, wymagań wydajnościowych i preferencji zespołu. Warto zapoznać się z kilkoma opcjami przed podjęciem decyzji.
+    </div>
+</div>
+
+<div class="section">
+    <h2>15. Przyszłość JavaScript</h2>
+    <p>JavaScript stale ewoluuje, wprowadzając nowe funkcje i możliwości. Oto kilka obszarów, na które warto zwrócić uwagę:</p>
+
+    <h3>15.1. WebAssembly</h3>
+    <p>WebAssembly umożliwia uruchamianie kodu napisanego w językach niskopoziomowych (jak C++ czy Rust) w przeglądarkach internetowych z wydajnością bliską natywnej.</p>
+
+    <h3>15.2. Progressive Web Apps (PWA)</h3>
+    <p>PWA to aplikacje webowe, które oferują doświadczenie zbliżone do natywnych aplikacji mobilnych.</p>
+
+    <h3>15.3. JavaScript dla IoT</h3>
+    <p>JavaScript znajduje zastosowanie w programowaniu urządzeń Internet of Things (IoT).</p>
+
+    <h3>15.4. Machine Learning w JavaScript</h3>
+    <p>Biblioteki takie jak TensorFlow.js umożliwiają implementację modeli uczenia maszynowego bezpośrednio w przeglądarce.</p>
+
+    <div class="tip">
+        <strong>Wskazówka:</strong> Śledź specyfikacje ECMAScript i eksperymentuj z nowymi funkcjami w środowisku deweloperskim, aby być na bieżąco z najnowszymi trendami w JavaScript.
+    </div>
+</div>
+
+<div class="tip">
+    <strong>Końcowa wskazówka:</strong> JavaScript jest dynamicznie rozwijającym się językiem z bogatym ekosystemem. Ciągłe uczenie się i eksperymentowanie z nowymi technikami i narzędziami jest kluczem do sukcesu w programowaniu JavaScript.
+</div>
+
+<div class="buttons">
+    <a href="https://github.com/tc39/proposals" class="button">TC39 Proposals</a>
+    <a href="https://webassembly.org/" class="button">WebAssembly</a>
+    <a href="https://developers.google.com/web/progressive-web-apps" class="button">Progressive Web Apps</a>
+    <a href="https://www.tensorflow.org/js" class="button">TensorFlow.js</a>
+</div>
+ <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const searchInput = document.getElementById('search-input');
+            const sections = document.getElementsByClassName('section');
+            
+            // Przechowuj oryginalną zawartość sekcji
+            const originalContent = Array.from(sections).map(section => section.innerHTML);
+
+            searchInput.addEventListener('input', function() {
+                const searchTerm = this.value.toLowerCase();
+
+                Array.from(sections).forEach(function(section, index) {
+                    const sectionText = section.textContent.toLowerCase();
+
+                    if (searchTerm === '' || sectionText.includes(searchTerm)) {
+                        section.style.display = '';
+                        // Przywróć oryginalną zawartość HTML
+                        section.innerHTML = originalContent[index];
+                        
+                        if (searchTerm !== '') {
+                            highlightText(section, searchTerm);
+                        }
+                    } else {
+                        section.style.display = 'none';
+                    }
+                });
+            });
+
+            function highlightText(element, searchTerm) {
+                const walker = document.createTreeWalker(element, NodeFilter.SHOW_TEXT, null, false);
+                let node;
+                while (node = walker.nextNode()) {
+                    const parent = node.parentNode;
+                    if (parent.nodeName !== 'SCRIPT' && parent.nodeName !== 'STYLE') {
+                        const text = node.textContent;
+                        const regex = new RegExp(searchTerm, 'gi');
+                        if (regex.test(text)) {
+                            const fragment = document.createDocumentFragment();
+                            let lastIndex = 0;
+                            text.replace(regex, function(match, index) {
+                                fragment.appendChild(document.createTextNode(text.slice(lastIndex, index)));
+                                const span = document.createElement('span');
+                                span.className = 'highlight';
+                                span.textContent = match;
+                                fragment.appendChild(span);
+                                lastIndex = index + match.length;
+                                return match;
+                            });
+                            fragment.appendChild(document.createTextNode(text.slice(lastIndex)));
+                            parent.replaceChild(fragment, node);
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>

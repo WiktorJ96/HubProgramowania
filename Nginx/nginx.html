@@ -6,88 +6,201 @@
     <title>Kompleksowy przewodnik po NGINX</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Fira+Code&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --primary-color: #009639;
-            --secondary-color: #007d31;
-            --background-color: #f8f9fa;
-            --text-color: #333;
-            --code-background: #e9ecef;
-            --pre-background: #272822;
-            --pre-color: #f8f8f2;
-            --tip-background: #d4edda;
-            --tip-border: #c3e6cb;
-            --link-color: #007bff;
-            --link-hover-color: #0056b3;
-        }
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Poppins:wght@400;600;700&display=swap');
 
-        body {
-            font-family: 'Roboto', sans-serif;
-            line-height: 1.6;
-            color: var(--text-color);
-            background-color: var(--background-color);
-            margin: 0;
-            padding: 0;
-        }
+body {
+    font-family: 'Poppins', sans-serif;
+    line-height: 1.8;
+    color: #333;
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f0f0f0;
+    font-size: 18px;
+}
 
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
-            background-color: white;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
-        }
+h1, h2, h3, h4 {
+    font-family: 'Poppins', sans-serif;
+    color: #00974a;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+}
 
-        h1, h2, h3 {
-            color: var(--primary-color);
-        }
+h1 {
+    font-size: 36px;
+    border-bottom: 4px solid #00974a;
+    padding-bottom: 10px;
+    margin-bottom: 30px;
+}
 
-        h1 {
-            border-bottom: 2px solid var(--primary-color);
-            padding-bottom: 10px;
-        }
+h2 {
+    font-size: 28px;
+    margin-top: 50px;
+}
 
-        pre, code {
-            font-family: 'Fira Code', monospace;
-            background-color: var(--code-background);
-            border-radius: 4px;
-        }
+h3 {
+    font-size: 22px;
+    color: #333;
+}
 
-        pre {
-            padding: 15px;
-            overflow-x: auto;
-        }
+pre {
+    background-color: #1e1e1e;
+    color: #ffffff;
+    border-left: 5px solid #00974a;
+    border-radius: 0 4px 4px 0;
+    padding: 20px;
+    overflow-x: auto;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 14px;
+    line-height: 1.6;
+}
 
-        code {
-            padding: 2px 5px;
-        }
+code {
+    font-family: 'JetBrains Mono', monospace;
+    background-color: #1e1e1e;
+    color: #ffffff;
+    padding: 3px 6px;
+    border-radius: 3px;
+    font-size: 14px;
+    font-weight: bold;
+}
 
-        .tip {
-            background-color: var(--tip-background);
-            border: 1px solid var(--tip-border);
-            border-radius: 4px;
-            padding: 15px;
-            margin: 20px 0;
-        }
+.tip, .warning {
+    padding: 20px;
+    margin: 20px 0;
+    border-radius: 4px;
+    font-weight: 500;
+}
 
-        .button {
-            display: inline-block;
-            background-color: var(--primary-color);
-            color: white;
-            padding: 10px 20px;
-            margin: 20px 0;
-            border: none;
-            border-radius: 5px;
-            font-size: 16px;
-            font-weight: bold;
-            text-decoration: none;
-            text-align: center;
-            transition: background-color 0.3s ease;
-            cursor: pointer;
-        }
+.tip {
+    background-color: #e6f7ed;
+    border-left: 5px solid #00974a;
+}
 
-        .button:hover {
-            background-color: var(--secondary-color);
-        }
+.warning {
+    background-color: #fff3cd;
+    border-left: 5px solid #ffc107;
+}
+
+.button {
+    display: inline-block;
+    padding: 12px 24px;
+    background-color: #00974a;
+    color: white;
+    text-decoration: none;
+    border-radius: 4px;
+    margin: 10px 5px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.button:hover {
+    background-color: #007a3d;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+#search-container {
+    margin: 30px 0;
+}
+
+#search-input {
+    width: 100%;
+    padding: 15px;
+    font-size: 16px;
+    border: 2px solid #00974a;
+    border-radius: 4px;
+    background-color: #ffffff;
+    font-family: 'Poppins', sans-serif;
+}
+
+.highlight {
+    background-color: #ffff00;
+    color: #000000;
+    font-weight: bold;
+    padding: 2px 4px;
+    border-radius: 3px;
+}
+
+table {
+    border-collapse: separate;
+    border-spacing: 0;
+    width: 100%;
+    margin: 20px 0;
+    background-color: #ffffff;
+    border-radius: 4px;
+    overflow: hidden;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+th, td {
+    border: 1px solid #e0e0e0;
+    padding: 15px;
+    text-align: left;
+}
+
+th {
+    background-color: #00974a;
+    color: #ffffff;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.section {
+    background-color: #ffffff;
+    border-radius: 8px;
+    padding: 30px;
+    margin-bottom: 40px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Nginx-specific styles */
+.nginx-block {
+    background-color: #1e1e1e;
+    color: #ffffff;
+    border-left: 5px solid #00974a;
+    border-radius: 0 4px 4px 0;
+    padding: 20px;
+    margin: 20px 0;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 14px;
+    line-height: 1.6;
+    overflow-x: auto;
+}
+
+.nginx-directive {
+    color: #4ec9b0;
+    font-weight: bold;
+}
+
+.nginx-variable {
+    color: #9cdcfe;
+}
+
+.nginx-comment {
+    color: #6a9955;
+    font-style: italic;
+}
+
+.performance-meter {
+    height: 25px;
+    background-color: #e0e0e0;
+    border-radius: 12.5px;
+    overflow: hidden;
+    margin: 15px 0;
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.performance-meter-fill {
+    height: 100%;
+    background-color: #00974a;
+    width: 0;
+    transition: width 1s ease-in-out;
+    border-radius: 12.5px;
+}
     </style>
 </head>
 <body>

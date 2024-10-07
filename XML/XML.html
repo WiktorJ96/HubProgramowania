@@ -1,0 +1,747 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rozszerzony przewodnik XML</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Fira+Code&display=swap" rel="stylesheet">
+    <style>
+        body {
+    font-family: 'Consolas', 'Courier New', monospace;
+    line-height: 1.6;
+    color: #333;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f8f8f8;
+}
+
+h1, h2, h3, h4 {
+    color: #4a5568;
+    border-bottom: 2px solid #4a5568;
+    padding-bottom: 5px;
+}
+
+pre {
+    background-color: #2d3748;
+    color: #e2e8f0;
+    border: 1px solid #4a5568;
+    border-radius: 4px;
+    padding: 15px;
+    overflow-x: auto;
+}
+
+code {
+    font-family: 'Fira Code', 'Consolas', monospace;
+    background-color: #edf2f7;
+    color: #2d3748;
+    padding: 2px 4px;
+    border-radius: 4px;
+}
+
+.tip {
+    background-color: #ebf8ff;
+    border-left: 6px solid #4299e1;
+    padding: 15px;
+    margin: 15px 0;
+    border-radius: 0 4px 4px 0;
+}
+
+.warning {
+    background-color: #fffaf0;
+    border-left: 6px solid #ed8936;
+    padding: 15px;
+    margin: 15px 0;
+    border-radius: 0 4px 4px 0;
+}
+
+.button {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #4a5568;
+    color: white;
+    text-decoration: none;
+    border-radius: 4px;
+    margin: 10px 5px;
+    transition: background-color 0.3s ease;
+}
+
+.button:hover {
+    background-color: #2d3748;
+}
+
+#search-container {
+    margin: 20px 0;
+}
+
+#search-input {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border: 2px solid #4a5568;
+    border-radius: 4px;
+    background-color: #edf2f7;
+}
+
+.highlight {
+    background-color: #faf089;
+    font-weight: bold;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+    margin: 15px 0;
+    background-color: #edf2f7;
+}
+
+th, td {
+    border: 1px solid #4a5568;
+    padding: 12px;
+    text-align: left;
+}
+
+th {
+    background-color: #4a5568;
+    color: white;
+}
+
+/* Dodatkowe style nawiązujące do XML */
+.xml-tag {
+    color: #805ad5;
+    font-weight: bold;
+}
+
+.xml-attribute {
+    color: #dd6b20;
+}
+
+.xml-value {
+    color: #38a169;
+}
+
+.section {
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 30px;
+    background-color: white;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.section:before {
+    content: '<section>';
+    display: block;
+    color: #805ad5;
+    font-family: 'Fira Code', monospace;
+    margin-bottom: 10px;
+}
+
+.section:after {
+    content: '</section>';
+    display: block;
+    color: #805ad5;
+    font-family: 'Fira Code', monospace;
+    margin-top: 10px;
+}
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Rozszerzony i szczegółowy przewodnik po XML</h1>
+
+        <div id="search-container">
+            <input type="text" id="search-input" placeholder="Wyszukaj w przewodniku...">
+        </div>
+
+        <div class="section">
+            <h2>1. Wprowadzenie do XML</h2>
+            <p>XML (eXtensible Markup Language) to uniwersalny język znaczników, używany do przechowywania i transportu danych.</p>
+            
+            <h3>1.1. Kluczowe cechy XML</h3>
+            <ul>
+                <li><strong>Rozszerzalność:</strong> Możliwość definiowania własnych znaczników</li>
+                <li><strong>Separacja danych od prezentacji:</strong> XML opisuje strukturę i zawartość danych, nie ich wygląd</li>
+                <li><strong>Czytelność dla ludzi i maszyn:</strong> Łatwy do zrozumienia zarówno dla programistów, jak i dla komputerów</li>
+                <li><strong>Niezależność od platformy:</strong> Może być używany na różnych systemach i w różnych aplikacjach</li>
+            </ul>
+
+            <h3>1.2. Podstawowa struktura dokumentu XML</h3>
+            <pre><code>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;root&gt;
+    &lt;element&gt;
+        &lt;child&gt;Zawartość&lt;/child&gt;
+    &lt;/element&gt;
+&lt;/root&gt;</code></pre>
+
+            <div class="tip">
+                <strong>Wskazówka:</strong> XML jest często używany jako format wymiany danych między różnymi systemami i aplikacjami.
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>2. Składnia XML</h2>
+            <p>Zrozumienie składni XML jest kluczowe dla poprawnego tworzenia i przetwarzania dokumentów XML.</p>
+
+            <h3>2.1. Elementy XML</h3>
+            <ul>
+                <li><strong>Element początkowy:</strong> &lt;element&gt;</li>
+                <li><strong>Zawartość elementu:</strong> Tekst lub inne elementy</li>
+                <li><strong>Element końcowy:</strong> &lt;/element&gt;</li>
+                <li><strong>Pusty element:</strong> &lt;element/&gt;</li>
+            </ul>
+
+            <h3>2.2. Atrybuty XML</h3>
+            <pre><code>&lt;element atrybut="wartość"&gt;Zawartość&lt;/element&gt;</code></pre>
+
+            <h3>2.3. Komentarze XML</h3>
+            <pre><code>&lt;!-- To jest komentarz w XML --&gt;</code></pre>
+
+            <h3>2.4. Instrukcje przetwarzania</h3>
+            <pre><code>&lt;?xml-stylesheet type="text/css" href="style.css"?&gt;</code></pre>
+
+            <div class="tip">
+                <strong>Wskazówka:</strong> Zwróć uwagę na poprawne zagnieżdżanie elementów i zamykanie wszystkich tagów w XML.
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>3. Walidacja XML</h2>
+            <p>Walidacja XML zapewnia, że dokument jest poprawnie sformatowany i zgodny z określonymi regułami.</p>
+
+            <h3>3.1. Dobrze sformułowany XML</h3>
+            <p>Dokument XML jest dobrze sformułowany, jeśli:</p>
+            <ul>
+                <li>Ma jeden element główny (root)</li>
+                <li>Wszystkie elementy są prawidłowo zagnieżdżone</li>
+                <li>Wszystkie tagi są zamknięte</li>
+                <li>Wielkość liter w tagach jest spójna</li>
+                <li>Wartości atrybutów są w cudzysłowach</li>
+            </ul>
+
+            <h3>3.2. DTD (Document Type Definition)</h3>
+            <p>DTD definiuje strukturę dokumentu XML:</p>
+            <pre><code>&lt;!DOCTYPE root [
+    &lt;!ELEMENT root (element+)&gt;
+    &lt;!ELEMENT element (#PCDATA)&gt;
+]&gt;</code></pre>
+
+            <h3>3.3. XML Schema</h3>
+            <p>XML Schema to bardziej zaawansowany sposób definiowania struktury dokumentu XML:</p>
+            <pre><code>&lt;xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"&gt;
+    &lt;xs:element name="root"&gt;
+        &lt;xs:complexType&gt;
+            &lt;xs:sequence&gt;
+                &lt;xs:element name="element" type="xs:string" maxOccurs="unbounded"/&gt;
+            &lt;/xs:sequence&gt;
+        &lt;/xs:complexType&gt;
+    &lt;/xs:element&gt;
+&lt;/xs:schema&gt;</code></pre>
+
+            <div class="tip">
+                <strong>Wskazówka:</strong> Walidacja XML jest kluczowa dla zapewnienia integralności danych i poprawności ich przetwarzania.
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>4. Przestrzenie nazw XML</h2>
+            <p>Przestrzenie nazw pomagają uniknąć konfliktów nazw w dokumentach XML, szczególnie gdy łączymy dane z różnych źródeł.</p>
+
+            <h3>4.1. Deklaracja przestrzeni nazw</h3>
+            <pre><code>&lt;root xmlns:prefix="http://example.com/namespace"&gt;
+    &lt;prefix:element&gt;Zawartość&lt;/prefix:element&gt;
+&lt;/root&gt;</code></pre>
+
+            <h3>4.2. Domyślna przestrzeń nazw</h3>
+            <pre><code>&lt;root xmlns="http://example.com/namespace"&gt;
+    &lt;element&gt;Zawartość&lt;/element&gt;
+&lt;/root&gt;</code></pre>
+
+            <div class="tip">
+                <strong>Wskazówka:</strong> Używaj przestrzeni nazw, aby uniknąć konfliktów nazw w złożonych dokumentach XML.
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>5. Przetwarzanie XML</h2>
+            <p>Istnieje wiele sposobów przetwarzania dokumentów XML w różnych językach programowania.</p>
+
+            <h3>5.1. DOM (Document Object Model)</h3>
+            <p>DOM tworzy drzewiastą reprezentację dokumentu XML w pamięci:</p>
+            <pre><code>// Przykład w JavaScript
+const parser = new DOMParser();
+const xmlDoc = parser.parseFromString(xmlString, "text/xml");
+const elements = xmlDoc.getElementsByTagName("element");</code></pre>
+
+            <h3>5.2. SAX (Simple API for XML)</h3>
+            <p>SAX to model przetwarzania strumieniowego, przydatny dla dużych dokumentów:</p>
+            <pre><code>// Przykład w Javie
+SAXParserFactory factory = SAXParserFactory.newInstance();
+SAXParser saxParser = factory.newSAXParser();
+saxParser.parse(new File("document.xml"), handler);</code></pre>
+
+            <h3>5.3. XSLT (eXtensible Stylesheet Language Transformations)</h3>
+            <p>XSLT służy do transformacji dokumentów XML:</p>
+            <pre><code>&lt;xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform"&gt;
+    &lt;xsl:template match="/"&gt;
+        &lt;html&gt;
+            &lt;body&gt;
+                &lt;h2&gt;&lt;xsl:value-of select="root/element"/&gt;&lt;/h2&gt;
+            &lt;/body&gt;
+        &lt;/html&gt;
+    &lt;/xsl:template&gt;
+&lt;/xsl:stylesheet&gt;</code></pre>
+
+            <div class="tip">
+                <strong>Wskazówka:</strong> Wybór metody przetwarzania XML zależy od rozmiaru dokumentu i specyfiki aplikacji.
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>6. XML w praktyce</h2>
+            <p>XML jest szeroko stosowany w różnych dziedzinach i aplikacjach.</p>
+
+            <h3>6.1. Konfiguracja aplikacji</h3>
+            <pre><code>&lt;configuration&gt;
+    &lt;database&gt;
+        &lt;host&gt;localhost&lt;/host&gt;
+        &lt;port&gt;3306&lt;/port&gt;
+        &lt;name&gt;mydb&lt;/name&gt;
+    &lt;/database&gt;
+&lt;/configuration&gt;</code></pre>
+
+            <h3>6.2. Wymiana danych</h3>
+            <pre><code>&lt;order&gt;
+    &lt;id&gt;12345&lt;/id&gt;
+    &lt;customer&gt;Jan Kowalski&lt;/customer&gt;
+    &lt;items&gt;
+        &lt;item&gt;
+            &lt;name&gt;Produkt A&lt;/name&gt;
+            &lt;quantity&gt;2&lt;/quantity&gt;
+        &lt;/item&gt;
+    &lt;/items&gt;
+&lt;/order&gt;</code></pre>
+
+            <h3>6.3. RSS (Really Simple Syndication)</h3>
+            <pre><code>&lt;rss version="2.0"&gt;
+    &lt;channel&gt;
+        &lt;title&gt;Mój blog&lt;/title&gt;
+        &lt;item&gt;
+            &lt;title&gt;Nowy wpis&lt;/title&gt;
+            &lt;description&gt;Treść wpisu&lt;/description&gt;
+        &lt;/item&gt;
+    &lt;/channel&gt;
+&lt;/rss&gt;</code></pre>
+
+            <div class="tip">
+                <strong>Wskazówka:</strong> XML jest wszechstronny i może być używany w wielu różnych kontekstach, od konfiguracji po wymianę danych.
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>7. XML a inne formaty</h2>
+            <p>Choć XML jest popularny, istnieją alternatywne formaty, które mogą być bardziej odpowiednie w niektórych sytuacjach.</p>
+
+            <h3>7.1. XML vs JSON</h3>
+            <p>JSON (JavaScript Object Notation) jest często preferowany w aplikacjach webowych ze względu na swoją zwięzłość:</p>
+            <pre><code>// XML
+&lt;person&gt;
+    &lt;name&gt;Jan&lt;/name&gt;
+    &lt;age&gt;30&lt;/age&gt;
+&lt;/person&gt;
+
+// JSON
+{
+    "name": "Jan",
+    "age": 30
+}</code></pre>
+
+            <h3>7.2. XML vs YAML</h3>
+            <p>YAML jest często używany w plikach konfiguracyjnych ze względu na jego czytelność:</p>
+            <pre><code># YAML
+person:name: Jan
+  age: 30</code></pre>
+
+            <h3>7.3. XML vs CSV</h3>
+            <p>CSV (Comma-Separated Values) jest prosty i efektywny dla danych tabelarycznych:</p>
+            <pre><code>name,age
+Jan,30</code></pre>
+
+            <div class="tip">
+                <strong>Wskazówka:</strong> Wybór formatu zależy od specyfiki projektu, wymagań dotyczących struktury danych i środowiska, w którym dane będą używane.
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>8. Bezpieczeństwo XML</h2>
+            <p>Bezpieczeństwo jest kluczowym aspektem przy pracy z XML, szczególnie w kontekście przetwarzania danych zewnętrznych.</p>
+
+            <h3>8.1. XXE (XML External Entity) Injection</h3>
+            <p>XXE to luka bezpieczeństwa, która może prowadzić do ujawnienia poufnych danych:</p>
+            <pre><code>&lt;!DOCTYPE foo [ 
+    &lt;!ENTITY xxe SYSTEM "file:///etc/passwd"&gt; 
+]&gt;
+&lt;foo&gt;&xxe;&lt;/foo&gt;</code></pre>
+            <p>Aby zapobiec XXE, należy wyłączyć przetwarzanie zewnętrznych encji w parserze XML.</p>
+
+            <h3>8.2. XML Signature</h3>
+            <p>XML Signature zapewnia integralność, uwierzytelnianie wiadomości i/lub podpisywanie nieodrzucalności dla danych w dowolnej formie cyfrowej:</p>
+            <pre><code>&lt;Signature xmlns="http://www.w3.org/2000/09/xmldsig#"&gt;
+    &lt;SignedInfo&gt;
+        &lt;CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315"/&gt;
+        &lt;SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1"/&gt;
+        &lt;Reference URI=""&gt;
+            &lt;Transforms&gt;
+                &lt;Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature"/&gt;
+            &lt;/Transforms&gt;
+            &lt;DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1"/&gt;
+            &lt;DigestValue&gt;...&lt;/DigestValue&gt;
+        &lt;/Reference&gt;
+    &lt;/SignedInfo&gt;
+    &lt;SignatureValue&gt;...&lt;/SignatureValue&gt;
+&lt;/Signature&gt;</code></pre>
+
+            <h3>8.3. XML Encryption</h3>
+            <p>XML Encryption pozwala na szyfrowanie części lub całości dokumentu XML:</p>
+            <pre><code>&lt;EncryptedData xmlns="http://www.w3.org/2001/04/xmlenc#"&gt;
+    &lt;EncryptionMethod Algorithm="http://www.w3.org/2001/04/xmlenc#aes256-cbc"/&gt;
+    &lt;KeyInfo xmlns="http://www.w3.org/2000/09/xmldsig#"&gt;
+        &lt;EncryptedKey xmlns="http://www.w3.org/2001/04/xmlenc#"&gt;
+            &lt;EncryptionMethod Algorithm="http://www.w3.org/2001/04/xmlenc#rsa-1_5"/&gt;
+            &lt;KeyInfo xmlns="http://www.w3.org/2000/09/xmldsig#"&gt;
+                &lt;KeyName&gt;Bob&lt;/KeyName&gt;
+            &lt;/KeyInfo&gt;
+            &lt;CipherData&gt;
+                &lt;CipherValue&gt;...&lt;/CipherValue&gt;
+            &lt;/CipherData&gt;
+        &lt;/EncryptedKey&gt;
+    &lt;/KeyInfo&gt;
+    &lt;CipherData&gt;
+        &lt;CipherValue&gt;...&lt;/CipherValue&gt;
+    &lt;/CipherData&gt;
+&lt;/EncryptedData&gt;</code></pre>
+
+            <div class="warning">
+                <strong>Uwaga:</strong> Zawsze sprawdzaj i waliduj dane XML pochodzące z zewnętrznych źródeł przed ich przetworzeniem.
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>9. Zaawansowane techniki XML</h2>
+            <p>XML oferuje zaawansowane techniki, które pozwalają na bardziej złożone operacje i manipulacje danymi.</p>
+
+            <h3>9.1. XPath</h3>
+            <p>XPath to język zapytań używany do nawigacji po dokumentach XML:</p>
+            <pre><code>// Wybierz wszystkie elementy 'item'
+//item
+
+// Wybierz wszystkie elementy 'price' większe niż 100
+//price[text() > 100]
+
+// Wybierz trzeci element 'book'
+//book[3]</code></pre>
+
+            <h3>9.2. XQuery</h3>
+            <p>XQuery to język zapytań zaprojektowany do przetwarzania danych XML:</p>
+            <pre><code>for $x in doc("books.xml")//book
+where $x/price > 30
+order by $x/title
+return $x/title</code></pre>
+
+            <h3>9.3. XLink i XPointer</h3>
+            <p>XLink i XPointer pozwalają na tworzenie i opisywanie linków między dokumentami XML:</p>
+            <pre><code>&lt;link xlink:type="simple" xlink:href="other.xml#xpointer(//section[@id='intro'])"&gt;
+    Link do innego dokumentu
+&lt;/link&gt;</code></pre>
+
+            <div class="tip">
+                <strong>Wskazówka:</strong> Zaawansowane techniki XML są szczególnie przydatne przy pracy z dużymi i złożonymi zestawami danych XML.
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>10. Najlepsze praktyki XML</h2>
+            <p>Przestrzeganie najlepszych praktyk pomoże w tworzeniu czytelnych, wydajnych i łatwych w utrzymaniu dokumentów XML.</p>
+
+            <h3>10.1. Projektowanie schematu</h3>
+            <ul>
+                <li>Używaj znaczących nazw elementów i atrybutów</li>
+                <li>Preferuj elementy nad atrybutami dla złożonych danych</li>
+                <li>Unikaj nadmiernie głębokiego zagnieżdżania elementów</li>
+                <li>Używaj przestrzeni nazw do unikania konfliktów</li>
+            </ul>
+
+            <h3>10.2. Formatowanie i styl</h3>
+            <ul>
+                <li>Konsekwentnie stosuj wcięcia dla lepszej czytelności</li>
+                <li>Używaj komentarzy do wyjaśnienia skomplikowanych struktur</li>
+                <li>Ogranicz długość linii do rozsądnej wartości (np. 80-120 znaków)</li>
+            </ul>
+
+            <h3>10.3. Wydajność</h3>
+            <ul>
+                <li>Unikaj niepotrzebnego powtarzania danych</li>
+                <li>Rozważ użycie atrybutów dla prostych, krótkich wartości</li>
+                <li>Optymalizuj schemat dla najczęstszych operacji</li>
+            </ul>
+
+            <h3>10.4. Walidacja i testowanie</h3>
+            <ul>
+                <li>Zawsze waliduj dokumenty XML względem schematu</li>
+                <li>Testuj przetwarzanie XML na różnych zestawach danych</li>
+                <li>Sprawdzaj wydajność dla dużych dokumentów XML</li>
+            </ul>
+
+            <div class="tip">
+                <strong>Wskazówka:</strong> Regularne przeglądy kodu i dokumentacji XML mogą pomóc w utrzymaniu wysokiej jakości i spójności w projektach wykorzystujących XML.
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>11. XML w usługach sieciowych</h2>
+            <p>XML odgrywa kluczową rolę w wielu protokołach usług sieciowych.</p>
+
+            <h3>11.1. SOAP (Simple Object Access Protocol)</h3>
+            <p>SOAP to protokół wymiany komunikatów oparty na XML:</p>
+            <pre><code>&lt;?xml version="1.0"?&gt;
+&lt;soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope"&gt;
+    &lt;soap:Header&gt;
+    &lt;/soap:Header&gt;
+    &lt;soap:Body&gt;
+        &lt;m:GetStockPrice xmlns:m="http://www.example.org/stock"&gt;
+            &lt;m:StockName&gt;IBM&lt;/m:StockName&gt;
+        &lt;/m:GetStockPrice&gt;
+    &lt;/soap:Body&gt;
+&lt;/soap:Envelope&gt;</code></pre>
+
+            <h3>11.2. WSDL (Web Services Description Language)</h3>
+            <p>WSDL używa XML do opisu funkcjonalności oferowanej przez usługę sieciową:</p>
+            <pre><code>&lt;definitions name="StockQuote"
+             targetNamespace="http://example.com/stockquote.wsdl"
+             xmlns:tns="http://example.com/stockquote.wsdl"
+             xmlns:xsd1="http://example.com/stockquote.xsd"
+             xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+             xmlns="http://schemas.xmlsoap.org/wsdl/"&gt;
+
+    &lt;types&gt;
+        &lt;schema targetNamespace="http://example.com/stockquote.xsd"
+                xmlns="http://www.w3.org/2001/XMLSchema"&gt;
+            &lt;element name="TradePriceRequest"&gt;
+                &lt;complexType&gt;
+                    &lt;all&gt;
+                        &lt;element name="tickerSymbol" type="string"/&gt;
+                    &lt;/all&gt;
+                &lt;/complexType&gt;
+            &lt;/element&gt;
+            &lt;element name="TradePrice"&gt;
+                &lt;complexType&gt;
+                    &lt;all&gt;
+                        &lt;element name="price" type="float"/&gt;
+                    &lt;/all&gt;
+                &lt;/complexType&gt;
+            &lt;/element&gt;
+        &lt;/schema&gt;
+    &lt;/types&gt;
+
+    &lt;message name="GetLastTradePriceInput"&gt;
+        &lt;part name="body" element="xsd1:TradePriceRequest"/&gt;
+    &lt;/message&gt;
+
+    &lt;message name="GetLastTradePriceOutput"&gt;
+        &lt;part name="body" element="xsd1:TradePrice"/&gt;
+    &lt;/message&gt;
+
+    &lt;portType name="StockQuotePortType"&gt;
+        &lt;operation name="GetLastTradePrice"&gt;
+           &lt;input message="tns:GetLastTradePriceInput"/&gt;
+           &lt;output message="tns:GetLastTradePriceOutput"/&gt;
+        &lt;/operation&gt;
+    &lt;/portType&gt;
+
+    &lt;binding name="StockQuoteSoapBinding" type="tns:StockQuotePortType"&gt;
+        &lt;soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/&gt;
+        &lt;operation name="GetLastTradePrice"&gt;
+           &lt;soap:operation soapAction="http://example.com/GetLastTradePrice"/&gt;
+           &lt;input&gt;
+               &lt;soap:body use="literal"/&gt;
+           &lt;/input&gt;
+           &lt;output&gt;
+               &lt;soap:body use="literal"/&gt;
+           &lt;/output&gt;
+        &lt;/operation&gt;
+    &lt;/binding&gt;
+
+    &lt;service name="StockQuoteService"&gt;
+        &lt;documentation&gt;My first service&lt;/documentation&gt;
+        &lt;port name="StockQuotePort" binding="tns:StockQuoteSoapBinding"&gt;
+           &lt;soap:address location="http://example.com/stockquote"/&gt;
+        &lt;/port&gt;
+    &lt;/service&gt;
+
+&lt;/definitions&gt;</code></pre>
+
+            <div class="tip">
+                <strong>Wskazówka:</strong> Choć REST API często używają JSON, XML wciąż jest powszechnie stosowany w starszych systemach i niektórych branżach.
+            </div>
+        </div>
+
+        <div class="tip">
+            <strong>Końcowa wskazówka:</strong> XML, mimo że często postrzegany jako starszy format, wciąż odgrywa ważną rolę w wielu systemach i aplikacjach. Zrozumienie XML i jego ekosystemu jest cenną umiejętnością dla każdego programisty.
+        </div>
+
+        <div class="buttons">
+            <a href="https://www.w3.org/XML/" class="button">W3C XML</a>
+            <a href="https://www.w3schools.com/xml/" class="button">W3Schools XML Tutorial</a>
+            <a href="https://developer.mozilla.org/en-US/docs/Web/XML/XML_introduction" class="button">MDN Web Docs - XML</a>
+            <a href="https://www.xml.com/" class="button">XML.com</a>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const searchInput = document.getElementById('search-input');
+            const sections = document.getElementsByClassName('section');
+            
+            // Przechowuj oryginalną zawartość sekcji
+            const originalContent = Array.from(sections).map(section => section.innerHTML);
+
+            searchInput.addEventListener('input', function() {
+                const searchTerm = this.value.toLowerCase();
+
+                Array.from(sections).forEach(function(section, index) {
+                    const sectionText = section.const sectionText = section.textContent.toLowerCase();
+
+                    if (searchTerm === '' || sectionText.includes(searchTerm)) {
+                        section.style.display = '';
+                        // Przywróć oryginalną zawartość HTML
+                        section.innerHTML = originalContent[index];
+                        
+                        if (searchTerm !== '') {
+                            highlightText(section, searchTerm);
+                        }
+                    } else {
+                        section.style.display = 'none';
+                    }
+                });
+            });
+
+            function highlightText(element, searchTerm) {
+                const walker = document.createTreeWalker(element, NodeFilter.SHOW_TEXT, null, false);
+                let node;
+                while (node = walker.nextNode()) {
+                    const parent = node.parentNode;
+                    if (parent.nodeName !== 'SCRIPT' && parent.nodeName !== 'STYLE') {
+                        const text = node.textContent;
+                        const regex = new RegExp(searchTerm, 'gi');
+                        if (regex.test(text)) {
+                            const fragment = document.createDocumentFragment();
+                            let lastIndex = 0;
+                            text.replace(regex, function(match, index) {
+                                fragment.appendChild(document.createTextNode(text.slice(lastIndex, index)));
+                                const span = document.createElement('span');
+                                span.className = 'highlight';
+                                span.textContent = match;
+                                fragment.appendChild(span);
+                                lastIndex = index + match.length;
+                                return match;
+                            });
+                            fragment.appendChild(document.createTextNode(text.slice(lastIndex)));
+                            parent.replaceChild(fragment, node);
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+
+    <div class="section">
+        <h2>12. Przyszłość XML</h2>
+        <p>Choć XML ma już wiele lat, wciąż ewoluuje i znajduje nowe zastosowania w świecie technologii.</p>
+
+        <h3>12.1. XML w IoT (Internet of Things)</h3>
+        <p>XML jest używany w protokołach komunikacyjnych dla urządzeń IoT, takich jak MQTT-SN (MQTT for Sensor Networks):</p>
+        <pre><code>&lt;mqtt-sn&gt;
+    &lt;topic-name&gt;sensors/temperature&lt;/topic-name&gt;
+    &lt;message&gt;
+        &lt;value&gt;25.5&lt;/value&gt;
+        &lt;unit&gt;Celsius&lt;/unit&gt;
+        &lt;timestamp&gt;2023-07-01T12:00:00Z&lt;/timestamp&gt;
+    &lt;/message&gt;
+&lt;/mqtt-sn&gt;</code></pre>
+
+        <h3>12.2. XML w Big Data</h3>
+        <p>XML znajduje zastosowanie w strukturyzacji i opisie metadanych w systemach Big Data:</p>
+        <pre><code>&lt;dataset&gt;
+    &lt;metadata&gt;
+        &lt;name&gt;Customer Transactions&lt;/name&gt;
+        &lt;description&gt;Daily customer transaction data&lt;/description&gt;
+        &lt;date-created&gt;2023-07-01&lt;/date-created&gt;
+        &lt;size&gt;1.5TB&lt;/size&gt;
+    &lt;/metadata&gt;
+    &lt;schema&gt;
+        &lt;field name="customer_id" type="string"/&gt;
+        &lt;field name="transaction_date" type="date"/&gt;
+        &lt;field name="amount" type="decimal"/&gt;
+    &lt;/schema&gt;
+&lt;/dataset&gt;</code></pre>
+
+        <h3>12.3. XML w Blockchain</h3>
+        <p>XML może być używany do reprezentacji transakcji i kontraktów w technologii blockchain:</p>
+        <pre><code>&lt;blockchain-transaction&gt;
+    &lt;sender&gt;0x1234567890abcdef&lt;/sender&gt;
+    &lt;recipient&gt;0xfedcba0987654321&lt;/recipient&gt;
+    &lt;amount&gt;10.5&lt;/amount&gt;
+    &lt;currency&gt;ETH&lt;/currency&gt;
+    &lt;timestamp&gt;2023-07-01T14:30:00Z&lt;/timestamp&gt;
+    &lt;signature&gt;...&lt;/signature&gt;
+&lt;/blockchain-transaction&gt;</code></pre>
+
+        <div class="tip">
+            <strong>Wskazówka:</strong> Mimo rosnącej popularności innych formatów, jak JSON, XML wciąż znajduje zastosowanie w nowych technologiach, szczególnie tam, gdzie ważna jest strukturyzacja i walidacja danych.
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>13. Podsumowanie</h2>
+        <p>XML jest wszechstronnym i potężnym językiem znaczników, który pomimo swojego wieku wciąż odgrywa ważną rolę w świecie technologii.</p>
+
+        <h3>13.1. Kluczowe zalety XML</h3>
+        <ul>
+            <li>Elastyczność w definiowaniu własnych struktur danych</li>
+            <li>Wsparcie dla walidacji danych poprzez schematy i DTD</li>
+            <li>Bogaty ekosystem narzędzi i technologii (XSLT, XPath, XQuery)</li>
+            <li>Niezależność od platformy i języka programowania</li>
+            <li>Zdolność do reprezentacji złożonych, hierarchicznych danych</li>
+        </ul>
+
+        <h3>13.2. Wyzwania związane z XML</h3>
+        <ul>
+            <li>Względna rozwlekłość w porównaniu do niektórych nowszych formatów (np. JSON)</li>
+            <li>Potencjalne problemy z wydajnością przy przetwarzaniu bardzo dużych dokumentów</li>
+            <li>Złożoność niektórych związanych technologii (np. XSLT)</li>
+            <li>Konieczność zwracania uwagi na bezpieczeństwo (np. ataki XXE)</li>
+        </ul>
+
+        <h3>13.3. Przyszłość XML</h3>
+        <p>Choć XML może nie być już pierwszym wyborem dla nowych projektów webowych, wciąż pozostaje istotny w wielu dziedzinach:</p>
+        <ul>
+            <li>Systemy korporacyjne i integracja danych</li>
+            <li>Protokoły komunikacyjne (np. SOAP)</li>
+            <li>Przechowywanie metadanych i konfiguracji</li>
+            <li>Publikowanie i wymiana dokumentów</li>
+            <li>Nowe zastosowania w IoT, Big Data i Blockchain</li>
+        </ul>
+
+        <div class="tip">
+            <strong>Końcowa wskazówka:</strong> Zrozumienie XML i jego ekosystemu jest cenną umiejętnością dla każdego programisty. Nawet jeśli nie używasz XML codziennie, znajomość jego koncepcji i zasad może być przydatna w wielu sytuacjach, od integracji systemów po pracę z złożonymi strukturami danych.
+        </div>
+    </div>
+
+    <div class="buttons">
+        <a href="https://www.w3.org/standards/xml/core" class="button">XML Core Standards</a>
+        <a href="https://www.xml.com/pub/a/98/10/guide0.html" class="button">XML.com - What is XML?</a>
+        <a href="https://github.com/topics/xml" class="button">GitHub XML Projects</a>
+        <a href="https://stackoverflow.com/questions/tagged/xml" class="button">Stack Overflow XML Q&A</a>
+    </div>
+</body>
+</html>
